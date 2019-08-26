@@ -17,6 +17,9 @@ void Player::Update()
 {
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
+
+	
+
 }
 void Player::Draw()
 {
