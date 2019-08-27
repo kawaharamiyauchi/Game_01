@@ -2,7 +2,7 @@
 #include "system/system.h"
 #include "Player.h"
 #include "level/Level.h"
-
+#include "Sprite.h"
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	
 	//プレイヤー
 	Player player;
-
+	Sprite sprite;
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
@@ -30,10 +30,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		}
 		//物理エンジンの更新。
 		g_physics.Update();
-		//プレイヤーの更新。
-		player.Update();
-		//プレイヤーの描画。
-		player.Draw();
+		////プレイヤーの更新。
+		//player.Update();
+		////プレイヤーの描画。
+		//player.Draw();
+
+		sprite.Draw();
 		//カメラの更新。
 		g_camera3D.Update();
 		//描画終了。

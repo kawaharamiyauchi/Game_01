@@ -15,8 +15,14 @@ Player::~Player()
 
 void Player::Update()
 {
+	
+	move_x = m_pad.GetLStickXF() ;
+	move_z = m_pad.GetLStickYF();
+	m_position.x += move_x;
+	m_position.z += move_z;
+	
 	//ワールド行列の更新。
-	m_model.UpdateWorldMatrix(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
+	m_model.UpdateWorldMatrix(m_position,m_rotation,m_scale);
 
 	
 
