@@ -6,8 +6,19 @@ class Player
 public:
 	Player();
 	~Player();
+
+	CVector3 GetPosition()
+	{
+		return m_position;
+	}
+	void SetPosition(CVector3 pos)
+	{
+		m_position = pos;
+	}
 	void Update();
 	void Draw();
+
+
 private:
 	float move_x = 0.0f;
 	float move_z = 0.0f;

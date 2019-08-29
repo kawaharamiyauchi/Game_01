@@ -4,6 +4,7 @@
 
 GameCamera::GameCamera()
 {
+	g_camera3D
 }
 
 

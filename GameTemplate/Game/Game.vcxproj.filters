@@ -109,7 +109,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -196,7 +197,8 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Game.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
