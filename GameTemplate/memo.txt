@@ -1,0 +1,31 @@
+9/4
+gameobject class 制作
+gameobject.h
+
+
+	#ifndef & #endif	疑似命令
+プリプロセッサ(コンパイル前に実行されるコマンド)によって処理される命令
+
+疑似命令を使用すると条件によってコンパイルしたり、しなかったりを制御可能
+
+使用例　#ifndef 記号定数
+		#difine 記号定数　　//定数定義
+		・・・
+		・・・
+		#endif
+
+注意　記号定数が定義されていなければ普通にコンパイルされてしまう。
+	　定義は#difineで行う
+
+
+	typedef
+既存のデータ型に新しい名前をつけることができる。
+
+使用例　typedef unsigned int//既存の型  hoge//新しい名前
+		
+		hoge num,len;	//変数定義
+		hoge *value;
+
+
+	using
+
