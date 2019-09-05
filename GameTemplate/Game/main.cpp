@@ -22,6 +22,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
+
+
 		//描画開始。
 		g_graphicsEngine->BegineRender();
 		//ゲームパッドの更新。	
@@ -34,7 +36,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		player.Update();
 		//プレイヤーの描画。
 		player.Draw();
-
 		//sprite.Draw();
 		//カメラの更新。
 		g_camera3D.Update();

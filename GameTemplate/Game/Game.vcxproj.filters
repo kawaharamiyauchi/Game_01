@@ -120,6 +120,12 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>gameobject</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjectManager_easy.cpp">
+      <Filter>gameobject</Filter>
+    </ClCompile>
+    <ClCompile Include="IGameObject.cpp">
+      <Filter>gameobject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -212,6 +218,12 @@
       <Filter>gameobject</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
+      <Filter>gameobject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager_easy.h">
+      <Filter>gameobject</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameObject.h">
       <Filter>gameobject</Filter>
     </ClInclude>
   </ItemGroup>

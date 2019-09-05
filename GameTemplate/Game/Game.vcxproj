@@ -104,6 +104,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
+    <ClCompile Include="GameObjectManager_easy.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
     <ClCompile Include="graphics\animation\AnimationClip.cpp" />
     <ClCompile Include="graphics\animation\AnimationPlayController.cpp" />
@@ -116,6 +117,7 @@
     <ClCompile Include="graphics\SkinModelDataManager.cpp" />
     <ClCompile Include="graphics\SkinModelEffect.cpp" />
     <ClCompile Include="HID\Pad.cpp" />
+    <ClCompile Include="IGameObject.cpp" />
     <ClCompile Include="level\Level.cpp" />
     <ClCompile Include="level\MapChip.cpp" />
     <ClCompile Include="main.cpp" />
@@ -141,6 +143,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
+    <ClInclude Include="GameObjectManager_easy.h" />
     <ClInclude Include="graphics\animation\Animation.h" />
     <ClInclude Include="graphics\animation\AnimationClip.h" />
     <ClInclude Include="graphics\animation\AnimationPlayController.h" />
@@ -154,6 +157,7 @@
     <ClInclude Include="graphics\SkinModelEffect.h" />
     <ClInclude Include="graphics\SkinModelShaderConst.h" />
     <ClInclude Include="HID\Pad.h" />
+    <ClInclude Include="IGameObject.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\MapChip.h" />
     <ClInclude Include="math\kMath.h" />
