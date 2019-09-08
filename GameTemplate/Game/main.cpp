@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "system/system.h"
+#include"GameObjectManager.h"
 #include "Player.h"
+#include"BackGround.h"
 #include "level/Level.h"
 #include "Sprite.h"
 ///////////////////////////////////////////////////////////////////
@@ -17,13 +19,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.SetFar(10000.0f);
 	
 	//プレイヤー
-	Player player;
-	Sprite sprite;
+	Player*player = g_goMgr.NewGO<Player>();
+	//map
+	//BackGround*m_bg = g_goMgr.NewGO<BackGround>();
+	//Sprite sprite;
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
-
-
+		
+		
 		//描画開始。
 		g_graphicsEngine->BegineRender();
 		//ゲームパッドの更新。	
@@ -32,11 +36,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		}
 		//物理エンジンの更新。
 		g_physics.Update();
-		//プレイヤーの更新。
-		player.Update();
-		//プレイヤーの描画。
-		player.Draw();
-		//sprite.Draw();
+		//ゲームオブジェクトマネージャーの更新。
+		g_goMgr.Update();
+		
+		if (GetAsyncKeyState('A'))
+		{
+			g_goMgr.DeleteGO(player);
+		}
+		
 		//カメラの更新。
 		g_camera3D.Update();
 		//描画終了。

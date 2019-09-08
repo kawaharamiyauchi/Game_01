@@ -1,7 +1,7 @@
 #pragma once
 #include "character/CharacterController.h"
-
-class Player
+#include"IGameObject.h"
+class Player:public IGameObject
 {
 public:
 	Player();
@@ -16,7 +16,7 @@ public:
 		m_position = pos;
 	}
 	void Update();
-	void Draw();
+	void Render();
 
 
 private:

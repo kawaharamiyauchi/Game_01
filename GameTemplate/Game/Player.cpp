@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
-
+#include"GameObjectManager.h"
 
 Player::Player()
 {
@@ -11,15 +11,13 @@ Player::Player()
 
 Player::~Player()
 {
+	
 }
 
 void Player::Update()
 {
 	
-	move_x = m_pad.GetLStickXF() ;
-	move_z = m_pad.GetLStickYF();
-	m_position.x += move_x;
-	m_position.z += move_z;
+	
 	
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position,m_rotation,m_scale);
@@ -27,7 +25,7 @@ void Player::Update()
 	
 
 }
-void Player::Draw()
+void Player::Render()
 {
 	m_model.Draw(
 		g_camera3D.GetViewMatrix(), 

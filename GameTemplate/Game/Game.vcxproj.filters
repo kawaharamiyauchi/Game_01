@@ -114,16 +114,10 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObjectManager.cpp">
-      <Filter>gameobject</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>gameobject</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectManager_easy.cpp">
-      <Filter>gameobject</Filter>
-    </ClCompile>
     <ClCompile Include="IGameObject.cpp">
+      <Filter>gameobject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
       <Filter>gameobject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -214,21 +208,18 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>gameobject</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>gameobject</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectManager_easy.h">
-      <Filter>gameobject</Filter>
-    </ClInclude>
     <ClInclude Include="IGameObject.h">
+      <Filter>gameobject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
       <Filter>gameobject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Desert stage.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
