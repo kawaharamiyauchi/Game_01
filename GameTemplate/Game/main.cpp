@@ -5,6 +5,7 @@
 #include"BackGround.h"
 #include "level/Level.h"
 #include "Sprite.h"
+#include"Game.h"
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -19,15 +20,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.SetFar(10000.0f);
 	
 	//プレイヤー
-	Player*player = g_goMgr.NewGO<Player>();
+	//Player*player = g_goMgr.NewGO<Player>();
+	Player*m_player = g_goMgr.NewGO<Player>();
 	//map
-	//BackGround*m_bg = g_goMgr.NewGO<BackGround>();
+	BackGround*m_bg = g_goMgr.NewGO<BackGround>();
 	//Sprite sprite;
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
-		
-		
 		//描画開始。
 		g_graphicsEngine->BegineRender();
 		//ゲームパッドの更新。	
@@ -38,12 +38,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		g_physics.Update();
 		//ゲームオブジェクトマネージャーの更新。
 		g_goMgr.Update();
-		
+		m_player->SetPosition({ m_player->GetPosition().x + 1.1f,m_player->GetPosition().y,m_player->GetPosition().z, });
 		if (GetAsyncKeyState('A'))
 		{
-			g_goMgr.DeleteGO(player);
+			g_goMgr.DeleteGO(m_player);
 		}
-		
+		CVector3 target = m_player->GetPosition();
+		target.y += 2.0f;
+		g_camera3D.SetTarget(target);
 		//カメラの更新。
 		g_camera3D.Update();
 		//描画終了。
