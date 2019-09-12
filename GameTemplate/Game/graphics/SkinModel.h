@@ -45,6 +45,22 @@ public:
 		int boneId = m_skeleton.FindBoneID(boneName);
 		return m_skeleton.GetBone(boneId);
 	}
+	/// <summary>
+	/// 描画処理を行うかどうか
+	/// </summary>
+	/// <param name="flag">アクティブフラグ</param>
+	void SetActiveFlag(bool flag)
+	{
+		IsActiveflag = flag;
+	}
+	/// <summary>
+	/// アクティブフラグを取得
+	/// </summary>
+	/// <returns>アクティブフラグ</returns>
+	bool GetActiveFlag()
+	{
+		return IsActiveflag;
+	}
 	/*!
 	*@brief	モデルを描画。
 	*@param[in]	viewMatrix		カメラ行列。
@@ -94,6 +110,7 @@ private:
 	*/
 	void InitSkeleton(const wchar_t* filePath);
 	
+	
 private:
 	//定数バッファ。
 	struct SVSConstantBuffer {
@@ -107,5 +124,6 @@ private:
 	CMatrix				m_worldMatrix;					//!<ワールド行列。
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
+	bool IsActiveflag = true;							//!<アクティブフラグ
 };
 

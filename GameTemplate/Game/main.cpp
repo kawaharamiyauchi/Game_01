@@ -20,7 +20,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.SetFar(10000.0f);
 	
 	//プレイヤー
-	//Player*player = g_goMgr.NewGO<Player>();
 	Player*m_player = g_goMgr.NewGO<Player>();
 	//map
 	BackGround*m_bg = g_goMgr.NewGO<BackGround>();
@@ -38,7 +37,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		g_physics.Update();
 		//ゲームオブジェクトマネージャーの更新。
 		g_goMgr.Update();
-		m_player->SetPosition({ m_player->GetPosition().x + 1.1f,m_player->GetPosition().y,m_player->GetPosition().z, });
+		//m_player->SetPosition({ m_player->GetPosition().x + 1.1f,m_player->GetPosition().y,m_player->GetPosition().z, });
+		/*CQuaternion a;
+		a.SetRotationDeg(CVector3::AxisY(), 10.0f);*/
+		//m_player->SetRotation(m_player->GetRotation());
 		if (GetAsyncKeyState('A'))
 		{
 			g_goMgr.DeleteGO(m_player);

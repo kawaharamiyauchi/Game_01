@@ -125,11 +125,14 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	m_skeleton.SendBoneMatrixArrayToGPU();
 
 	//•`‰æB
-	m_modelDx->Draw(
-		d3dDeviceContext,
-		state,
-		m_worldMatrix,
-		viewMatrix,
-		projMatrix
-	);
+	if (IsActiveflag == true)
+	{
+		m_modelDx->Draw(
+			d3dDeviceContext,
+			state,
+			m_worldMatrix,
+			viewMatrix,
+			projMatrix
+		);
+	}
 }
