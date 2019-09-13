@@ -1,5 +1,6 @@
 #pragma once
 #include "IGameObject.h"
+#include"character/CharacterController.h"
 class BackGround:public IGameObject
 {
 public:
@@ -37,6 +38,7 @@ private:
 	CVector3 m_scale = CVector3::One();
 	CQuaternion m_rotation = CQuaternion::Identity();
 	SkinModel m_skinModel;
+	CharacterController m_charaCon;
 	
 };
 

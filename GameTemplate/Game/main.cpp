@@ -5,6 +5,7 @@
 #include"BackGround.h"
 #include "level/Level.h"
 #include "Sprite.h"
+#include"GameCamera.h"
 #include"Game.h"
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
