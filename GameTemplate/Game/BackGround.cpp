@@ -8,7 +8,8 @@ BackGround::BackGround()
 	add.SetRotationDeg(CVector3::AxisX(), 90.0f);
 	m_rotation.Add(add);
 	m_skinModel.Init(L"Assets/modelData/Desert stage.cmo");
-	m_scale *= 40.0f;
+	m_scale = { 100.0f,10.0f,100.0f };
+	
 	//m_scale.y = 1.0f;
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "character/CharacterController.h"
 #include"IGameObject.h"
+#include"character/CharacterController.h"
 class Player:public IGameObject
 {
 public:
@@ -54,14 +55,21 @@ public:
 	/// プレイヤーの移動処理
 	/// </summary>
 	void Move();
+	/// <summary>
+	/// プレイヤーの回転処理
+	/// </summary>
+	void Turn();
 private:
 	float move_x = 0.0f;
 	float move_z = 0.0f;
 	
-	CMatrix m;
-	SkinModel m_model;									//スキンモデル。
+	
+	SkinModel m_model;	//スキンモデル。
+	CVector3 m_speed = CVector3::One();
 	CVector3 m_position =CVector3::Zero();				//位置
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転
 	CVector3 m_scale =CVector3::One();					//拡大率
+	CharacterController m_charaCon;
+
 };
 

@@ -10,3 +10,12 @@ Title::Title()
 Title::~Title()
 {
 }
+
+void Title::UpDate()
+{
+
+}
+void Title::Render()
+{
+
+}

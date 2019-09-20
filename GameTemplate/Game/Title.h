@@ -1,8 +1,11 @@
 #pragma once
-class Title
+#include"IGameObject.h"
+class Title:public IGameObject
 {
 public:
 	Title();
 	~Title();
+	void UpDate();
+	void Render();
 };
 
