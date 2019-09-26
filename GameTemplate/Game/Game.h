@@ -11,6 +11,8 @@ class Game:public IGameObject
 public:
 	Game();
 	~Game();
+
+	
 	static Game* instance()
 	{
 		

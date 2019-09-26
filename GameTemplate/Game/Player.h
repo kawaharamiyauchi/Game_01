@@ -65,7 +65,7 @@ private:
 	
 	
 	SkinModel m_model;	//スキンモデル。
-	CVector3 m_speed = CVector3::One();
+	CVector3 m_speed = CVector3::Zero();
 	CVector3 m_position =CVector3::Zero();				//位置
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転
 	CVector3 m_scale =CVector3::One();					//拡大率

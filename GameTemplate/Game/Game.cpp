@@ -15,9 +15,9 @@ Game::Game()
 
 Game::~Game()
 {
-	/*g_goMgr.DeleteGO(m_player);
+	g_goMgr.DeleteGO(m_player);
 	g_goMgr.DeleteGO(m_background);
-	g_goMgr.DeleteGO(m_gamecamera);*/
+	g_goMgr.DeleteGO(m_gamecamera);
 
 	
 }

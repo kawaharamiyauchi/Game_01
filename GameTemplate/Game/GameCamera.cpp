@@ -6,13 +6,14 @@
 
 GameCamera::GameCamera()
 {
-	m_toCameraPos.Set(0.0f, 200.0f, -600.0f);
+	m_toCameraPos.Set(0.0f, 100.0f, -400.0f);
 	//m_position = {m_player->GetPosition().x,m_player->GetPosition().y + 10.0f, m_player->GetPosition().z-50.0f };
 	//m_position = { 0.0f,10.0f,-100.0f };
 	//g_camera3D.SetViewAngle(60.0f);
 	g_camera3D.SetPosition({ 0.0f,250.0f,-300.0f });
 	g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
-	g_camera3D.SetFar(10000.0f);
+	//g_camera3D.SetNear(1000.0f);
+	g_camera3D.SetFar(1000000.0f);
 }
 
 
@@ -60,7 +61,7 @@ void GameCamera::Update()
 	m_position= m_target + m_toCameraPos;
 	g_camera3D.SetPosition(m_position);
 	g_camera3D.SetTarget(m_target);
-	g_camera3D.SetFar(10000.0f);
+	
 	//カメラの更新。
 	g_camera3D.Update();
 	

@@ -61,6 +61,14 @@ public:
 	{
 		return IsActiveflag;
 	}
+	/// <summary>
+	/// ディレクションライトを付与するかどうか
+	/// </summary>
+	/// <param name="flag">ディレクションライトフラグ</param>
+	void SetlightFlag(bool flag)
+	{
+		lightFlag = flag;
+	}
 	/*!
 	*@brief	モデルを描画。
 	*@param[in]	viewMatrix		カメラ行列。
@@ -110,7 +118,32 @@ private:
 	*/
 	void InitSkeleton(const wchar_t* filePath);
 	
+	void InitDirectionLight()
+	{
+		m_dirLight.direction[0] = { 0.0f,-0.8f,0.0f,0.0f };
+		m_dirLight.color[0] = { 1.0f,1.0f,1.0f,1.0f };
+		
+		m_dirLight.direction[1] = { 0.0f,0.8f,0.0f,0.0f };
+		m_dirLight.color[1] = { 1.0f,1.0f,1.0f,1.0f };
+
+		m_dirLight.direction[2] = { 1.0f,0.0f,1.0f,0.0f };
+		m_dirLight.color[2] = { 1.0f,1.0f,1.0f,0.5f };
+
+		m_dirLight.direction[3] = { -1.0f,0.0f,-1.0f,0.0f };
+		m_dirLight.color[3] = { 1.0f,1.0f,1.0f,0.5f };
+	}
+	void UpDate() {
+		
+	}
 	
+private:
+	/// <summary>
+	/// ディレクションライト
+	/// </summary>
+	struct DirectionLight {
+		CVector4 direction[4];
+		CVector4 color[4];
+	};
 private:
 	//定数バッファ。
 	struct SVSConstantBuffer {
@@ -120,10 +153,14 @@ private:
 	};
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
+	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。>
 	Skeleton			m_skeleton;						//!<スケルトン。
 	CMatrix				m_worldMatrix;					//!<ワールド行列。
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
+	DirectionLight		m_dirLight;
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
+	
 	bool IsActiveflag = true;							//!<アクティブフラグ
+	bool lightFlag = true;
 };
 

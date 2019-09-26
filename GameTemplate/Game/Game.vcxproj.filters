@@ -34,6 +34,9 @@
     <Filter Include="gameobject">
       <UniqueIdentifier>{9485c7b2-91f0-4e80-9e89-a71bab3d45f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\light">
+      <UniqueIdentifier>{00687ca6-2af6-4e99-9135-186de9506d74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -122,6 +125,7 @@
     </ClCompile>
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="DirectionLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -218,6 +222,7 @@
     </ClInclude>
     <ClInclude Include="Title.h" />
     <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="DirectionLight.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">

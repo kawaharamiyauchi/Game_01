@@ -16,7 +16,7 @@ public:
 		m_position = pos;
 	}
 
-	CVector3 GetScale(int i)
+	/*CVector3 GetScale(int i)
 	{
 		return m_scale;
 	}
@@ -24,7 +24,7 @@ public:
 	void SetScale(int i,CVector3 sca)
 	{
 		m_scale = sca;
-	}
+	}*/
 
 
 
@@ -35,9 +35,10 @@ public:
 private:
 
 	CVector3 m_position = CVector3::Zero();
-	CVector3 m_scale = { CVector3::One() };
-	CQuaternion m_rotation = CQuaternion::Identity();
-	SkinModel m_skinModel;
+	CVector3 m_scale[2] = { CVector3::One() };
+	CQuaternion m_rotation = { CQuaternion::Identity() };
+	CQuaternion add_2;
+	SkinModel m_skinModel[2];
 	CharacterController m_charaCon;
 	
 };

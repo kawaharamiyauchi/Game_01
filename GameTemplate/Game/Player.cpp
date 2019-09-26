@@ -29,6 +29,8 @@ void Player::Move()
 	m_speed.x = g_pad[0].GetLStickXF()*20.0f;
 	m_speed.z = g_pad[0].GetLStickYF()*20.0f;
 
+	//CVector3 cameraForward =g_camera3D.
+
 	if (g_pad[0].IsPress(enButtonB))
 	{
 		m_model.SetActiveFlag(false);
