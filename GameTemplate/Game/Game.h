@@ -1,6 +1,8 @@
 #pragma once
 #include"IGameObject.h"
 #include"GameObjectManager.h"
+#include"Sprite.h"
+
 class Player;
 class BackGround;
 class GameCamera;
@@ -27,7 +29,7 @@ public:
 	BackGround*m_background = nullptr;
 	GameCamera *m_gamecamera = nullptr;
 private:
-
+	Sprite m_sprite;
 	
 	
 };

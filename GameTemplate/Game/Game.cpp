@@ -7,6 +7,8 @@
 
 Game::Game()
 {
+	
+	
 		m_player = g_goMgr.NewGO<Player>();
 		m_background = g_goMgr.NewGO<BackGround>();
 		m_gamecamera = g_goMgr.NewGO<GameCamera>();

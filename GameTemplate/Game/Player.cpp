@@ -39,20 +39,24 @@ void Player::Move()
 
 	m_speed.x = 0.0f;
 	m_speed.z = 0.0f;
-	//m_speed.y -= 8.0f;
+	m_speed.y -= 0.8f;
 
 	m_speed += cameraForward * IStick_y*20.0f;
 	m_speed += cameraRight * IStick_x*20.0f;
 
 
 
-	if (g_pad[0].IsPress(enButtonB))
+	if (g_pad[0].IsPress(enButtonY))
 	{
 		m_model.SetActiveFlag(false);
 	}
-	if (g_pad[0].IsPress(enButtonA))
+	if (g_pad[0].IsPress(enButtonX))
 	{
 		m_model.SetActiveFlag(true);
+	}
+	if (g_pad[0].IsPress(enButtonB))
+	{
+		m_speed.y += 10.0f;
 	}
 	m_position =m_charaCon.Execute(1.0f,m_speed);
 

@@ -37,6 +37,9 @@
     <Filter Include="Assets\light">
       <UniqueIdentifier>{00687ca6-2af6-4e99-9135-186de9506d74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\sprite">
+      <UniqueIdentifier>{5a18d4c8-8d18-4c2c-b486-589c36bb1ca1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -125,7 +128,6 @@
     </ClCompile>
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="GameCamera.cpp" />
-    <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="dbgDraw.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -223,7 +225,6 @@
     </ClInclude>
     <ClInclude Include="Title.h" />
     <ClInclude Include="GameCamera.h" />
-    <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="dbgDraw.h" />
   </ItemGroup>
   <ItemGroup>
@@ -236,5 +237,10 @@
     <MeshContentTask Include="Assets\modelData\sky_01.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\ago_free_03.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

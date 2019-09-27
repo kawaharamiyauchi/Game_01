@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include"GameCamera.h"
 #include"Game.h"
+#include "Title.h"
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -16,7 +17,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 	
 	//Game*m_game = g_goMgr.NewGO<Game>();
-		auto m_game = Game::instance();
+	//auto m_game = Game::instance();
+	Title*m_title = g_goMgr.NewGO<Title>();
 	////プレイヤー
 	//Player*m_player = g_goMgr.NewGO<Player>();
 	////map

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "dbgDraw.h"
 
+
+
 void dbgDraw::Init()
 {
 
@@ -16,7 +18,7 @@ void dbgDraw::Init()
 	);
 	m_vs.Load("shader/linePrimitive.fx", "VSMain", Shader::EnType::VS);
 	m_ps.Load("shader/linePrimitive.fx", "PSMain", Shader::EnType::PS);
-	m_cb.Create(nullptr, sizeof(SConstantBuffer));
+	m_cb.Create(nullptr, sizeof(ConstantBuffer));
 }
 void dbgDraw::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {

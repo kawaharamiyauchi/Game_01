@@ -4,6 +4,7 @@
 #include "graphics/Camera.h"
 #include "system/system.h"
 
+
 class dbgDraw:public btIDebugDraw 
 {
 	struct ConstantBuffer {
@@ -15,7 +16,7 @@ class dbgDraw:public btIDebugDraw
 	//CPrimitive m_primitive;
 	Shader m_vs;	//頂点シェーダー。
 	Shader m_ps;	//ピクセルシェーダー。
-	ConstantBuffer m_cb;
+	//CConstantBuffer m_cb;
 	static const int VERTEX_MAX = 1000000;
 	std::array<CVector4, VERTEX_MAX> m_vertexBuffer;
 
