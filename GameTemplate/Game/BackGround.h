@@ -1,6 +1,8 @@
 #pragma once
 #include "IGameObject.h"
 #include"character/CharacterController.h"
+#include"physics/PhysicsStaticObject.h"
+
 class BackGround:public IGameObject
 {
 public:
@@ -40,6 +42,7 @@ private:
 	CQuaternion add_2;
 	SkinModel m_skinModel[2];
 	CharacterController m_charaCon;
+	PhysicsStaticObject m_physicsStaticObject;
 	
 };
 

@@ -101,6 +101,9 @@
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
+    <ClCompile Include="dbgDraw.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
@@ -141,6 +144,9 @@
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="character\CharacterController.h" />
+    <ClInclude Include="dbgDraw.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />

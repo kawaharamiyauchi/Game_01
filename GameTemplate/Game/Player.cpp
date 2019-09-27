@@ -7,8 +7,8 @@
 Player::Player()
 {
 	m_charaCon.Init(
-		20.0f,		//半径
-		68.0f,		//高さ
+		10.0f,		//半径
+		10.0f,		//高さ
 		m_position	//初期座標
 	);	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/unityChan.cmo");
@@ -26,10 +26,25 @@ void Player::Move()
 {
 	
 
-	m_speed.x = g_pad[0].GetLStickXF()*20.0f;
-	m_speed.z = g_pad[0].GetLStickYF()*20.0f;
+	float IStick_x = g_pad[0].GetLStickXF();
+	float IStick_y = g_pad[0].GetLStickYF();
 
-	//CVector3 cameraForward =g_camera3D.
+	CVector3 cameraForward = g_camera3D.GetFront();
+	CVector3 cameraRight = g_camera3D.GetRight();
+
+	cameraForward.y = 0.0f;
+	cameraForward.Normalize();
+	cameraRight.y = 0.0f;
+	cameraRight.Normalize();
+
+	m_speed.x = 0.0f;
+	m_speed.z = 0.0f;
+	//m_speed.y -= 8.0f;
+
+	m_speed += cameraForward * IStick_y*20.0f;
+	m_speed += cameraRight * IStick_x*20.0f;
+
+
 
 	if (g_pad[0].IsPress(enButtonB))
 	{

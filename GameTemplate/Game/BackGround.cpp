@@ -12,11 +12,13 @@ BackGround::BackGround()
 	
 	m_skinModel[0].Init(L"Assets/modelData/Desert stage.cmo");
 	m_scale[0] = { 100.0f,10.0f,100.0f };
+	
+	//m_skinModel[0].SetlightFlag(false);
 	m_skinModel[1].Init(L"Assets/modelData/sky_01.cmo");
 	m_skinModel[1].SetlightFlag(false);
-	//m_skinModel[1].SetActiveFlag(false);
+	m_skinModel[1].SetActiveFlag(false);
 	m_scale[1] = { 100.0f,100.0f,100.0f };
-	//m_scale.y = 1.0f;
+	m_physicsStaticObject.CreateMeshObject(m_skinModel[0], m_position, m_rotation,m_scale[0]);
 }
 
 

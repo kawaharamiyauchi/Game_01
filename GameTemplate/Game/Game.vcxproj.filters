@@ -126,6 +126,7 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
+    <ClCompile Include="dbgDraw.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -223,6 +224,7 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="DirectionLight.h" />
+    <ClInclude Include="dbgDraw.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
