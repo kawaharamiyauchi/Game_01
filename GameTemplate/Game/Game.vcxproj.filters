@@ -129,6 +129,7 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="dbgDraw.cpp" />
+    <ClCompile Include="Dragon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -226,15 +227,22 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="dbgDraw.h" />
+    <ClInclude Include="Dragon.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\sky_01.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Desert stage.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\sky_01.FBX">
+    <MeshContentTask Include="..\..\..\..\..\Documents\3dsMax\export\MH_sky.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\DragonBoar.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

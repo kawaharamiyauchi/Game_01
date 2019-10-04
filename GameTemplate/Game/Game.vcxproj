@@ -104,6 +104,7 @@
     <ClCompile Include="dbgDraw.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Dragon.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="dbgDraw.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Dragon.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -186,7 +188,9 @@
     <ClInclude Include="Title.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="..\..\..\..\..\Documents\3dsMax\export\MH_sky.FBX" />
     <MeshContentTask Include="Assets\modelData\Desert stage.FBX" />
+    <MeshContentTask Include="Assets\modelData\DragonBoar.fbx" />
     <MeshContentTask Include="Assets\modelData\sky_01.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>

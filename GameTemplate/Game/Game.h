@@ -6,6 +6,7 @@
 class Player;
 class BackGround;
 class GameCamera;
+class Dragon;
 class Game:public IGameObject
 {
 
@@ -28,6 +29,7 @@ public:
 	Player*m_player = nullptr;
 	BackGround*m_background = nullptr;
 	GameCamera *m_gamecamera = nullptr;
+	Dragon *m_dragon = nullptr;
 private:
 	Sprite m_sprite;
 	

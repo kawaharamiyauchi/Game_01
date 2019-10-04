@@ -120,17 +120,21 @@ private:
 	
 	void InitDirectionLight()
 	{
-		m_dirLight.direction[0] = { 0.0f,-0.8f,0.0f,0.0f };
-		m_dirLight.color[0] = { 1.0f,1.0f,1.0f,1.0f };
+		m_light.directionLight.direction[0] = { 0.0f,-0.8f,0.0f,0.0f };
+		m_light.directionLight.color[0] = { 1.0f,1.0f,1.0f,1.0f };
+		m_light.specPow[0] = 10.0f;
 		
-		m_dirLight.direction[1] = { 0.0f,0.8f,0.0f,0.0f };
-		m_dirLight.color[1] = { 1.0f,1.0f,1.0f,1.0f };
+		m_light.directionLight.direction[1] = { 0.0f,0.8f,0.0f,0.0f };
+		m_light.directionLight.color[1] = { 1.0f,1.0f,1.0f,1.0f };
+		m_light.specPow[1] = 10.0f;
 
-		m_dirLight.direction[2] = { 1.0f,0.0f,1.0f,0.0f };
-		m_dirLight.color[2] = { 1.0f,1.0f,1.0f,0.5f };
+		m_light.directionLight.direction[2] = { 1.0f,0.0f,1.0f,0.0f };
+		m_light.directionLight.color[2] = { 1.0f,1.0f,1.0f,0.5f };
+		m_light.specPow[2] = 10.0f;
 
-		m_dirLight.direction[3] = { -1.0f,0.0f,-1.0f,0.0f };
-		m_dirLight.color[3] = { 1.0f,1.0f,1.0f,0.5f };
+		m_light.directionLight.direction[3] = { -1.0f,0.0f,-1.0f,0.0f };
+		m_light.directionLight.color[3] = { 1.0f,1.0f,1.0f,0.5f };
+		m_light.specPow[3] = 10.0f;
 	}
 	void UpDate() {
 		
@@ -143,6 +147,14 @@ private:
 	struct DirectionLight {
 		CVector4 direction[4];
 		CVector4 color[4];
+		
+	};
+
+	struct Light {
+		DirectionLight		directionLight;		//ディレクションライト
+		CVector3			eyePos;				//視点の座標
+		float				specPow[4];			//鏡面反射の絞り。
+	
 	};
 private:
 	//定数バッファ。
@@ -157,7 +169,7 @@ private:
 	Skeleton			m_skeleton;						//!<スケルトン。
 	CMatrix				m_worldMatrix;					//!<ワールド行列。
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
-	DirectionLight		m_dirLight;
+	Light				m_light;
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	
 	bool IsActiveflag = true;							//!<アクティブフラグ

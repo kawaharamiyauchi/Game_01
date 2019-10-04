@@ -11,6 +11,7 @@ Player::Player()
 		10.0f,		//高さ
 		m_position	//初期座標
 	);	//cmoファイルの読み込み。
+	
 	m_model.Init(L"Assets/modelData/unityChan.cmo");
 	
 }
@@ -39,7 +40,7 @@ void Player::Move()
 
 	m_speed.x = 0.0f;
 	m_speed.z = 0.0f;
-	m_speed.y -= 0.8f;
+	m_speed.y -= 4.0f;
 
 	m_speed += cameraForward * IStick_y*20.0f;
 	m_speed += cameraRight * IStick_x*20.0f;
@@ -54,9 +55,9 @@ void Player::Move()
 	{
 		m_model.SetActiveFlag(true);
 	}
-	if (g_pad[0].IsPress(enButtonB))
+	if (g_pad[0].IsTrigger(enButtonB))
 	{
-		m_speed.y += 10.0f;
+		m_speed.y += 40.0f;
 	}
 	m_position =m_charaCon.Execute(1.0f,m_speed);
 

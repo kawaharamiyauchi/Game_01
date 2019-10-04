@@ -8,17 +8,18 @@ BackGround::BackGround()
 	CQuaternion add;
 	add.SetRotationDeg(CVector3::AxisX(), 90.0f);
 	
-	m_rotation.Add(add);
+	//m_rotation.Add(add);
 	
 	m_skinModel[0].Init(L"Assets/modelData/Desert stage.cmo");
-	m_scale[0] = { 100.0f,10.0f,100.0f };
+	//m_scale[0] = { 100.0f,10.0f,100.0f };
 	
 	//m_skinModel[0].SetlightFlag(false);
-	m_skinModel[1].Init(L"Assets/modelData/sky_01.cmo");
-	m_skinModel[1].SetlightFlag(false);
-	m_skinModel[1].SetActiveFlag(false);
-	m_scale[1] = { 100.0f,100.0f,100.0f };
+	m_skinModel[1].Init(L"Assets/modelData/MH_sky.cmo");
+	//m_skinModel[1].SetlightFlag(false);
+	//m_skinModel[1].SetActiveFlag(false);
+	m_scale[1] = { 5.0f,5.0f,0.8f };
 	m_physicsStaticObject.CreateMeshObject(m_skinModel[0], m_position, m_rotation,m_scale[0]);
+	
 }
 
 

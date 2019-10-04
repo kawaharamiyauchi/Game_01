@@ -18,7 +18,7 @@ PhysicsStaticObject::~PhysicsStaticObject()
 void PhysicsStaticObject::CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot,CVector3 sca)
 {
 	//メッシュコライダーを作成。
-	m_meshCollider.CreateFromSkinModel(skinModel, nullptr);
+	//m_meshCollider.CreateFromSkinModel(skinModel, nullptr);
 	CMatrix mScale;
 	mScale.MakeScaling(sca);
 	m_meshCollider.CreateFromSkinModel(skinModel, &mScale);

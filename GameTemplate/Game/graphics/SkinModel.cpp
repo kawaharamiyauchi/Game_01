@@ -18,6 +18,7 @@ public:
 	C3DModelEffect()
 	{
 		//頂点シェーダーをロード。
+		
 		m_vsShader.Load("Assets/shader/model.fx", "VSMain", Shader::EnType::VS);
 		m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
 	}
@@ -157,6 +158,7 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 }
 void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 {
+	
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
 	ID3D11DeviceContext* d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
@@ -169,7 +171,7 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	if (lightFlag == true) {
 		
-		d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_dirLight, 0, 0);
+		d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 	}
 	
 	//定数バッファをGPUに転送。
