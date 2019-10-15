@@ -20,7 +20,7 @@ Dragon::Dragon()
 			bonename[i] = m_skeleton.GetBone(i)->GetName();	
 	}
 	
-	//m_animation.Play(enAnimationClip_idle, 1.0f);
+	m_animation.Play(enAnimationClip_idle, 1.0f);
 }
 
 
@@ -30,7 +30,7 @@ Dragon::~Dragon()
 
 void Dragon::Update()
 {
-	//m_animation.Update(1.0f);
+	m_animation.Update(1.0f);
 	
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 }

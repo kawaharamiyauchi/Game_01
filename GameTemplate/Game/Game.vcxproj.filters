@@ -242,9 +242,6 @@
     <MeshContentTask Include="..\..\..\..\..\Documents\3dsMax\export\MH_sky.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\DragonBoar.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\ago_free_03.png">
