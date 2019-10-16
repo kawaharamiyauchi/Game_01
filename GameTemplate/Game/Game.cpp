@@ -5,6 +5,7 @@
 #include "GameCamera.h"
 #include"GameObjectManager.h"
 #include"Dragon.h"
+#include"Title.h"
 
 Game::Game()
 {
@@ -26,7 +27,11 @@ Game::~Game()
 }
 void Game::Update()
 {
-	
+	if (g_pad[0].IsTrigger(enButtonSelect))
+	{
+
+		g_goMgr.DeleteGO(this);
+	}
 }
 void Game::Render()
 {

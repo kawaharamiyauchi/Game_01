@@ -39,5 +39,5 @@ void Title::Render()
 	);
 	//mViewInv.Inverse(mView);
 	mProj.MakeOrthoProjectionMatrix(1280, 720, 0.1, 100);
-	m_sprite.Draw(mView, mProj);
+	//m_sprite.Draw(mView, mProj);
 }

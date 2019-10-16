@@ -6,6 +6,7 @@
 
 Player::Player()
 {
+	
 	m_charaCon.Init(
 		10.0f,		//îºåa
 		10.0f,		//çÇÇ≥

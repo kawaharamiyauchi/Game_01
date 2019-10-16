@@ -44,7 +44,8 @@ private:
 	CVector3 m_scale = CVector3::One();
 	CQuaternion m_rotation = CQuaternion::Identity();
 	Skeleton m_skeleton;
-	CMatrix m_bonePos[40] = {CMatrix::Identity() };
+	CMatrix m_bone[40] = {CMatrix::Identity() };
+	float a = 0.0f;
 	
 	const wchar_t * bonename[41];
 	SkinModel m_model;		//ƒXƒLƒ“ƒ‚ƒfƒ‹

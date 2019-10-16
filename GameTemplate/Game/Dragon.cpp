@@ -18,6 +18,10 @@ Dragon::Dragon()
 	for (int i = 0; i < 40; i++)
 	{
 			bonename[i] = m_skeleton.GetBone(i)->GetName();	
+			if (i == 39)
+			{
+				bonename[i] = L"end";
+			}
 	}
 	
 	m_animation.Play(enAnimationClip_idle, 1.0f);
@@ -30,8 +34,11 @@ Dragon::~Dragon()
 
 void Dragon::Update()
 {
-	m_animation.Update(1.0f);
 	
+	a += 0.1f;
+	m_animation.Update(1.0f);
+	m_bone[1].MakeRotationY(a);
+	m_skeleton.GetBone(1)->SetWorldMatrix(m_bone[1]);
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 }
 

@@ -24,7 +24,10 @@ public:
 	{
 		m_toCameraPos = pos;
 	}
-
+	/// <summary>
+	/// 注視点の座標設定
+	/// </summary>
+	/// <param name="t">設定する注視点位置座標</param>
 	void SetTarget(CVector3 t)
 	{
 		m_target = t;

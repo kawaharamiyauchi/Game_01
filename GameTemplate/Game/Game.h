@@ -15,7 +15,10 @@ public:
 	Game();
 	~Game();
 
-	
+	/// <summary>
+	/// シングルトンパターン実装関数
+	/// </summary>
+	/// <returns></returns>
 	static Game* instance()
 	{
 		
@@ -26,8 +29,8 @@ public:
 
 	void Update();
 	void Render();
-	Player*m_player = nullptr;
-	BackGround*m_background = nullptr;
+	Player*m_player = nullptr;				//プレイヤー
+	BackGround*m_background = nullptr;		
 	GameCamera *m_gamecamera = nullptr;
 	Dragon *m_dragon = nullptr;
 private:
