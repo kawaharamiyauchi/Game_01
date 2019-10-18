@@ -1,6 +1,7 @@
 #pragma once
 #include "IGameObject.h"
-#include"math/Matrix.h";
+#include"math/Matrix.h"
+
 class Dragon :public IGameObject
 {
 public:
@@ -39,12 +40,16 @@ private:
 
 	};
 	AnimationClip animationClip[enAnimationClip_num];
+	
 	Animation m_animation;
 	CVector3 m_position = CVector3::Zero();
 	CVector3 m_scale = CVector3::One();
+
+	CVector3 diff = CVector3::Zero();
 	CQuaternion m_rotation = CQuaternion::Identity();
 	Skeleton m_skeleton;
 	CMatrix m_bone[40] = {CMatrix::Identity() };
+	AnimationPlayController m_aniCon;
 	float a = 0.0f;
 	
 	const wchar_t * bonename[41];

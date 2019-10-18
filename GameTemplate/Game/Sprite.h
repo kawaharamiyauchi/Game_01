@@ -4,6 +4,8 @@
 
 class Sprite {
 public:
+
+	static const CVector2 NORMAL;
 	/// <summary>
 	/// コンストラクタ。
 	/// </summary>
@@ -30,6 +32,19 @@ public:
 	/// <param name="mView">カメラ行列</param>
 	/// /// <param name="mView">プロジェクション行列</param>
 	void Draw(CMatrix mView, CMatrix mProj);
+	/// <summary>
+	/// 2Dの基点を設定。
+	/// </summary>
+	/// <param name="piv"></param>
+	void SetPivot(CVector3 piv);
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+	/// <param name="trans">平行移動</param>
+	/// <param name="rot">回転</param>
+	/// <param name="sca">拡大</param>
+	/// <param name="pivot">基点</param>
+	void Update(const CVector3& trans, const CQuaternion& rot, const CVector3& sca, const CVector2& pivot);
 private:
 	/// <summary>
 	/// シェーダーをロード。
@@ -59,7 +74,12 @@ private:
 private:
 
 	Shader	m_vs;											//頂点シェーダー。
-	Shader	m_ps;											//ピクセルシェーダー。
+	Shader	m_ps;	//ピクセルシェーダー。
+	CVector3 m_position = CVector3::Zero();
+	CQuaternion m_rotation = CQuaternion::Identity();
+	CVector3 m_scale = CVector3::One();
+	CVector2 m_pivot;
+	CVector2 m_size =CVector2::Zero();
 	ID3D11Buffer*	m_vertexBuffer = nullptr;	//VRAM上の頂点バッファにアクセスするためのインターフェース。
 	ID3D11Buffer*	m_indexBuffer = nullptr;		//VRAM上のインデックスバッファにアクセスするためのインターフェース。
 	ID3D11Buffer*	m_cbGPU = nullptr;			//GPU側の定数バッファにアクセスするためのインターフェース。

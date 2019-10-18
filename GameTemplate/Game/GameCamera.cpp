@@ -27,7 +27,7 @@ void GameCamera::Update()
 	
 	m_target = a->m_player->GetPosition();
 	m_target.y += 110.0f;
-
+	//m_target.y += 200.0f;
 	CVector3 toCameraPosOld = m_toCameraPos;
 	//パッドの入力を使ってカメラを回す。
 	float x = g_pad[0].GetRStickXF() * 2;
@@ -59,6 +59,7 @@ void GameCamera::Update()
 	//g_camera3D.SetViewAngle(x);
 
 	m_position= m_target + m_toCameraPos;
+	//m_position.y += 200.0f;
 	g_camera3D.SetPosition(m_position);
 	g_camera3D.SetTarget(m_target);
 	

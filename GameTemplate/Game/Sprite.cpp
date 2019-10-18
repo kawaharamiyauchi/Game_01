@@ -41,6 +41,8 @@ Sprite::~Sprite()
 
 void Sprite::Init(const wchar_t* textureFilePath, float w, float h)
 {
+	m_size.x = w;
+	m_size.y = h;
 	//シェーダーをロード。
 	LoadShader();
 	//頂点バッファを作成。
@@ -53,6 +55,35 @@ void Sprite::Init(const wchar_t* textureFilePath, float w, float h)
 	CreateSamplerState();
 	//テクスチャをロード。
 	LoadTexture(textureFilePath);
+}
+
+void Sprite::Update(const CVector3 & trans, const CQuaternion & rot, const CVector3 & sca, const CVector2 & pivot)
+{
+	//基点を考慮して平行移動
+	CVector2 localPivot = pivot;
+	localPivot.x -= 0.5f;
+	localPivot.y -= 0.5f;
+	localPivot.x *= -2.0f;
+	localPivot.y *= -2.0f;
+
+	//画像のサイズの半分を計算する。
+	CVector2 halfSize = m_size;
+	halfSize.x *= 0.5f;
+	halfSize.y *= 0.5f;
+	CMatrix mPivotTrans;
+
+	mPivotTrans;
+	mPivotTrans.MakeTranslation({ halfSize.x * localPivot.x, halfSize.y * localPivot.y, 0.0f });
+	CMatrix mTrans, mRot, mScale;
+
+	mTrans.MakeTranslation(trans);
+	mRot.MakeRotationFromQuaternion(rot);
+	mScale.MakeScaling(sca);
+
+	m_world.Mul(mPivotTrans, mScale);
+	m_world.Mul(m_world, mRot);
+	m_world.Mul(m_world, mTrans);
+	
 }
 
 void Sprite::LoadShader()
@@ -79,6 +110,7 @@ void Sprite::CreateConstantBuffer()
 }
 void Sprite::CreateVertexBuffer(float w, float h)
 {
+
 	float halfW = w * 0.5f;
 	float halfH = h * 0.5f;
 
@@ -189,6 +221,7 @@ void Sprite::UpdateWorldMatrix(CVector3 pos, CQuaternion rot, CVector3 scale)
 }
 void Sprite::Draw(CMatrix mView, CMatrix mProj)
 {
+	
 	//デバイスコンテキストを引っ張ってくる。
 	auto deviceContext = g_graphicsEngine->GetD3DDeviceContext();
 
@@ -223,3 +256,5 @@ void Sprite::Draw(CMatrix mView, CMatrix mProj)
 	//ここまで設定した内容でドロー
 	deviceContext->DrawIndexed(4, 0, 0);
 }
+
+

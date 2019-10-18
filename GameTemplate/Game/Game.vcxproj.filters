@@ -130,6 +130,8 @@
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="dbgDraw.cpp" />
     <ClCompile Include="Dragon.cpp" />
+    <ClCompile Include="UI.cpp" />
+    <ClCompile Include="SpriteRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -228,6 +230,8 @@
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="dbgDraw.h" />
     <ClInclude Include="Dragon.h" />
+    <ClInclude Include="UI.h" />
+    <ClInclude Include="SpriteRender.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">

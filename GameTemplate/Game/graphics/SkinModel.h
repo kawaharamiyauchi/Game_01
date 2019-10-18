@@ -69,6 +69,14 @@ public:
 	{
 		lightFlag = flag;
 	}
+	/// <summary>
+	/// 謎関数
+	/// </summary>
+	/// <param name="flag"></param>
+	void SetColorFlag(bool flag)
+	{
+		colorFlag = flag;
+	}
 	/*!
 	*@brief	モデルを描画。
 	*@param[in]	viewMatrix		カメラ行列。
@@ -166,6 +174,7 @@ private:
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
 	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。>
+	ID3D11Buffer*		m_nullCb = nullptr;				//null定数バッファ。>
 	Skeleton			m_skeleton;						//!<スケルトン。
 	CMatrix				m_worldMatrix;					//!<ワールド行列。
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
@@ -174,5 +183,6 @@ private:
 	
 	bool IsActiveflag = true;							//!<アクティブフラグ
 	bool lightFlag = true;
+	bool colorFlag = false;
 };
 

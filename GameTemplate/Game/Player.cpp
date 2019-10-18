@@ -8,8 +8,8 @@ Player::Player()
 {
 	
 	m_charaCon.Init(
-		10.0f,		//半径
-		10.0f,		//高さ
+		50.0f,		//半径
+		80.0f,		//高さ
 		m_position	//初期座標
 	);	//cmoファイルの読み込み。
 	

@@ -1,16 +1,20 @@
 #include "stdafx.h"
 #include "Title.h"
 #include"Game.h"
+#include "SpriteRender.h"
 
 Title::Title()
 {
-	m_sprite.Init(L"Assets/sprite/ago_free_03.dds", 1280, 720);
+	//m_sprite.Init(L"Assets/sprite/ago_free_03.dds", 1280.0f, 720.0f);
+	m_spriteRender = g_goMgr.NewGO<SpriteRender>();
+	m_spriteRender->Init(L"Assets/sprite/ago_free_03.dds", 1280.0f, 720.0f);
 }
 
 
 Title::~Title()
 {
-	m_sprite.~Sprite();
+	m_spriteRender->~SpriteRender();
+	//m_sprite.~Sprite();
 	
 }
 
@@ -18,8 +22,12 @@ void Title::Update()
 {
 	CQuaternion rot;
 	rot.SetRotationDeg(CVector3::AxisY(), 180.0f);
-	m_sprite.UpdateWorldMatrix(CVector3::Zero(), rot, CVector3::One());
-
+	m_scale.x -= 0.001f;
+	//m_scale.y += 0.001f;
+	m_spriteRender->SetPivot({ 0.0f,0.5f });
+	m_spriteRender->SetScale(m_scale);
+	
+	
 	if (g_pad[0].IsPress(enButtonStart))
 	{
 		auto m_game = Game::instance();
@@ -29,15 +37,5 @@ void Title::Update()
 }
 void Title::Render()
 {
-	CMatrix mView;
-	CMatrix mViewInv;
-	CMatrix mProj;
-	mView.MakeLookAt(
-		{ 0, 0, 1 },
-		{ 0, 0, 0 },
-		{ 0,1,0 }
-	);
-	//mViewInv.Inverse(mView);
-	mProj.MakeOrthoProjectionMatrix(1280, 720, 0.1, 100);
-	//m_sprite.Draw(mView, mProj);
+	
 }
