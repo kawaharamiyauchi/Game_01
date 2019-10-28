@@ -49,6 +49,7 @@ public:
 		{
 			if ((*it) == go) {
 
+				(*it)->RequestDelete();
 				//見つかった。
 				//リストから削除する。
 				m_goList.erase(it);

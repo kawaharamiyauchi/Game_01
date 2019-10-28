@@ -2,6 +2,11 @@
 #include "SpriteRender.h"
 
 
+
+SpriteRender::~SpriteRender()
+{
+	m_sprite.~Sprite();
+}
 void SpriteRender::Init(const wchar_t*FileName, float w, float h)
 {
 	m_sprite.Init(FileName, w, h);

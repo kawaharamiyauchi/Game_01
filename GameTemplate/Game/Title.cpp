@@ -20,6 +20,7 @@ Title::~Title()
 
 void Title::Update()
 {
+	
 	CQuaternion rot;
 	rot.SetRotationDeg(CVector3::AxisY(), 180.0f);
 	m_scale.x -= 0.001f;
@@ -32,6 +33,7 @@ void Title::Update()
 	{
 		auto m_game = Game::instance();
 		g_goMgr.DeleteGO(this);
+		
 	}
 
 }

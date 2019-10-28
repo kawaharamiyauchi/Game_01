@@ -38,10 +38,10 @@ void Dragon::Update()
 {
 
 	a += 0.1f;
-	m_animation.Update(0.03f);
+	m_animation.Update(0.003f);
 	/*m_bone[1].MakeRotationY(a);
 	m_skeleton.GetBone(1)->SetWorldMatrix(m_bone[1]);*/
-	auto m_search = m_aniCon.GetAnimClip();
+	//auto m_search = m_aniCon.GetKeyFrame();
 	if (g_pad[0].IsTrigger(enButtonA))
 	{
 		if (m_model.GetActiveFlag() == false) {
@@ -49,6 +49,7 @@ void Dragon::Update()
 		}
 		else m_model.SetActiveFlag(false);
 	}
+
 	auto m_game = Game::instance();
 	diff.Set(m_game->m_player->GetPosition() - m_position);
 	

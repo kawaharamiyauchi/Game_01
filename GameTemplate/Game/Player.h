@@ -59,7 +59,21 @@ public:
 	/// ƒvƒŒƒCƒ„[‚Ì‰ñ“]ˆ—
 	/// </summary>
 	void Turn();
+
+	
 private:
+	
+	struct plinfo{
+		float HP = 100.0f;
+		float Stamina = 100.0f;
+		enum PlayerState {
+			idle,
+			run,
+			dye,
+			attack
+		};
+
+	};
 	float move_x = 0.0f;
 	float move_z = 0.0f;
 	
@@ -70,6 +84,6 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();	//‰ñ“]
 	CVector3 m_scale =CVector3::One();					//Šg‘å—¦
 	CharacterController m_charaCon;
-
+	
 };
 

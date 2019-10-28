@@ -8,10 +8,8 @@ public:
 	SpriteRender()
 	{
 	}
-	~SpriteRender()
-	{
-		//m_sprite.~Sprite();
-	}
+	~SpriteRender();
+	
 	void Init(const wchar_t*FileName, float w, float h);
 	void SetPosition(CVector3& pos)
 	{

@@ -7,7 +7,18 @@ class Dragon :public IGameObject
 public:
 	Dragon();
 	~Dragon();
-
+	
+	/// <summary>
+	/// ƒhƒ‰ƒSƒ“‚Ìó‘Ô‘JˆÚ
+	/// </summary>
+	enum DragonState
+	{
+		normal,			///’Êí
+		walk,			///œpœj
+		run,			///’ÇÕ
+		die,			///€–S
+		escape,			///“¦‘–
+	};
 	/// <summary>
 	/// ƒhƒ‰ƒSƒ“‚ÌˆÊ’u‚ğæ“¾
 	/// </summary>
@@ -15,6 +26,24 @@ public:
 	CVector3 GetPosition()
 	{
 		return m_position;
+	}
+
+	/// <summary>
+	/// ƒhƒ‰ƒSƒ“‚Ìó‘Ô‚ğİ’è
+	/// </summary>
+	/// <param name="state">Œ»İ‚Ìó‘Ô</param>
+	void SetDragonState(DragonState state)
+	{
+
+		d_state = state;
+	}
+	/// <summary>
+	/// Œ»İ‚Ìƒhƒ‰ƒSƒ“‚Ìó‘Ô‚ğæ“¾
+	/// </summary>
+	/// <returns>Œ»İ‚Ìó‘Ô</returns>
+	DragonState GetDragonState()
+	{
+		return d_state;
 	}
 	/// <summary>
 	/// ƒhƒ‰ƒSƒ“‚ÌˆÊ’u‚ğİ’è
@@ -39,6 +68,9 @@ private:
 		enAnimationClip_num,
 
 	};
+	
+
+	DragonState d_state;
 	AnimationClip animationClip[enAnimationClip_num];
 	
 	Animation m_animation;

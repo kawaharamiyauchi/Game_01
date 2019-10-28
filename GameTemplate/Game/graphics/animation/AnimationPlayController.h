@@ -83,6 +83,14 @@ public:
 	{
 		return m_isPlaying;
 	}
+	/// <summary>
+	/// 現在再生中のキーフレームを取得
+	/// </summary>
+	/// <returns></returns>
+	int GetKeyFrame()
+	{
+		return m_currentKeyFrameNo;
+	}
 private:
 	
 	/*!

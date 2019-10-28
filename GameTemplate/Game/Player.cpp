@@ -26,7 +26,8 @@ Player::~Player()
 
 void Player::Move()
 {
-	
+	/*plinfo i;
+	int a = i.attack;*/
 
 	float IStick_x = g_pad[0].GetLStickXF();
 	float IStick_y = g_pad[0].GetLStickYF();
