@@ -17,6 +17,7 @@ public:
 		walk,			///œpœj
 		run,			///’ÇÕ
 		die,			///€–S
+		attack,			///UŒ‚
 		escape,			///“¦‘–
 	};
 	/// <summary>
@@ -53,6 +54,8 @@ public:
 	{
 		m_position = pos;
 	}
+
+	void AnimationPlay();
 	/// <summary>
 	/// ƒhƒ‰ƒSƒ“‚ÌXVˆ—
 	/// </summary>
@@ -65,6 +68,8 @@ public:
 private:
 	enum {
 		enAnimationClip_idle,
+		enAnimationClip_walk,
+		enAnimationClip_attack,
 		enAnimationClip_num,
 
 	};
@@ -82,8 +87,8 @@ private:
 	Skeleton m_skeleton;
 	CMatrix m_bone[40] = {CMatrix::Identity() };
 	AnimationPlayController m_aniCon;
-	float a = 0.0f;
-	
+	float a = 0.0;
+	int m_timer = 0;
 	const wchar_t * bonename[41];
 	SkinModel m_model;		//ƒXƒLƒ“ƒ‚ƒfƒ‹
 };

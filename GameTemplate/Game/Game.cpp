@@ -11,11 +11,11 @@ Game::Game()
 {
 	
 	
-		/*m_player = g_goMgr.NewGO<Player>();
+		m_player = g_goMgr.NewGO<Player>();
 		m_dragon = g_goMgr.NewGO<Dragon>();	
 		m_background = g_goMgr.NewGO<BackGround>();
 		m_gamecamera = g_goMgr.NewGO<GameCamera>();
-		m_UI = g_goMgr.NewGO<UI>();*/
+		m_UI = g_goMgr.NewGO<UI>();
 	
 }
 

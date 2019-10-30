@@ -8,6 +8,22 @@ public:
 	Player();
 	~Player();
 
+	struct plinfo {
+		float HP = 100.0f;
+		float Stamina = 100.0f;
+		enum PlayerState {
+			idle,
+			run,
+			dye,
+			attack
+		};
+
+	};
+	plinfo GetPlayerInformation()
+	{
+		return m_plinfo;
+	}
+
 	/// <summary>
 	/// プレイヤーの位置を取得
 	/// </summary>
@@ -63,17 +79,7 @@ public:
 	
 private:
 	
-	struct plinfo{
-		float HP = 100.0f;
-		float Stamina = 100.0f;
-		enum PlayerState {
-			idle,
-			run,
-			dye,
-			attack
-		};
-
-	};
+	
 	float move_x = 0.0f;
 	float move_z = 0.0f;
 	
@@ -84,6 +90,7 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転
 	CVector3 m_scale =CVector3::One();					//拡大率
 	CharacterController m_charaCon;
-	
+	plinfo m_plinfo;
+	bool isPlus = false;
 };
 

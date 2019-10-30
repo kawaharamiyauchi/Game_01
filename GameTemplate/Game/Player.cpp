@@ -85,6 +85,18 @@ void Player::Update()
 	Turn();
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position,m_rotation,m_scale);
+	if (m_plinfo.HP < 0.01f)
+	{
+		isPlus = true;
+	}
+	else if (m_plinfo.HP > 99.9f)
+	{
+		isPlus = false;
+	}
+	if (isPlus == false) {
+		m_plinfo.HP -= 1.0f;
+	}
+	else m_plinfo.HP += 1.0f;
 }
 void Player::Render()
 {

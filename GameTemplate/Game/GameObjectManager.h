@@ -49,14 +49,14 @@ public:
 		{
 			if ((*it) == go) {
 
-				(*it)->RequestDelete();
+				go->RequestDelete();
 				//見つかった。
 				//リストから削除する。
-				m_goList.erase(it);
+				//m_goList.erase(it);
 				//インスタンス自体も削除。
-				delete go;
-				//削除できたので終わり。
-				return;
+				//delete go;
+				////削除できたので終わり。
+				//return;
 			}
 		}
 	}

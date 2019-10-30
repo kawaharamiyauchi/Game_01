@@ -34,10 +34,15 @@ public:
 	void Update() override final;
 	
 	void Render();
+
+	void SetIsActive(bool flag)
+	{
+		IsActive = flag;
+	}
 	Sprite m_sprite;
 private:
 	
-
+	bool IsActive = true;
 	CVector3 m_position = CVector3::Zero();
 	CQuaternion m_rotation = CQuaternion::Identity();
 	CVector3 m_scale = CVector3::CVector3::One();

@@ -25,7 +25,7 @@ void GameObjectManager::Update()
 		if ((*it)->IsRequestDelete() ==true)
 		{
 			//íœ
-			delete (*it);
+			delete* it;
 			it = m_goList.erase(it);
 		}
 		//‚»‚êˆÈŠO‚È‚ç
