@@ -46,7 +46,12 @@ public:
 		int lastIndex = GetLastAnimationControllerIndex();
 		return m_animationPlayController[lastIndex].IsPlaying();
 	}
-	
+
+	int Getm_currentKeyFrameNo()
+	{
+		return m_animationPlayController[32].GetKeyFrame();
+	}
+
 	/*!
 	* @brief	アニメーションを進める。
 	*@details
@@ -104,6 +109,8 @@ private:
 	{
 		return (startIndex + localIndex) % ANIMATION_PLAY_CONTROLLER_NUM;
 	}
+
+	
 private:
 	static const int ANIMATION_PLAY_CONTROLLER_NUM = 32;			//!<アニメーションコントローラの数。
 	std::vector<AnimationClip*>	m_animationClips;					//!<アニメーションクリップの配列。

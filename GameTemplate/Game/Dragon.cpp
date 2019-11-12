@@ -14,10 +14,14 @@ Dragon::Dragon()
 	animationClip[enAnimationClip_walk].SetLoopFlag(true);
 	animationClip[enAnimationClip_attack].Load(L"Assets/animData/DragonBoar_attack.tka");
 	animationClip[enAnimationClip_attack].SetLoopFlag(false);
+	animationClip[enAnimationClip_run].Load(L"Assets/animData/DragonBoar_run.tka");
+	animationClip[enAnimationClip_run].SetLoopFlag(true);
+	animationClip[enAnimationClip_scream].Load(L"Assets/animData/DragonBoar_scream.tka");
+	animationClip[enAnimationClip_scream].SetLoopFlag(false);
 	m_animation.Init(m_model, animationClip, enAnimationClip_num);
 	m_model.SetActiveFlag(false);
-	//m_skeleton.Load(L"Assets/modelData/DragonBoar.tks");
-	
+	m_skeleton.Load(L"Assets/modelData/DragonBoar.tks");
+	//m_aniCon->Init(&m_skeleton);
 	/*for (int i = 0; i < 40; i++)
 	{
 			bonename[i] = m_skeleton.GetBone(i)->GetName();	
@@ -41,17 +45,69 @@ void Dragon::AnimationPlay()
 	{
 	case normal:
 		m_animation.Play(enAnimationClip_idle, 1.0f);
+		m_animation.Update(0.03f);
 		break;
 	case walk:
 		m_animation.Play(enAnimationClip_walk, 1.0f);
+		m_animation.Update(0.03f);
+		break;
+	case run:
+		m_animation.Play(enAnimationClip_run, 1.0f);
+		m_animation.Update(0.06f);
 		break;
 	case attack:
 		m_animation.Play(enAnimationClip_attack,1.0f);
+		m_animation.Update(0.03f);
 		break;
 	default:
 		return;
 	}
-	m_animation.Update(0.03f);
+	
+}
+
+void Dragon::Move()
+{
+	auto m_game = Game::instance();
+	diff.Set(m_game->m_player->GetPosition() - m_position);
+	auto move = diff;
+	move.Normalize();
+	switch(d_state)
+
+	{
+	case normal:
+		break;
+	case walk:
+		if (m_model.GetActiveFlag() == true)
+		{
+			if (diff.Length() > 10.0f)
+			{
+				m_position += move * 10.0f;
+			}
+			
+
+			float angle = atan2(move.x, move.z);
+			m_rotation.SetRotation(CVector3::AxisY(), angle);
+
+		}
+
+		break;
+	case run:
+		if (m_model.GetActiveFlag() == true)
+		{
+			if (diff.Length() > 20.0f)
+			{
+				m_position += move * 20.0f;
+			}
+			
+
+			float angle = atan2(move.x, move.z);
+			m_rotation.SetRotation(CVector3::AxisY(), angle);
+
+		}
+		break;
+	case attack:
+		break;
+	}
 }
 
 void Dragon::Update()
@@ -65,12 +121,17 @@ void Dragon::Update()
 		}
 		else if (GetDragonState() == walk)
 		{
+			SetDragonState(run);
+		}
+		else if (GetDragonState() == run)
+		{
 			SetDragonState(attack);
 		}
 		else if (m_animation.IsPlaying() == false)
 		{
 			SetDragonState(normal);
 		}
+
 	}
 	a += 0.1f;
 	
@@ -84,27 +145,7 @@ void Dragon::Update()
 		}
 		else m_model.SetActiveFlag(false);
 	}
-
-	auto m_game = Game::instance();
-	if (m_timer > 30.0f) {
-		diff.Set(m_game->m_player->GetPosition() - m_position);
-		m_timer = 0;
-	}
-
-	auto move = diff;
-	move.Normalize();
-	if (m_model.GetActiveFlag() == true)
-	{
-		if (diff.Length() > 20.0f)
-		{
-			m_position += move * 20.0f;
-		}
-		m_aniCon.GetAnimClip();
-
-		float angle = atan2(move.x, move.z);
-		m_rotation.SetRotation(CVector3::AxisY(), angle);
-		
-	}
+	Move();
 	AnimationPlay();
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 }

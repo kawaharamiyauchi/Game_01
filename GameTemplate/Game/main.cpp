@@ -15,7 +15,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 {
 	//ƒQ[ƒ€‚Ì‰Šú‰»B
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
-	
+
 	
 	Title*m_title = g_goMgr.NewGO<Title>();
 	

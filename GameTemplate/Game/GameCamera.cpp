@@ -6,7 +6,7 @@
 
 GameCamera::GameCamera()
 {
-	m_toCameraPos.Set(0.0f, 100.0f, -400.0f);
+	m_toCameraPos.Set(0.0f, 70.0f, -250.0f);
 	//m_position = {m_player->GetPosition().x,m_player->GetPosition().y + 10.0f, m_player->GetPosition().z-50.0f };
 	//m_position = { 0.0f,10.0f,-100.0f };
 	//g_camera3D.SetViewAngle(60.0f);

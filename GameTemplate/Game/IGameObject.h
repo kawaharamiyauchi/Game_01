@@ -2,6 +2,7 @@
 class IGameObject
 {
 public:
+	virtual ~IGameObject() {}
 	/// <summary>
 	///	XVŠÖ”
 	/// </summary>

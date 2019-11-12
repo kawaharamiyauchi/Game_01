@@ -4,6 +4,11 @@
 //GameObjectManagerクラスのインスタンス作成
 GameObjectManager g_goMgr;
 
+GameObjectManager::GameObjectManager()
+{
+	m_deleteObject.reserve(32);
+}
+
 void GameObjectManager::Update()
 {
 	//登録済みのゲームオブジェクトの
@@ -18,14 +23,18 @@ void GameObjectManager::Update()
 		go->Render();
 	}
 
+	
+	
+
 	//全てのゲームオブジェクトの1フレーム分の処理が終わってから、削除する。
-	for (auto it = m_goList.begin();it !=m_goList.end();)
+	for (auto& it = m_goList.begin();it !=m_goList.end();)
 	{
 		//もし削除リクエストを受けていたなら
 		if ((*it)->IsRequestDelete() ==true)
 		{
+			//m_deleteObject.push_back((*it));
 			//削除
-			delete* it;
+			delete(*it);
 			it = m_goList.erase(it);
 		}
 		//それ以外なら
@@ -35,7 +44,10 @@ void GameObjectManager::Update()
 		}
 	}
 
-
-
+	for (auto& go : m_deleteObject)
+	{
+		delete (go);
+	}
+	m_deleteObject.clear();
 
 }

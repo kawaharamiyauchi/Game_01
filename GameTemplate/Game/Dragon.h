@@ -56,6 +56,8 @@ public:
 	}
 
 	void AnimationPlay();
+
+	void Move();
 	/// <summary>
 	/// ÉhÉâÉSÉìÇÃçXêVèàóù
 	/// </summary>
@@ -66,15 +68,17 @@ public:
 	void Render();
 
 private:
-	enum {
+	enum Dragon_anim{
 		enAnimationClip_idle,
 		enAnimationClip_walk,
 		enAnimationClip_attack,
+		enAnimationClip_run,
+		enAnimationClip_scream,
 		enAnimationClip_num,
 
 	};
 	
-
+	Dragon_anim d_anim;
 	DragonState d_state;
 	AnimationClip animationClip[enAnimationClip_num];
 	
@@ -86,7 +90,7 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();
 	Skeleton m_skeleton;
 	CMatrix m_bone[40] = {CMatrix::Identity() };
-	AnimationPlayController m_aniCon;
+	//AnimationPlayController m_aniCon;
 	float a = 0.0;
 	int m_timer = 0;
 	const wchar_t * bonename[41];

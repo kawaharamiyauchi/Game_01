@@ -5,7 +5,7 @@ using namespace std;
 class GameObjectManager
 {
 public:
-	
+	GameObjectManager();
 	
 	/// <summary>
 	/// 更新処理
@@ -67,6 +67,8 @@ public:
 private:
 	//ゲームオブジェクトのリスト
 	std::vector<IGameObject*> m_goList;
+
+	std::vector<IGameObject*> m_deleteObject;
 
 };
 

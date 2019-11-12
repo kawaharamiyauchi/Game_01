@@ -31,6 +31,7 @@ void UI::Update()
 {
 	auto m_game = Game::instance();
 	float hp = m_game->m_player->GetPlayerInformation().HP;
+	float stamina = m_game->m_player->GetPlayerInformation().Stamina;
 	if (hp < 30.0f)
 	{
 		m_spriteRender[0]->SetIsActive(false);
@@ -42,6 +43,7 @@ void UI::Update()
 	}
 
 	m_spriteSca[0].x = hp;
+	m_spriteSca[1].x = stamina;
 	m_spriteSca[2].x = hp;
 	for (int i = 0; i < 3; i++)
 	{

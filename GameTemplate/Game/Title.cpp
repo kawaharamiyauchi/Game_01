@@ -14,8 +14,7 @@ Title::Title()
 
 Title::~Title()
 {
-	
-	
+	g_goMgr.DeleteGO(m_spriteRender);
 }
 
 void Title::Update()
@@ -34,7 +33,7 @@ void Title::Update()
 	{
 		//m_spriteRender->SetIsActive(false);
 		auto m_game = Game::instance();
-		g_goMgr.DeleteGO(m_spriteRender);
+		
 		g_goMgr.DeleteGO(this);
 		
 		

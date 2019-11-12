@@ -40,6 +40,12 @@
     <Filter Include="Assets\sprite">
       <UniqueIdentifier>{5a18d4c8-8d18-4c2c-b486-589c36bb1ca1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="enemy">
+      <UniqueIdentifier>{2f8a171b-3edc-4862-9f3f-f45f3260bae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{fd6d04e7-518b-4823-8eb4-1626edcfae5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -114,10 +120,8 @@
     <ClCompile Include="level\MapChip.cpp">
       <Filter>level</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IGameObject.cpp">
@@ -129,9 +133,19 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="dbgDraw.cpp" />
-    <ClCompile Include="Dragon.cpp" />
     <ClCompile Include="UI.cpp" />
-    <ClCompile Include="SpriteRender.cpp" />
+    <ClCompile Include="Dragon.cpp">
+      <Filter>enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRender.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -215,9 +229,7 @@
     <ClInclude Include="level\MapChip.h">
       <Filter>level</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Sprite.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="IGameObject.h">
@@ -229,9 +241,19 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="dbgDraw.h" />
-    <ClInclude Include="Dragon.h" />
     <ClInclude Include="UI.h" />
-    <ClInclude Include="SpriteRender.h" />
+    <ClInclude Include="Dragon.h">
+      <Filter>enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRender.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
@@ -247,6 +269,9 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\DragonBoar.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\hunter.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
