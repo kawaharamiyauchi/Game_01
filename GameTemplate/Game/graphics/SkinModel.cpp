@@ -4,41 +4,7 @@
 #include "graphics/Shader.h"
 #include "graphics/Camera.h"
 #include "system/system.h"
-/*!
-*@brief	モデルエフェクト。
-*@details
-* DirectX::Modelの描画処理で使用されるシェーダーを差し替えるためのクラス
-*/
-class C3DModelEffect : public DirectX::IEffect {
-private:
-	Shader m_vsShader;
-	Shader m_psShader;
-public:
-	//コンストラクタ。
-	C3DModelEffect()
-	{
-		//頂点シェーダーをロード。
-		
-		m_vsShader.Load("Assets/shader/model.fx", "VSMain", Shader::EnType::VS);
-		m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
-	}
-	//この関数はDirectX::Model::Draw内部のドローコールの直前に呼ばれる。
-	//なので、この関数のなかで、シェーダーの設定や、テクスチャの設定などを行うとよい。
-	void __cdecl Apply(ID3D11DeviceContext* deviceContext) override
-	{
-		//シェーダーを適用する。
-		deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShader.GetBody(), NULL, 0);
-		deviceContext->PSSetShader((ID3D11PixelShader*)m_psShader.GetBody(), NULL, 0);
-	}
-	//この関数はDirectX::Modelの初期化処理から呼ばれる。
-	//頂点シェーダーのバイトコードとコードの長さを設定する必要がある。
-	void __cdecl GetVertexShaderBytecode(void const** pShaderByteCode, size_t* pByteCodeLength) override
-	{
-		*pShaderByteCode = m_vsShader.GetByteCode();
-		*pByteCodeLength = m_vsShader.GetByteCodeSize();
-	}
-};
-
+#include "Game.h"
 
 
 SkinModel::~SkinModel()
@@ -156,9 +122,26 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 }
-void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
+void SkinModel::Draw(/*EnRenderMode renderMode, */CMatrix viewMatrix, CMatrix projMatrix)
 {
-	
+
+	auto shadowMap = Game::instance()->GetShadowMap();
+
+
+	SModelFxConstantBuffer modelFxCb;
+	modelFxCb.mWorld = m_worldMatrix;
+	modelFxCb.mProj = projMatrix;
+	modelFxCb.mView = viewMatrix;
+	//todo ライトカメラのビュー、プロジェクション行列を送る。
+	modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
+	modelFxCb.mLightView = shadowMap->GetLighViewMatrix();
+	/*if (m_isShadowReciever == true) {
+		modelFxCb.isShadowReciever = 1;
+	}
+	else {
+		modelFxCb.isShadowReciever = 0;
+	}*/
+
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
 	ID3D11DeviceContext* d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();

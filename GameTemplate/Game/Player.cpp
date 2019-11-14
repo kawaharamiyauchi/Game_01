@@ -9,10 +9,11 @@ Player::Player()
 	
 	m_charaCon.Init(
 
-		50.0f,		//半径
-		80.0f,		//高さ
+		20.0f,		//半径
+		40.0f,		//高さ
 		m_position	//初期座標
-	);	//cmoファイルの読み込み。
+	);	
+	//cmoファイルの読み込み。
 	m_skleton.Load(L"Assets/modelData/hunter.tks");
 	m_model.Init(L"Assets/modelData/hunter.cmo");
 
@@ -61,7 +62,10 @@ void Player::Move()
 	{
 		m_speed.x *= 1.8f;
 		m_speed.z *= 1.8f;
-		m_plinfo.Stamina -= 1.0f;
+		if (m_plinfo.Stamina > 0.1f)
+		{
+			m_plinfo.Stamina -= 1.0f;
+		}
 
 	}
 	else if (p_state != run && m_plinfo.Stamina < 100.0f)
@@ -122,10 +126,15 @@ void Player::StateChange()
 }
 void Player::AnimationPlay()
 {
+	/*if (p_state == idle)
+	{
+		m_animation.Play(enAnimationClip_run);
+		m_animation.Update(0.4f);
+	}*/
 	if (p_state == run)
 	{
 		m_animation.Play(enAnimationClip_run);
-		m_animation.Update(0.6f);
+		m_animation.Update(0.8f);
 	}
 	if (p_state == damage)
 	{
@@ -158,6 +167,7 @@ void Player::Update()
 }
 void Player::Render()
 {
+	//MessageBox(NULL, "aa", "aaa",MB_OK);
 	m_model.Draw(
 		g_camera3D.GetViewMatrix(), 
 		g_camera3D.GetProjectionMatrix()

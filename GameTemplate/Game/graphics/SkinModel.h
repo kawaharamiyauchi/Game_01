@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Skeleton.h"
+#include "C3DModelEffect.h"
+
+
 
 /*!
 *@brief	FBXの上方向。
@@ -14,6 +17,32 @@ enum EnFbxUpAxis {
 */
 class SkinModel
 {
+public:
+	/// <summary>
+/// レンダリングモード。
+/// </summary>
+	enum EnRenderMode {
+		enRenderMode_Invalid,			//不正なレンダリングモード。
+		enRenderMode_CreateShadowMap,	//シャドウマップ生成。
+		enRenderMode_Normal,			//通常レンダリング。
+		enRenderMode_Num,				//レンダリングモードの数。
+	};
+	/// <summary>
+	/// モデルエフェクト用の構造体。
+	/// </summary>
+	/// <remarks>
+	/// これを変更したら、Asserts/shader/model.fxの
+	/// VSCbも変更する必要があります。
+	/// この構造体は16byteアライメントになっている必要があります。
+	/// </remarks>
+	struct SModelFxConstantBuffer {
+		CMatrix mWorld;			//ワールド行列。
+		CMatrix mView;			//ビュー行列。
+		CMatrix mProj;			//プロジェクション行列。
+		CMatrix mLightView;		//todo ライトビュー行列。
+		CMatrix mLightProj;		//todo ライトプロジェクション行列。
+		int isShadowReciever;	//todo シャドウレシーバーのフラグ。
+	};
 public:
 	//メッシュが見つかったときのコールバック関数。
 	using OnFindMesh = std::function<void(const std::unique_ptr<DirectX::ModelMeshPart>&)>;
@@ -84,7 +113,7 @@ public:
 	*@param[in]	projMatrix		プロジェクション行列。
 	*  カメラ座標系の3Dモデルをスクリーン座標系に変換する行列です。
 	*/
-	void Draw( CMatrix viewMatrix, CMatrix projMatrix );
+	void Draw(/*EnRenderMode renderMode, */CMatrix viewMatrix, CMatrix projMatrix );
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -111,6 +140,33 @@ public:
 		enSkinModelSRVReg_DiffuseTexture = 0,		//!<ディフューズテクスチャ。
 		enSkinModelSRVReg_BoneMatrix,				//!<ボーン行列。
 	};
+
+	/// <summary>
+	/// シャドウレシーバーのフラグを設定する。
+	/// </summary>
+	/// <param name="flag">trueを渡すとシャドウレシーバーになる</param>
+	/// <remarks>
+	/// シャドウレシーバーとは影を落とされるオブジェクトのことです。
+	/// シャドウキャスターによって生成された、シャドウマップを利用して
+	/// 自身に影を落とします。
+	/// オブジェクトがシャドウレシーバーかつシャドウキャスターになっている場合は
+	/// セルフシャドウ(自分の影が自分に落ちる)を行うことができます。
+	/// </remarks>
+	void SetShadowReciever(bool flag)
+	{
+		m_isShadowReciever = flag;
+	}
+
+	/// <summary>
+	/// マテリアルに対してクエリを行う。
+	/// </summary>
+	/// <param name="func">問い合わせ関数</param>
+	void QueryMaterials(std::function<void(C3DModelEffect*)> func)
+	{
+		m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
+			func(reinterpret_cast<C3DModelEffect*>(material));
+			});
+	}
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -181,6 +237,7 @@ private:
 	Light				m_light;
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	
+	bool m_isShadowReciever;
 	bool IsActiveflag = true;							//!<アクティブフラグ
 	bool lightFlag = true;
 	bool colorFlag = false;

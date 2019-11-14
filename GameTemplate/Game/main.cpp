@@ -18,7 +18,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	
 	Title*m_title = g_goMgr.NewGO<Title>();
-	
+	//Game::instance();
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{

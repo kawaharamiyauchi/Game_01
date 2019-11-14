@@ -35,7 +35,7 @@ public:
 	/// プレイヤーの位置を取得
 	/// </summary>
 	/// <returns>m_position プレイヤーの位置</returns>
-	CVector3 GetPosition()
+	CVector3 GetPosition() const
 	{
 		return m_position;
 	}
@@ -87,7 +87,10 @@ public:
 
 	void StateChange();
 	
-	
+	SkinModel* GetskinModel()
+	{
+		return &m_model;
+	}
 private:
 	enum Player_anim {
 		enAnimationClip_idle,

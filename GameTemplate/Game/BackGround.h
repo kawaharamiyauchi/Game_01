@@ -28,7 +28,10 @@ public:
 		m_scale = sca;
 	}*/
 
-
+	SkinModel* GetskinModel()
+	{
+		return &m_skinModel[0];
+	}
 
 	void Update();
 
