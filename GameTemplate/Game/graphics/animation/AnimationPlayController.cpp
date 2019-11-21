@@ -25,6 +25,20 @@ void AnimationPlayController::StartLoop()
 	m_currentKeyFrameNo = 0;
 	m_time = 0.0f;
 }
+void AnimationPlayController::InvokeAnimationEvent(Animation * animation)
+{
+	auto& animEventArray = m_animationClip->GetAnimationEvent();
+	for (auto i = 0; i < m_animationClip->GetNumAnimationEvent(); i++) {
+		if (m_time > animEventArray[i].GetInvokeTime()
+			&& animEventArray[i].GetisInvoked() == false) {
+			//アニメーションの起動時間を過ぎている且つ、まだイベント起動していない。
+			animation->NotifyAnimationEventToListener(
+				m_animationClip->GetName(), animEventArray[i].GetEventName()
+			);
+			animEventArray[i].SetInvokedFlag(true);
+		}
+	}
+}
 void AnimationPlayController::Update(float deltaTime, Animation* animation)
 {
 	if(m_animationClip == nullptr){
@@ -34,6 +48,7 @@ void AnimationPlayController::Update(float deltaTime, Animation* animation)
 	const auto& topBoneKeyFrameList = m_animationClip->GetTopBoneKeyFrameList();
 	m_time += deltaTime;
 
+	InvokeAnimationEvent(animation);
 	//補完時間も進めていく。
 	m_interpolateTime = min(1.0f, m_interpolateTime + deltaTime);
 	while (true) {

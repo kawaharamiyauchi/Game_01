@@ -1,7 +1,8 @@
 #pragma once
 #include "IGameObject.h"
 #include"math/Matrix.h"
-
+#include "GhostObject.h"
+#include"character/CharacterController.h"
 class Dragon :public IGameObject
 {
 public:
@@ -24,7 +25,7 @@ public:
 	/// ドラゴンの位置を取得
 	/// </summary>
 	///<returns>m_position ドラゴンの位置</returns>
-	CVector3 GetPosition()
+	CVector3 GetPosition()const
 	{
 		return m_position;
 	}
@@ -42,7 +43,7 @@ public:
 	/// 現在のドラゴンの状態を取得
 	/// </summary>
 	/// <returns>現在の状態</returns>
-	DragonState GetDragonState()
+	DragonState GetDragonState()const
 	{
 		return d_state;
 	}
@@ -57,6 +58,8 @@ public:
 
 	void AnimationPlay();
 
+	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
+	
 	void Move();
 	/// <summary>
 	/// ドラゴンの更新処理
@@ -83,8 +86,11 @@ private:
 	AnimationClip animationClip[enAnimationClip_num];
 	
 	Animation m_animation;
+	CAnimationEvent m_canimation;
+	AnimationEventListener m_listener;
 	CVector3 m_position = CVector3::Zero();
 	CVector3 m_scale = CVector3::One();
+	CVector3 m_collisionScale = { 3000.0f,1000.0f,3000.0f };
 
 	CVector3 diff = CVector3::Zero();
 	CQuaternion m_rotation = CQuaternion::Identity();
@@ -95,5 +101,7 @@ private:
 	int m_timer = 0;
 	const wchar_t * bonename[41];
 	SkinModel m_model;		//スキンモデル
+	
+	GhostObject m_ghost;
 };
 

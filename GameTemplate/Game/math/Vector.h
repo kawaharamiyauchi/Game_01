@@ -69,6 +69,13 @@ public:
 		vec = _v.vec;
 		return *this;
 	}
+	CVector3& operator=(const btVector3& _v)
+	{
+		x = _v.x();
+		y = _v.y();
+		z = _v.z();
+		return *this;
+	}
 	CVector3() {}
 	/*!
 	* @brief	コンストラクタ。

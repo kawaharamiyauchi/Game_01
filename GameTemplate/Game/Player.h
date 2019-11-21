@@ -87,9 +87,14 @@ public:
 
 	void StateChange();
 	
-	SkinModel* GetskinModel()
+	const SkinModel* GetskinModel()const
 	{
 		return &m_model;
+	}
+
+	CharacterController& GetcharaCon()
+	{
+		return m_charaCon;
 	}
 private:
 	enum Player_anim {

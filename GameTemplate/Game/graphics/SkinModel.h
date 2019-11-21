@@ -140,7 +140,14 @@ public:
 		enSkinModelSRVReg_DiffuseTexture = 0,		//!<ディフューズテクスチャ。
 		enSkinModelSRVReg_BoneMatrix,				//!<ボーン行列。
 	};
-
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="flag"></param>
+	void SetShadowCasterFlag(bool flag)
+	{
+		m_isShadowCaster = flag;
+	}
 	/// <summary>
 	/// シャドウレシーバーのフラグを設定する。
 	/// </summary>
@@ -237,6 +244,7 @@ private:
 	Light				m_light;
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	
+	bool m_isShadowCaster;	
 	bool m_isShadowReciever;
 	bool IsActiveflag = true;							//!<アクティブフラグ
 	bool lightFlag = true;

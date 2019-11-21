@@ -158,6 +158,18 @@
     <ClCompile Include="C3DModelEffect.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="SkinModelRender.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostObject.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsObjectBase.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugWireframe.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -279,6 +291,18 @@
       <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SkinModelRender.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostObject.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsObjectBase.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugWireframe.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\sky_01.FBX">

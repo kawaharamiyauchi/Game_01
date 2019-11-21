@@ -106,10 +106,12 @@
     <ClCompile Include="dbgDraw.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="DebugWireframe.cpp" />
     <ClCompile Include="Dragon.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
+    <ClCompile Include="GhostObject.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
     <ClCompile Include="graphics\animation\AnimationClip.cpp" />
     <ClCompile Include="graphics\animation\AnimationPlayController.cpp" />
@@ -129,6 +131,7 @@
     <ClCompile Include="math\kMath.cpp" />
     <ClCompile Include="math\Matrix.cpp" />
     <ClCompile Include="math\Vector.cpp" />
+    <ClCompile Include="PhysicsObjectBase.cpp" />
     <ClCompile Include="physics\MeshCollider.cpp" />
     <ClCompile Include="physics\Physics.cpp" />
     <ClCompile Include="physics\RigidBody.cpp" />
@@ -137,6 +140,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
+    <ClCompile Include="SkinModelRender.cpp" />
     <ClCompile Include="Sprite.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -157,10 +161,12 @@
     <ClInclude Include="dbgDraw.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="DebugWireframe.h" />
     <ClInclude Include="Dragon.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameObjectManager.h" />
+    <ClInclude Include="GhostObject.h" />
     <ClInclude Include="graphics\animation\Animation.h" />
     <ClInclude Include="graphics\animation\AnimationClip.h" />
     <ClInclude Include="graphics\animation\AnimationPlayController.h" />
@@ -180,7 +186,10 @@
     <ClInclude Include="math\kMath.h" />
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Vector.h" />
-    <ClInclude Include="physics\ICollider.h" />
+    <ClInclude Include="PhysicsObjectBase.h" />
+    <ClInclude Include="physics\ICollider.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="physics\MeshCollider.h" />
     <ClInclude Include="physics\Physics.h" />
     <ClInclude Include="physics\RigidBody.h" />
@@ -191,6 +200,7 @@
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShadowMap.h" />
+    <ClInclude Include="SkinModelRender.h" />
     <ClInclude Include="Sprite.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

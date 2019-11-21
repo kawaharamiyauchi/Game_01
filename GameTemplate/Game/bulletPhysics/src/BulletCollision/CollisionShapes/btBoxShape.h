@@ -82,7 +82,16 @@ BT_DECLARE_ALIGNED_ALLOCATOR();
 	}
 
 
-	btBoxShape( const btVector3& boxHalfExtents);
+	btBoxShape(const btVector3& boxHalfExtents);
+	/*	: btPolyhedralConvexShape()
+	{
+		m_shapeType = BOX_SHAPE_PROXYTYPE;
+
+		setSafeMargin(boxHalfExtents);
+
+		btVector3 margin(getMargin(), getMargin(), getMargin());
+		m_implicitShapeDimensions = (boxHalfExtents * m_localScaling) - margin;
+	};*/
 
 	virtual void setMargin(btScalar collisionMargin)
 	{

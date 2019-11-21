@@ -17,9 +17,9 @@ Player::Player()
 	m_skleton.Load(L"Assets/modelData/hunter.tks");
 	m_model.Init(L"Assets/modelData/hunter.cmo");
 
-	m_animationClip[enAnimationClip_run].Load(L"Assets/animData/hunter_run.tka");
+	m_animationClip[enAnimationClip_run].Load(L"Assets/animData/hunter_run.tka",L"enAnimation(h)Run");
 	m_animationClip[enAnimationClip_run].SetLoopFlag(true);
-	m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter_damage.tka");
+	m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter_damage.tka",L"enAnimtion(h)Damage");
 	m_animationClip[enAnimationClip_damage].SetLoopFlag(false);
 	m_animation.Init(m_model, m_animationClip, enAnimationClip_num);
 }
@@ -134,7 +134,7 @@ void Player::AnimationPlay()
 	if (p_state == run)
 	{
 		m_animation.Play(enAnimationClip_run);
-		m_animation.Update(0.8f);
+		m_animation.Update(0.3f);
 	}
 	if (p_state == damage)
 	{

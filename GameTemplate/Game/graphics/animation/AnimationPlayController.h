@@ -41,6 +41,14 @@ public:
 		m_currentKeyFrameNo = 0;
 		m_time = 0.0f;
 		m_isPlaying = true;
+
+		//アニメーションイベント発生フラグをすべてfalseにする
+		auto& animEventArray = m_animationClip->GetAnimationEvent();
+		for (auto i = 0; i < m_animationClip->GetNumAnimationEvent(); i++)
+		{
+			animEventArray[i].SetInvokedFlag(false);
+
+		}
 	}
 	void SetInterpolateTime(float interpolateTime)
 	{
@@ -97,6 +105,14 @@ private:
 	*@brief	ループ再生開始する時の処理。
 	*/
 	void StartLoop();
+
+	/// <summary>
+	/// アニメーションイベントを起動する
+	/// </summary>
+	/// <param name="animation">アニメーション</param>
+	void InvokeAnimationEvent(Animation* animation);
+
+
 private:
 	AnimationClip*			m_animationClip = nullptr;		//!<アニメーションクリップ。
 	int						m_currentKeyFrameNo = 0;		//!<現在再生中のキーフレーム番号。

@@ -18,7 +18,7 @@ BackGround::BackGround()
 	//m_skinModel[1].SetlightFlag(false);
 	//m_skinModel[1].SetColorFlag(true);
 	//m_skinModel[1].SetActiveFlag(false);
-	m_scale[1] = { 5.0f,5.0f,0.8f };
+	//m_scale[1].Set({ 5.0f,5.0f,0.8f });
 	m_physicsStaticObject.CreateMeshObject(m_skinModel[0], m_position, m_rotation,m_scale[0]);
 	
 }
