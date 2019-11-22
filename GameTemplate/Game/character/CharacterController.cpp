@@ -24,6 +24,7 @@ namespace {
 		{
 			if (convexResult.m_hitCollisionObject == me
 				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character
+				|| convexResult.m_hitCollisionObject->getInternalType() ==btCollisionObject::CO_GHOST_OBJECT
 				) {
 				//自分に衝突した。or キャラクタ属性のコリジョンと衝突した。
 				return 0.0f;
@@ -65,7 +66,8 @@ namespace {
 												//衝突したときに呼ばれるコールバック関数。
 		virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 		{
-			if (convexResult.m_hitCollisionObject == me) {
+			if (convexResult.m_hitCollisionObject == me
+				||convexResult.m_hitCollisionObject->getInternalType() ==btCollisionObject::CO_GHOST_OBJECT) {
 				//自分に衝突した。or 地面に衝突した。
 				return 0.0f;
 			}
@@ -113,7 +115,7 @@ void CharacterController::Init(float radius, float height, const CVector3& posit
 	m_rigidBody.Create(rbInfo);
 	btTransform& trans = m_rigidBody.GetBody()->getWorldTransform();
 	//剛体の位置を更新。
-	trans.setOrigin(btVector3(position.x, position.y, position.z));
+	trans.setOrigin(btVector3(position.x, position.y+m_height*0.5f+m_radius, position.z));
 	//@todo 未対応。trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Character);
 	m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
@@ -286,7 +288,7 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 	btBody->setActivationState(DISABLE_DEACTIVATION);
 	btTransform& trans = btBody->getWorldTransform();
 	//剛体の位置を更新。
-	trans.setOrigin(btVector3(m_position.x, m_position.y, m_position.z));
+	trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
 	//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 	return m_position;
 }

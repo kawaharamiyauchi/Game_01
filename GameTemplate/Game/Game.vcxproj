@@ -217,6 +217,7 @@
     <MeshContentTask Include="Assets\modelData\DragonBoar.fbx" />
     <MeshContentTask Include="Assets\modelData\hunter.fbx" />
     <MeshContentTask Include="Assets\modelData\sky_01.FBX" />
+    <MeshContentTask Include="Assets\modelData\testbox.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
   </ItemGroup>
   <ItemGroup>

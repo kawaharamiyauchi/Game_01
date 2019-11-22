@@ -113,7 +113,7 @@ private:
 	SkinModel m_model;	//スキンモデル。
 	Skeleton m_skleton;
 	CVector3 m_speed = CVector3::Zero();
-	CVector3 m_position =	{0.0f, 200.0f, -3000.0f};//位置
+	CVector3 m_position =	{0.0f, 200.0f, /*-300*/0.0f};//位置
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転
 	CVector3 m_scale =CVector3::One();					//拡大率
 	CharacterController m_charaCon;

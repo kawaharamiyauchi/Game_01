@@ -88,20 +88,26 @@ private:
 	Animation m_animation;
 	CAnimationEvent m_canimation;
 	AnimationEventListener m_listener;
+
 	CVector3 m_position = CVector3::Zero();
 	CVector3 m_scale = CVector3::One();
-	CVector3 m_collisionScale = { 3000.0f,1000.0f,3000.0f };
-
-	CVector3 diff = CVector3::Zero();
 	CQuaternion m_rotation = CQuaternion::Identity();
-	Skeleton m_skeleton;
-	CMatrix m_bone[40] = {CMatrix::Identity() };
-	//AnimationPlayController m_aniCon;
+
+	CVector3 m_collisionPosition = CVector3::Zero();
+	CVector3 m_collisionScale = CVector3::One();
+
+
+	float angle = 0.0f;
+	CVector3 diff = CVector3::Zero();
+	
+	Skeleton* m_skeleton;
+	
+	CharacterController m_charaCon[5];
 	float a = 0.0;
 	int m_timer = 0;
 	const wchar_t * bonename[41];
 	SkinModel m_model;		//ƒXƒLƒ“ƒ‚ƒfƒ‹
-	
+	//SkinModel m_test;
 	GhostObject m_ghost;
 };
 

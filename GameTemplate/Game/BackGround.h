@@ -41,6 +41,7 @@ private:
 
 	CVector3 m_position = CVector3::Zero();
 	CVector3 m_scale[2] = { CVector3::One() };
+	CVector3 a = { 1000.0f,20.0f,1000.0f };
 	CQuaternion m_rotation = { CQuaternion::Identity() };
 	CQuaternion add_2;
 	SkinModel m_skinModel[2];

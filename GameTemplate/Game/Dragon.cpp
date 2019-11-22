@@ -4,7 +4,6 @@
 #include "Player.h"
 Dragon::Dragon()
 {	
-	
 	d_state = normal;
 	m_position.Set(0.0f, 50.0f, 100.0f);
 	m_scale *= 2.5f;
@@ -21,21 +20,22 @@ Dragon::Dragon()
 	animationClip[enAnimationClip_scream].SetLoopFlag(false);
 	m_animation.Init(m_model, animationClip, enAnimationClip_num);
 	m_model.SetActiveFlag(false);
-	m_skeleton.Load(L"Assets/modelData/DragonBoar.tks");
+	m_skeleton = &m_model.GetSkeleton();
 	m_animation.AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 		OnAnimationEvent(clipName,eventName);
 		});
 
 	//m_aniCon->Init(&m_skeleton);
-	/*for (int i = 0; i < 40; i++)
+	for (int i = 0; i < 40; i++)
 	{
-			bonename[i] = m_skeleton.GetBone(i)->GetName();	
+			bonename[i] = m_skeleton->GetBone(i)->GetName();	
 			if (i == 39)
 			{
 				bonename[i] = L"end";
 			}
-	}*/
-	
+	}
+	//auto m_bone[0] = m_skeleton->GetBone(22);
+	//m_charaCon->Init(15.0f,20.0f, m_bone->GetWorldMatrix().v[3]);
 
 }
 
@@ -73,11 +73,18 @@ void Dragon::AnimationPlay()
 void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventName)
 {
 	auto m_game = Game::instance();
-
+	
+	
+	m_collisionScale.Set(200.0f, 200.0f, 200.0f);
+	auto bone = m_skeleton->GetBone(11);
+	m_collisionPosition.x = bone->GetWorldMatrix().m[3][0];
+	m_collisionPosition.y = bone->GetWorldMatrix().m[3][1];
+	m_collisionPosition.z = bone->GetWorldMatrix().m[3][2];
+	//m_collisionPosition = bone->GetWorldMatrix().v[3];
 	CVector3 attackpoint;
-	attackpoint.Set(m_position);
+	attackpoint.Set(m_collisionPosition);
 	(void)clipName;
-	m_ghost.CreateBox(m_position, CQuaternion::Identity(),m_collisionScale);
+	m_ghost.CreateBox(attackpoint, m_rotation,m_collisionScale);
 	g_physics.ContactTest(m_game->m_player->GetcharaCon(), [&](const btCollisionObject & contactObject)
 		{
 			if (m_ghost.IsSelf(contactObject))
@@ -124,7 +131,7 @@ void Dragon::Move()
 			}
 			
 
-			float angle = atan2(move.x, move.z);
+			 angle = atan2(move.x, move.z);
 			m_rotation.SetRotation(CVector3::AxisY(), angle);
 
 		}
@@ -137,7 +144,8 @@ void Dragon::Move()
 void Dragon::Update()
 {
 	
-	
+
+	m_ghost.Release();
 	
 	m_timer ++ ;
 	if (g_pad[0].IsTrigger(enButtonY))
@@ -163,9 +171,7 @@ void Dragon::Update()
 
 	a += 0.1f;
 	
-	/*m_bone[1].MakeRotationY(a);
-	m_skeleton.GetBone(1)->SetWorldMatrix(m_bone[1]);*/
-	//auto m_search = m_aniCon.GetKeyFrame();
+	
 	if (g_pad[0].IsTrigger(enButtonA))
 	{
 		if (m_model.GetActiveFlag() == false) {
@@ -173,17 +179,8 @@ void Dragon::Update()
 		}
 		else m_model.SetActiveFlag(false);
 	}
-	
-	
-	
 
 
-
-	//m_listener.operator=<void(const wchar_t* clipName, const wchar_t* eventName)>;
-	
-
-	
-		
 	
 	Move();
 	AnimationPlay();
