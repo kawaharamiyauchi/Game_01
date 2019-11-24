@@ -38,6 +38,6 @@ private:
 	CVector3 m_toCameraPos = CVector3::Zero();		//à íu
 	CVector3 m_target = CVector3::Zero();		//íçéãì_ÇÃç¿ïW
 	CVector3 m_position;
-	
+	int m_timer = 0;
 };
 

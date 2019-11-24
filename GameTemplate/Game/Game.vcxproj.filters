@@ -132,7 +132,6 @@
     </ClCompile>
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="GameCamera.cpp" />
-    <ClCompile Include="dbgDraw.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Dragon.cpp">
       <Filter>enemy</Filter>
@@ -168,6 +167,9 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="DebugWireframe.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="dbgDraw.cpp">
       <Filter>physics</Filter>
     </ClCompile>
   </ItemGroup>
@@ -264,7 +266,6 @@
     </ClInclude>
     <ClInclude Include="Title.h" />
     <ClInclude Include="GameCamera.h" />
-    <ClInclude Include="dbgDraw.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Dragon.h">
       <Filter>enemy</Filter>
@@ -303,6 +304,9 @@
     <ClInclude Include="DebugWireframe.h">
       <Filter>physics</Filter>
     </ClInclude>
+    <ClInclude Include="dbgDraw.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\sky_01.FBX">
@@ -327,6 +331,12 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\testbox.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\hunter_weapon.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\testbox_small.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

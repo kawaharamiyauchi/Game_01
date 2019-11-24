@@ -12,21 +12,18 @@ public:
 	struct plinfo {
 		float HP = 100.0f;
 		float Stamina = 100.0f;
-
-		
-
 	};
 	enum PlayerState {
 		idle,
 		run,
 		damage,
-		dye,
+		die,
 		attack
 		
 	};
 	
 	PlayerState p_state;
-	plinfo GetPlayerInformation()
+	plinfo GetPlayerInformation()const
 	{
 		return m_plinfo;
 	}
@@ -37,7 +34,7 @@ public:
 	/// <returns>m_position プレイヤーの位置</returns>
 	CVector3 GetPosition() const
 	{
-		return m_position;
+		return m_position[Hunter];
 	}
 	/// <summary>
 	/// プレイヤーの位置設定
@@ -45,7 +42,7 @@ public:
 	/// <param name="pos">設定する位置座標</param>
 	void SetPosition(CVector3 pos)
 	{
-		m_position = pos;
+		m_position[Hunter] = pos;
 	}
 	/// <summary>
 	/// プレイヤーの回転を取得
@@ -53,7 +50,7 @@ public:
 	/// <returns>m_rotation</returns>
 	CQuaternion GetRotation()
 	{
-		return m_rotation;
+		return m_rotation[Hunter];
 	}
 	/// <summary>
 	/// プレイヤーの回転を設定
@@ -62,9 +59,13 @@ public:
 
 	void SetRotation(CQuaternion rot)
 	{
-		m_rotation = rot;
+		m_rotation[Hunter] = rot;
 	}
 
+	void SetDamageFlag(bool flag)
+	{
+		m_damageFlag = flag;
+	}
 	void AnimationPlay();
 	/// <summary>
 	/// プレイヤーの更新処理
@@ -89,7 +90,7 @@ public:
 	
 	const SkinModel* GetskinModel()const
 	{
-		return &m_model;
+		return &m_model[Hunter];
 	}
 
 	CharacterController& GetcharaCon()
@@ -104,20 +105,27 @@ private:
 		enAnimationClip_damage,
 		enAnimationClip_num
 	};
-	
+	enum Modeltype {
+		Hunter,
+		RightHand,
+		LeftHand,
+		Weapon,
+		ModelType_num
+	};
 	float move_x = 0.0f;
 	float move_z = 0.0f;
 	
 	Animation m_animation;
 	AnimationClip m_animationClip[enAnimationClip_num];
-	SkinModel m_model;	//スキンモデル。
-	Skeleton m_skleton;
+	//SkinModel m_model[] = new Modeltype[4]{};	//スキンモデル。
+	SkinModel m_model[ModelType_num];
+	Skeleton* m_skeleton;
 	CVector3 m_speed = CVector3::Zero();
-	CVector3 m_position =	{0.0f, 200.0f, /*-300*/0.0f};//位置
-	CQuaternion m_rotation = CQuaternion::Identity();	//回転
+	CVector3 m_position[ModelType_num]; //位置
+	CQuaternion m_rotation[ModelType_num] = { CQuaternion::Identity() };	//回転
 	CVector3 m_scale =CVector3::One();					//拡大率
 	CharacterController m_charaCon;
 	plinfo m_plinfo;
-	bool isPlus = false;
+	bool m_damageFlag =false;
 };
 

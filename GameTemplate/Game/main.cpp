@@ -33,7 +33,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 		//ゲームオブジェクトマネージャーの更新。
 		g_goMgr.Update();
-		g_physics.DebugDraw();
+		//g_physics.DebugDraw();
 		//描画終了。
 		g_graphicsEngine->EndRender();
 	}

@@ -10,6 +10,7 @@ UI::UI()
 		m_spriteSca[i].Set(100.0f, 2.0f, 1.0f);
 		m_spriteRender[i]->SetPivot({ 0.0f,0.5f });
 	}
+
 	m_spritePos[0].Set(-550.0f, 340.0f, 0.0f);
 	m_spritePos[1].Set(-550.0f, 300.0f, 0.0f);
 	m_spritePos[2].Set(-550.0f, 340.0f, 0.0f);

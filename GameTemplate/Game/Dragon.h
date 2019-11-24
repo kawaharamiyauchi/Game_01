@@ -60,6 +60,7 @@ public:
 
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 	
+	void SetState();
 	void Move();
 	/// <summary>
 	/// ƒhƒ‰ƒSƒ“‚ÌXVˆ—
