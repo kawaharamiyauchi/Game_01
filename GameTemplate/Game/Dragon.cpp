@@ -2,13 +2,16 @@
 #include "Dragon.h"
 #include "Game.h"
 #include "Player.h"
+
 #define pai 3.14159265
 Dragon::Dragon()
 {	
 	d_state = normal;
 	m_position.Set(0.0f, 50.0f, 100.0f);
 	m_scale *= 2.5f;
-	m_model.Init(L"Assets/modelData/DragonBoar.cmo");
+	m_skinModelRender = g_goMgr.NewGO<SkinModelRender>();
+	m_skinModelRender->Init(L"Assets/modelData/DragonBoar.cmo");
+	//m_model.Init(L"Assets/modelData/DragonBoar.cmo");
 	animationClip[enAnimationClip_idle].Load(L"Assets/animData/DragonBoar_idle.tka",L"enAnimationIdle");
 	animationClip[enAnimationClip_idle].SetLoopFlag(true);
 	animationClip[enAnimationClip_walk].Load(L"Assets/animData/DragonBoar_walk.tka",L"enAnimationWalk");
@@ -19,14 +22,14 @@ Dragon::Dragon()
 	animationClip[enAnimationClip_run].SetLoopFlag(true);
 	animationClip[enAnimationClip_scream].Load(L"Assets/animData/DragonBoar_scream.tka",L"num");
 	animationClip[enAnimationClip_scream].SetLoopFlag(false);
-	m_animation.Init(m_model, animationClip, enAnimationClip_num);
-	
-	m_skeleton = &m_model.GetSkeleton();
-	m_animation.AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
+	//m_animation.Init(m_skinModelRender->GetSkinModel(), animationClip, enAnimationClip_num);
+	//m_animation.Init(m_model, animationClip, enAnimationClip_num);
+	m_skeleton = m_skinModelRender->GetSkeleton();
+	//m_skeleton = &m_model.GetSkeleton();
+	/*m_animation.AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 			OnAnimationEvent(clipName, eventName);
 		
-		});
-
+		});*/
 	//m_aniCon->Init(&m_skeleton);
 	for (int i = 0; i < 40; i++)
 	{
@@ -78,7 +81,7 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 	
 	if (d_state ==attack)
 	{
-		m_collisionScale.Set(100.0f, 200.0f, 250.0f);
+		m_collisionScale.Set(100.0f, 200.0f, 300.0f);
 		auto bone = m_skeleton->GetBone(11);
 		m_collisionPosition.x = bone->GetWorldMatrix().m[3][0];
 		m_collisionPosition.y = bone->GetWorldMatrix().m[3][1];
@@ -134,8 +137,8 @@ void Dragon::Move()
 
 		break;
 	case run:
-		if (m_model.GetActiveFlag() == true)
-		{
+		
+		
 			if (diff.Length() > 20.0f)
 			{
 				m_position += move * 20.0f;
@@ -144,7 +147,7 @@ void Dragon::Move()
 			 angle = atan2(move.x, move.z);
 			m_rotation.SetRotation(CVector3::AxisY(), angle);
 
-		}
+		
 		break;
 	case attack:
 		break;
@@ -273,15 +276,17 @@ void Dragon::Update()
 	
 	Move();
 	SetState();
-	AnimationPlay();
-	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-	
+	//AnimationPlay();
+	//m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	m_skinModelRender->SetPosition(m_position);
+	m_skinModelRender->SetRotation(m_rotation);
+	m_skinModelRender->SetScale(m_scale);
 }
 
 void Dragon::Render()
 {
-	m_model.Draw(
+	/*m_model.Draw(
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()
-	);
+	);*/
 }

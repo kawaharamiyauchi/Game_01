@@ -2,7 +2,7 @@
 #include "character/CharacterController.h"
 #include"IGameObject.h"
 #include"character/CharacterController.h"
-
+#include "SkinModelRender.h"
 class Player:public IGameObject
 {
 public:
@@ -90,7 +90,8 @@ public:
 	
 	const SkinModel* GetskinModel()const
 	{
-		return &m_model[Hunter];
+		//return &m_skinModelRender[Hunter]->GetSkinModel();
+		return m_model;
 	}
 
 	CharacterController& GetcharaCon()
@@ -119,6 +120,7 @@ private:
 	AnimationClip m_animationClip[enAnimationClip_num];
 	//SkinModel m_model[] = new Modeltype[4]{};	//スキンモデル。
 	SkinModel m_model[ModelType_num];
+	//SkinModelRender *m_skinModelRender[ModelType_num] = { nullptr };
 	Skeleton* m_skeleton;
 	CVector3 m_speed = CVector3::Zero();
 	CVector3 m_position[ModelType_num]; //位置

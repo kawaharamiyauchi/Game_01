@@ -15,6 +15,10 @@ public:
 	*@param[in]	skeleton	スケルトン。
 	*/
 	DirectX::Model* Load(const wchar_t* filePath, const Skeleton& sketon);
+	
+	
+
+	
 	/*!
 	*@brief	モデルデータを全開放。
 	*/

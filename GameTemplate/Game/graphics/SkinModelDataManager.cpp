@@ -9,6 +9,7 @@ SkinModelDataManager g_skinModelDataManager;
 DirectX::Model* SkinModelDataManager::Load(const wchar_t* filePath, const Skeleton& skeleton)
 {
 	DirectX::Model* retModel = NULL;
+	//std::unique_ptr<DirectX::Model> retModel = NULL;
 	//ボーンを発見したときのコールバック関数。
 	auto onFindBone = [&](
 		const wchar_t* boneName,
@@ -40,7 +41,7 @@ DirectX::Model* SkinModelDataManager::Load(const wchar_t* filePath, const Skelet
 			false,
 			onFindBone
 		);
-		retModel = model.get();
+		retModel= model.get();
 		//新規なのでマップに登録する。
 		m_directXModelMap.insert({ filePath, std::move(model) });
 	}
@@ -50,6 +51,7 @@ DirectX::Model* SkinModelDataManager::Load(const wchar_t* filePath, const Skelet
 	}
 	return retModel;
 }
+
 
 void SkinModelDataManager::Release()
 {

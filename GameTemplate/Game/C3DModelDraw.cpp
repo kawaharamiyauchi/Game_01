@@ -46,7 +46,7 @@ void C3DModelDraw::Init(const wchar_t* filePath)
 		false,										//第四引数はCullモード。今は気にしなくてよい。
 		false
 	);
-
+	
 	//m_modelDx = g_skinModelDataManager.Load(filePath, m_skeleton);
 
 }

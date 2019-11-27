@@ -7,7 +7,7 @@ public:
 	~SkinModelRender();
 
 	
-	void Init(const wchar_t*filePath,EnFbxUpAxis fbxUpaxis);
+	void Init(const wchar_t*filePath);
 
 	/// <summary>
 	/// シャドウキャスターのフラグを設定
@@ -52,17 +52,29 @@ public:
 	/// <summary>
 	/// スキンモデルを取得
 	/// </summary>
-	const SkinModel& GetSkinModel() const
+	 SkinModel* GetSkinModel()
 	{
-		return m_skinModel;
+		return &m_skinModel;
+	}
+
+	Skeleton* GetSkeleton()
+	{
+		return &m_skinModel.GetSkeleton();
 	}
 	void Update();
 	void Render();
+	SkinModel m_skinModel;
 private:
 	CVector3 m_position = CVector3::Zero();
 	CQuaternion m_rotation = CQuaternion::Identity();
 	CVector3 m_scale = CVector3::One();
 	EnFbxUpAxis					m_enFbxUpAxis = enFbxUpAxisZ;		// FBXの上方向。
-	SkinModel m_skinModel;
+	
+
+	AnimationClip animationClip[enAnimationClip_num];
+
+	Animation m_animation;
+	CAnimationEvent m_canimation;
+	AnimationEventListener m_listener;
 };
 

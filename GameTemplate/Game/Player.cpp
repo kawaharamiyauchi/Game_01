@@ -7,7 +7,9 @@
 Player::Player()
 {
 	m_position[Hunter].Set(0.0f, 200.0f, -300.0f);
-	
+	/*for (int i = 0; i < Modeltype::ModelType_num; i++) {
+		m_skinModelRender[i] = g_goMgr.NewGO<SkinModelRender>();
+	}*/
 	m_charaCon.Init(
 
 		20.0f,		//半径
@@ -15,13 +17,17 @@ Player::Player()
 		m_position[Hunter]	//初期座標
 	);	
 	//cmoファイルの読み込み。
-	//m_skeleton->Load(L"Assets/modelData/hunter_weapon.tks");
+	/*m_skinModelRender[Hunter]->Init(L"Assets/modelData/hunter_weapon.cmo");
+	m_skinModelRender[RightHand]->Init(L"Assets/modelData/testbox_small.cmo");
+	m_skinModelRender[LeftHand]->Init(L"Assets/modelData/testbox_small.cmo");
+	m_skinModelRender[Weapon]->Init(L"Assets/modelData/testbox_small.cmo");*/
+
 	m_model[Hunter].Init(L"Assets/modelData/hunter_weapon.cmo");
 	m_model[RightHand].Init(L"Assets/modelData/testbox_small.cmo");
 	m_model[LeftHand].Init(L"Assets/modelData/testbox_small.cmo");
 	m_model[Weapon].Init(L"Assets/modelData/testbox_small.cmo");
 
-	m_model[Hunter].SetlightFlag(false);
+	//m_model[Hunter].SetlightFlag(false);
 	/*m_animationClip[enAnimationClip_run].Load(L"Assets/animData/hunter_run.tka",L"enAnimation(h)Run");
 	m_animationClip[enAnimationClip_run].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter_damage.tka",L"enAnimtion(h)Damage");
@@ -30,7 +36,7 @@ Player::Player()
 
 	
 	m_skeleton = &m_model[Hunter].GetSkeleton();
-
+	//m_skeleton = &m_skinModelRender[Hunter]->GetSkeleton();
 	const wchar_t * bonename[41];
 
 
@@ -39,9 +45,7 @@ Player::Player()
 		bonename[i] = m_skeleton->GetBone(i)->GetName();
 		if (i==26)
 		{
-
 			bonename[i+1] = L"end";
-			return;
 		}
 	}
 	
@@ -50,6 +54,7 @@ Player::Player()
 
 Player::~Player()
 {
+	
 }
 
 void Player::Move()
@@ -104,7 +109,6 @@ void Player::Move()
 			m_speed += cameraForward * -10.0f;
 
 		}
-		m_position[Hunter] = m_charaCon.Execute(1.0f, m_speed);
 		CVector3 bonePos[Modeltype::ModelType_num];
 		bonePos[Hunter] =CVector3::Zero();
 		for (int i = 1; i < Modeltype::ModelType_num; i++)
@@ -116,11 +120,18 @@ void Player::Move()
 				m_skeleton->GetBone(14+i*4)->GetWorldMatrix().m[3][2]
 			);
 		}
+		/*m_position[RightHand] = bonePos[RightHand];
+		m_position[LeftHand] = bonePos[LeftHand];
+		m_position[Weapon] = bonePos[Weapon];*/
+		
+
 		m_position[RightHand] = bonePos[RightHand];
 		m_position[LeftHand] = bonePos[LeftHand];
 		m_position[Weapon] = bonePos[Weapon];
-		
 	}
+
+	m_position[Hunter] = m_charaCon.Execute(1.0f, m_speed);
+
 }
 void Player::Turn()
 {
@@ -213,8 +224,14 @@ void Player::Update()
 	//ワールド行列の更新。
 	
 	m_model[Hunter].UpdateWorldMatrix(m_position[Hunter], m_rotation[Hunter], m_scale);
+	/*m_skinModelRender[Hunter]->SetPosition(m_position[Hunter]);
+	m_skinModelRender[Hunter]->SetRotation(m_rotation[Hunter]);
+	m_skinModelRender[Hunter]->SetScale(m_scale);*/
 	for (int i = 1; i < Modeltype::ModelType_num; i++) {
 		m_model[i].UpdateWorldMatrix(m_position[i], m_rotation[i], m_scale);
+		/*m_skinModelRender[i]->SetPosition(m_position[i]);
+		m_skinModelRender[i]->SetRotation(m_rotation[i]);
+		m_skinModelRender[i]->SetScale(m_scale);*/
 	}
 }
 void Player::Render()
@@ -227,5 +244,6 @@ void Player::Render()
 			g_camera3D.GetProjectionMatrix()
 		);
 	}
+	
 }
 

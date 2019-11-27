@@ -113,7 +113,7 @@ public:
 	*@param[in]	projMatrix		プロジェクション行列。
 	*  カメラ座標系の3Dモデルをスクリーン座標系に変換する行列です。
 	*/
-	void Draw(/*EnRenderMode renderMode, */CMatrix viewMatrix, CMatrix projMatrix );
+	void Draw(/*EnRenderMode renderMode*/CMatrix viewMatrix, CMatrix projMatrix );
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -241,6 +241,7 @@ private:
 	Skeleton			m_skeleton;						//!<スケルトン。
 	CMatrix				m_worldMatrix;					//!<ワールド行列。
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
+	//std::unique_ptr<DirectX::Model>		m_modelDx;				//DirectXTKが提供するモデル。
 	Light				m_light;
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	

@@ -37,7 +37,7 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 
 
 	//SkinModelDataManagerを使用してCMOファイルのロード。
-	m_modelDx = g_skinModelDataManager.Load(filePath, m_skeleton);
+	m_modelDx =g_skinModelDataManager.Load(filePath, m_skeleton);
 
 	m_enFbxUpAxis = enFbxUpAxis;
 }
@@ -122,10 +122,10 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 }
-void SkinModel::Draw(/*EnRenderMode renderMode, */CMatrix viewMatrix, CMatrix projMatrix)
+void SkinModel::Draw(/*EnRenderMode renderMode*/ CMatrix viewMatrix, CMatrix projMatrix)
 {
 
-	auto shadowMap = Game::instance()->GetShadowMap();
+	//auto shadowMap = Game::instance()->GetShadowMap();
 
 
 	SModelFxConstantBuffer modelFxCb;
@@ -133,8 +133,8 @@ void SkinModel::Draw(/*EnRenderMode renderMode, */CMatrix viewMatrix, CMatrix pr
 	modelFxCb.mProj = projMatrix;
 	modelFxCb.mView = viewMatrix;
 	//todo ライトカメラのビュー、プロジェクション行列を送る。
-	modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
-	modelFxCb.mLightView = shadowMap->GetLighViewMatrix();
+	/*modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
+	modelFxCb.mLightView = shadowMap->GetLighViewMatrix();*/
 	/*if (m_isShadowReciever == true) {
 		modelFxCb.isShadowReciever = 1;
 	}
@@ -153,6 +153,7 @@ void SkinModel::Draw(/*EnRenderMode renderMode, */CMatrix viewMatrix, CMatrix pr
 	vsCb.mView = viewMatrix;
 	
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
+	
 	if (lightFlag == true) {
 		
 		d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);

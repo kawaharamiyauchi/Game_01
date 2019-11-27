@@ -2,7 +2,7 @@
 #include "IGameObject.h"
 #include"character/CharacterController.h"
 #include"physics/PhysicsStaticObject.h"
-
+#include "SkinModelRender.h"
 class BackGround:public IGameObject
 {
 public:
@@ -30,7 +30,8 @@ public:
 
 	SkinModel* GetskinModel()
 	{
-		return &m_skinModel[0];
+		return m_skinModelRender[MH_Ground]->GetSkinModel();
+		//return m_skinModel;
 	}
 
 	void Update();
@@ -38,13 +39,18 @@ public:
 	void Render();
 	
 private:
-
+	enum ModelType {
+		MH_Ground,
+		MH_Sky,
+		ModelTypenum
+	};
 	CVector3 m_position = CVector3::Zero();
-	CVector3 m_scale[2] = { CVector3::One() };
+	CVector3 m_scale[ModelTypenum] = { CVector3::One() };
 	CVector3 a = { 1000.0f,20.0f,1000.0f };
 	CQuaternion m_rotation = { CQuaternion::Identity() };
 	CQuaternion add_2;
-	SkinModel m_skinModel[2];
+	//SkinModel m_skinModel[2];
+	SkinModelRender *m_skinModelRender[ModelTypenum] = { nullptr };
 	CharacterController m_charaCon;
 	PhysicsStaticObject m_physicsStaticObject;
 	

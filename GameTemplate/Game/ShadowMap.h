@@ -117,7 +117,10 @@ public:
 	{
 		m_shadowCasters.push_back(shadowCaster);
 	}
-
+	/*void RegistShadowCaster(SkinModel* shadowCaster)
+	{
+		m_shadowCasters.push_back(shadowCaster);
+	}*/
 	/// <summary>
 	/// シャドウマップのSRVを取得。
 	/// </summary>
@@ -133,5 +136,7 @@ private:
 	CMatrix m_lightProjMatrix = CMatrix::Identity();	//ライトプロジェクション行列。
 	RenderTarget m_shadowMapRT;						//シャドウマップを描画するレンダリングターゲット。
 	std::vector<C3DModelDraw*> m_shadowCasters;	//シャドウキャスターの配列。
+	//std::vector<SkinModel*> m_shadowCasters;	//シャドウキャスターの配列。
+
 };
 

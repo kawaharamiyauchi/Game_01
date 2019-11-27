@@ -3,6 +3,7 @@
 #include "Player.h"
 #include"Game.h"
 #include"GameObjectManager.h"
+#include"Dragon.h"
 
 GameCamera::GameCamera()
 {
@@ -48,6 +49,7 @@ void GameCamera::Update()
 		
 
 		m_target = m_game->m_player->GetPosition();
+
 		m_target.y += 110.0f;
 		//m_target.y += 200.0f;
 		CVector3 toCameraPosOld = m_toCameraPos;

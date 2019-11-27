@@ -19,11 +19,13 @@ Game::Game()
 	m_unityChanModelDraw.Init(L"Assets/modelData/unityChan.cmo");
 
 	m_bgModelDraw.SetShadowReciever(true);*/
+	m_gamecamera = g_goMgr.NewGO<GameCamera>();
 		m_player = g_goMgr.NewGO<Player>();
 		
 		m_background = g_goMgr.NewGO<BackGround>();
-		m_gamecamera = g_goMgr.NewGO<GameCamera>();
-		m_dragon = g_goMgr.NewGO<Dragon>();
+	  m_dragon = g_goMgr.NewGO<Dragon>();
+		
+		
 		m_UI = g_goMgr.NewGO<UI>();
 	
 }
@@ -50,17 +52,18 @@ void Game::Update()
 //	m_shadowMap.RegistShadowCaster(&m_unityChanModelDraw);
 //	m_shadowMap.RegistShadowCaster(&m_bgModelDraw);
 //	//シャドウマップを更新。
-//	m_shadowMap.UpdateFromLightTarget(
-//		{ 1000.0f, 1000.0f, 1000.0f },
-//		{ 0.0f, 0.0f, 0.0f }
-//	);
+
+	/*m_shadowMap.UpdateFromLightTarget(
+		{ 1000.0f, 1000.0f, 1000.0f },
+		{ 0.0f, 0.0f, 0.0f }
+	);*/
 //
 //	
-//	if (g_pad[0].IsTrigger(enButtonSelect))
-//	{
-//
-//		g_goMgr.DeleteGO(this);
-//	}
+	if (g_pad[0].IsTrigger(enButtonSelect))
+	{
+
+		g_goMgr.DeleteGO(this);
+	}
 }
 void Game::Render()
 {
