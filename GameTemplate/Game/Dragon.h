@@ -110,7 +110,7 @@ private:
 	const wchar_t * bonename[41];
 	SkinModel m_model;		//ƒXƒLƒ“ƒ‚ƒfƒ‹
 	//SkinModel m_test;
-	SkinModelRender * const m_skinModelRender = nullptr;
+	SkinModelRender * m_skinModelRender = nullptr;
 	GhostObject m_ghost;
 };
 

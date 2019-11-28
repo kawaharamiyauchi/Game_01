@@ -71,7 +71,7 @@ private:
 	EnFbxUpAxis					m_enFbxUpAxis = enFbxUpAxisZ;		// FBXÇÃè„ï˚å¸ÅB
 	
 
-	AnimationClip animationClip[enAnimationClip_num];
+	//AnimationClip animationClip[enAnimationClip_num];
 
 	Animation m_animation;
 	CAnimationEvent m_canimation;

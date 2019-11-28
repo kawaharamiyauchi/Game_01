@@ -21,7 +21,7 @@ BackGround::BackGround()
 
 
 	//m_physicsStaticObject.CreateMeshObject(m_skinModel[0], m_position, m_rotation,a);
-	//m_physicsStaticObject.CreateMeshObject(m_skinModelRender[MH_Ground]->GetSkinModel(), m_position, m_rotation, a);
+	m_physicsStaticObject.CreateMeshObject(*m_skinModelRender[MH_Ground]->GetSkinModel(), m_position, m_rotation, a);
 
 }
 

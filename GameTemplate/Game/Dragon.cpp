@@ -22,14 +22,14 @@ Dragon::Dragon()
 	animationClip[enAnimationClip_run].SetLoopFlag(true);
 	animationClip[enAnimationClip_scream].Load(L"Assets/animData/DragonBoar_scream.tka",L"num");
 	animationClip[enAnimationClip_scream].SetLoopFlag(false);
-	//m_animation.Init(m_skinModelRender->GetSkinModel(), animationClip, enAnimationClip_num);
+	m_animation.Init(*m_skinModelRender->GetSkinModel(), animationClip, enAnimationClip_num);
 	//m_animation.Init(m_model, animationClip, enAnimationClip_num);
 	m_skeleton = m_skinModelRender->GetSkeleton();
 	//m_skeleton = &m_model.GetSkeleton();
-	/*m_animation.AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
+	m_animation.AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 			OnAnimationEvent(clipName, eventName);
 		
-		});*/
+		});
 	//m_aniCon->Init(&m_skeleton);
 	for (int i = 0; i < 40; i++)
 	{
@@ -276,7 +276,7 @@ void Dragon::Update()
 	
 	Move();
 	SetState();
-	//AnimationPlay();
+	AnimationPlay();
 	//m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetRotation(m_rotation);
