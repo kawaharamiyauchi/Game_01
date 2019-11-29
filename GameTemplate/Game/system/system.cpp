@@ -85,10 +85,12 @@ void InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 {
 	//ウィンドウを初期化。
 	InitWindow(hInstance, hPrevInstance, lpCmdLine, nCmdShow, appName);
+
 	//DirectXの初期化。
 	g_graphicsEngine = new GraphicsEngine();
 	g_graphicsEngine->Init(g_hWnd);
 
+	GameObjectManager::instance();
 	//ゲームパッドの初期化。
 	//最大４つのコントローラーを接続できるようにしましょう。
 	g_pad[0].Init(0);

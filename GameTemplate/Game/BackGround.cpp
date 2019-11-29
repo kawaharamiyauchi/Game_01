@@ -6,8 +6,8 @@ BackGround::BackGround()
 {
 	
 	CQuaternion add;
-	m_skinModelRender[MH_Ground] = g_goMgr.NewGO<SkinModelRender>();
-	m_skinModelRender[MH_Sky] = g_goMgr.NewGO<SkinModelRender>();
+	m_skinModelRender[MH_Ground] = GameObjectManager::instance().NewGO<SkinModelRender>();
+	m_skinModelRender[MH_Sky] = GameObjectManager::instance().NewGO<SkinModelRender>();
 	add.SetRotationDeg(CVector3::AxisX(), 90.0f);
 
 	m_scale[1].Set(0.5f, 0.5f, 0.2f);

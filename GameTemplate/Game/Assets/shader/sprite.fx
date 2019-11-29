@@ -6,7 +6,7 @@ cbuffer cb : register(b0){
 	float4x4 mvp;		//ワールドビュープロジェクション行列。
 };
 struct VSInput{
-	float4 pos : SV_Position;
+	float4 pos : POSITION;
 	float2 uv  : TEXCOORD0;
 };
 

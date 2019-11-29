@@ -17,13 +17,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 
 	
-	Title*m_title = g_goMgr.NewGO<Title>();
+	Title*m_title = GameObjectManager::instance().NewGO<Title>();
 	//Game::instance();
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
+
 		//描画開始。
 		g_graphicsEngine->BegineRender();
+		GameObjectManager::instance().BackUp();
 		//ゲームパッドの更新。	
 		for (auto& pad : g_pad) {
 			pad.Update();
@@ -32,7 +34,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		g_physics.Update();
 
 		//ゲームオブジェクトマネージャーの更新。
-		g_goMgr.Update();
+		GameObjectManager::instance().Update();
 		//g_physics.DebugDraw();
 		//描画終了。
 		g_graphicsEngine->EndRender();

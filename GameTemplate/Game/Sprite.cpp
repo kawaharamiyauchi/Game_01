@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "Sprite.h"
 
-
+struct SVertex {
+	float position[4];		//頂点座標。4要素なのは今は気にしない。
+	float uv[2];			//UV座標。これがテクスチャ座標
+};
 //頂点構造体。
 struct Vertex {
 	CVector4	pos;		//座標。
@@ -56,7 +59,23 @@ void Sprite::Init(const wchar_t* textureFilePath, float w, float h)
 	//テクスチャをロード。
 	LoadTexture(textureFilePath);
 }
-
+void Sprite::Init(ID3D11ShaderResourceView* srv, float w, float h)
+{
+	m_size.x = w;
+	m_size.y = h;
+	//シェーダーをロード。
+	LoadShader();
+	//頂点バッファを作成。
+	CreateVertexBuffer(w, h);
+	//インデックスバッファを作成。
+	CreateIndexBuffer();
+	//定数バッファを作成。
+	CreateConstantBuffer();
+	//サンプラステートを作成。
+	CreateSamplerState();
+	m_texture = srv;
+	m_texture->AddRef();	//参照カウンタを増やす。
+}
 void Sprite::Update(const CVector3 & trans, const CQuaternion & rot, const CVector3 & sca, const CVector2 & pivot)
 {
 	//基点を考慮して平行移動
@@ -256,5 +275,58 @@ void Sprite::Draw(CMatrix mView, CMatrix mProj)
 	//ここまで設定した内容でドロー
 	deviceContext->DrawIndexed(4, 0, 0);
 }
+void Sprite::Draw()
+{
+	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 
+	unsigned int vertexSize = sizeof(SVertex);	//頂点のサイズ。
+	unsigned int offset = 0;
+	d3dDeviceContext->IASetVertexBuffers(	//頂点バッファを設定。
+		0,					//StartSlot番号。今は0でいい。
+		1,					//バッファの数。今は1でいい。
+		&m_vertexBuffer,	//頂点バッファ。
+		&vertexSize,		//頂点のサイズ。
+		&offset				//気にしなくてよい。
+	);
+	d3dDeviceContext->IASetIndexBuffer(	//インデックスバッファを設定。
+		m_indexBuffer,			//インデックスバッファ。
+		DXGI_FORMAT_R16_UINT,	//インデックスのフォーマット。
+								//今回は32bitなので、DXGI_FORMAT_R32_UINTでいい。
+		0						//オフセット0でいい。
+	);
+	//シェーダーを設定。
+	d3dDeviceContext->VSSetShader(
+		(ID3D11VertexShader*)m_vs.GetBody(),
+		nullptr,
+		0
+	);
+	d3dDeviceContext->PSSetShader(
+		(ID3D11PixelShader*)m_ps.GetBody(),
+		nullptr,
+		0
+	);
+	d3dDeviceContext->IASetInputLayout(m_vs.GetInputLayout());
+	//テクスチャを設定。
+	d3dDeviceContext->PSSetShaderResources(0, 1, &m_texture);
+	//サンプラステートを設定。
+	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
+	//ワールドビュープロジェクション行列を作成。
+	ConstantBuffer cb;
+	cb.WVP = m_world;
+	cb.WVP.Mul(cb.WVP, g_camera2D.GetViewMatrix());
+	cb.WVP.Mul(cb.WVP, g_camera2D.GetProjectionMatrix());
+	cb.alpha = m_alpha;
+
+	d3dDeviceContext->UpdateSubresource(m_cbGPU, 0, NULL, &cb, 0, 0);
+	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cbGPU);
+	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cbGPU);
+	//プリミティブのトポロジーは
+	//トライアングルストリップを設定する。
+	d3dDeviceContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	d3dDeviceContext->DrawIndexed(	//描画命令。
+		4,				//インデックス数。
+		0,				//開始インデックス番号。0でいい。
+		0				//開始頂点番号。0でいい。
+	);
+}
 

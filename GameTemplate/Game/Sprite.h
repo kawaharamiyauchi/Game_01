@@ -19,6 +19,7 @@ public:
 	/// </summary>
 	/// <param name="textureFilePath">テクスチャのファイルパス。</param>
 	void Init(const wchar_t* textureFilePath, float w, float h);
+	void Init(ID3D11ShaderResourceView * srv, float w, float h);
 	/// <summary>
 	/// ワールド行列を更新。
 	/// </summary>
@@ -32,11 +33,15 @@ public:
 	/// <param name="mView">カメラ行列</param>
 	/// /// <param name="mView">プロジェクション行列</param>
 	void Draw(CMatrix mView, CMatrix mProj);
+	void Draw();
 	/// <summary>
 	/// 2Dの基点を設定。
 	/// </summary>
 	/// <param name="piv"></param>
-	void SetPivot(CVector3 piv);
+	void SetPivot(CVector2 piv)
+	{
+		m_pivot = piv;
+	}
 	/// <summary>
 	/// 更新処理
 	/// </summary>
@@ -72,7 +77,10 @@ private:
 	/// <param name="textureFIlePath">ロードするテクスチャのファイルパス。</param>
 	void LoadTexture(const wchar_t* textureFIlePath);
 private:
-
+	struct ConstantBuffer {
+		CMatrix WVP;		//ワールドビュープロジェクション行列。
+		float alpha;		//α値。
+	};
 	Shader	m_vs;											//頂点シェーダー。
 	Shader	m_ps;	//ピクセルシェーダー。
 	CVector3 m_position = CVector3::Zero();
@@ -86,6 +94,8 @@ private:
 	ID3D11ShaderResourceView* m_texture = nullptr;	//テクスチャにアクセスするためのインターフェース。
 	ID3D11SamplerState* m_samplerState = nullptr;	//サンプラステート。
 	CMatrix m_world = CMatrix::Identity();					//ワールド行列。
+	//ID3D11Buffer*				m_cb = nullptr;							//定数バッファ。
+	float						m_alpha = 1.0f;							//スプライトのα値。
 };
 
 

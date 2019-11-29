@@ -6,7 +6,7 @@
 UI::UI()
 {
 	for (int i = 0; i < 3; i++) {
-		m_spriteRender[i] = g_goMgr.NewGO<SpriteRender>();
+		m_spriteRender[i] = GameObjectManager::instance().NewGO<SpriteRender>();
 		m_spriteSca[i].Set(100.0f, 2.0f, 1.0f);
 		m_spriteRender[i]->SetPivot({ 0.0f,0.5f });
 	}

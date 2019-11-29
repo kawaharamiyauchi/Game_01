@@ -7,14 +7,14 @@ Title::Title()
 {
 	//m_sprite.Init(L"Assets/sprite/ago_free_03.dds", 1280.0f, 720.0f);
 	m_position.Set(-640.0f, 0.0f, 0.0f);
-	m_spriteRender = g_goMgr.NewGO<SpriteRender>();
+	m_spriteRender = GameObjectManager::instance().NewGO<SpriteRender>();
 	m_spriteRender->Init(L"Assets/sprite/MH_HP.dds", 1280.0f, 720.0f);
 }
 
 
 Title::~Title()
 {
-	g_goMgr.DeleteGO(m_spriteRender);
+	GameObjectManager::instance().DeleteGO(m_spriteRender);
 }
 
 void Title::Update()
@@ -32,7 +32,7 @@ void Title::Update()
 		//m_spriteRender->SetIsActive(false);
 		auto m_game = Game::instance();
 		
-		g_goMgr.DeleteGO(this);
+		GameObjectManager::instance().DeleteGO(this);
 		
 		
 	}

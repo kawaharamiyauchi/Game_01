@@ -19,25 +19,25 @@ Game::Game()
 	m_unityChanModelDraw.Init(L"Assets/modelData/unityChan.cmo");
 
 	m_bgModelDraw.SetShadowReciever(true);*/
-	m_gamecamera = g_goMgr.NewGO<GameCamera>();
-		m_player = g_goMgr.NewGO<Player>();
+	m_gamecamera = GameObjectManager::instance().NewGO<GameCamera>();
+		m_player = GameObjectManager::instance().NewGO<Player>();
 		
-		m_background = g_goMgr.NewGO<BackGround>();
-	  m_dragon = g_goMgr.NewGO<Dragon>();
+		m_background = GameObjectManager::instance().NewGO<BackGround>();
+	  m_dragon = GameObjectManager::instance().NewGO<Dragon>();
 		
 		
-		m_UI = g_goMgr.NewGO<UI>();
+		m_UI = GameObjectManager::instance().NewGO<UI>();
 	
 }
 
 Game::~Game()
 {
 	
-	g_goMgr.DeleteGO(m_background);
-	g_goMgr.DeleteGO(m_gamecamera);
-	g_goMgr.DeleteGO(m_dragon);
-	g_goMgr.DeleteGO(m_UI);
-	g_goMgr.DeleteGO(m_player);
+	GameObjectManager::instance().DeleteGO(m_background);
+	GameObjectManager::instance().DeleteGO(m_gamecamera);
+	GameObjectManager::instance().DeleteGO(m_dragon);
+	GameObjectManager::instance().DeleteGO(m_UI);
+	GameObjectManager::instance().DeleteGO(m_player);
 	
 }
 void Game::Update()
@@ -62,7 +62,7 @@ void Game::Update()
 	if (g_pad[0].IsTrigger(enButtonSelect))
 	{
 
-		g_goMgr.DeleteGO(this);
+		GameObjectManager::instance().DeleteGO(this);
 	}
 }
 void Game::Render()

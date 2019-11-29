@@ -24,7 +24,7 @@ public:
 	static Game* instance()
 	{
 		
-		static Game*gam = g_goMgr.NewGO<Game>();
+		static Game* gam = GameObjectManager::instance().NewGO<Game>();
 		return gam;
 	}
 	ShadowMap* GetShadowMap()
