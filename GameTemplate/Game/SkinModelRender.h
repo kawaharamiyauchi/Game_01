@@ -15,6 +15,7 @@ public:
 	/// <param name="flag">シャドウキャスターフラグ</param>
 	void SetShadowCasterFlag(bool flag)
 	{
+		m_isCasterFlag = flag;
 		m_skinModel.SetShadowCasterFlag(flag);
 	}
 	/// <summary>
@@ -23,8 +24,20 @@ public:
 	/// <param name="flag">シャドウレシーバーフラグ</param>
 	void SetShadowRecieverFlag(bool flag)
 	{
+		m_isRecieverFlag = flag;
 		m_skinModel.SetShadowReciever(flag);
 	}
+	void SetShadowCasterUpdate()
+	{
+		//ShadowMap::instance().RegistShadowCaster(&m_skinModel);
+		m_shadowMap = &ShadowMap::instance();
+		m_shadowMap->RegistShadowCaster(&m_skinModel);
+	}
+	void SetActiveFlag(bool flag)
+	{
+		m_skinModel.SetActiveFlag(flag);
+	}
+
 	/// <summary>
 	/// 座標を設定
 	/// </summary>
@@ -65,12 +78,15 @@ public:
 	void Render();
 	SkinModel m_skinModel;
 private:
+
+	EnRenderMode m_renderMode = enRenderMode_Normal;
 	CVector3 m_position = CVector3::Zero();
 	CQuaternion m_rotation = CQuaternion::Identity();
 	CVector3 m_scale = CVector3::One();
 	EnFbxUpAxis					m_enFbxUpAxis = enFbxUpAxisZ;		// FBXの上方向。
-	
-
+	bool m_isRecieverFlag = false;
+	bool m_isCasterFlag = false;
+	ShadowMap *m_shadowMap;
 	//AnimationClip animationClip[enAnimationClip_num];
 
 	Animation m_animation;

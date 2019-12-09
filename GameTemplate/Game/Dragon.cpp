@@ -9,8 +9,11 @@ Dragon::Dragon()
 	d_state = normal;
 	m_position.Set(0.0f, 50.0f, 100.0f);
 	m_scale *= 2.5f;
+	
 	m_skinModelRender = GameObjectManager::instance().NewGO<SkinModelRender>();
+
 	m_skinModelRender->Init(L"Assets/modelData/DragonBoar.cmo");
+	m_skinModelRender->SetActiveFlag(false);
 	//m_model.Init(L"Assets/modelData/DragonBoar.cmo");
 	animationClip[enAnimationClip_idle].Load(L"Assets/animData/DragonBoar_idle.tka",L"enAnimationIdle");
 	animationClip[enAnimationClip_idle].SetLoopFlag(true);
@@ -190,7 +193,8 @@ void Dragon::SetState()
 	case Dragon::normal:
 		if (diff_2.Length() < 1200.0f&&fabsf(hoge) < 90.0f)
 		{
-				MessageBox(NULL, "ミツケタ…", "発見", MB_OK);
+				//MessageBox(NULL, "ミツケタ…", "発見", MB_OK);
+				OutputDebugStringA("ミツケタ…\n");
 				SetDragonState(run);
 		}
 		break;

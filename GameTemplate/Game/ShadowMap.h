@@ -1,7 +1,7 @@
 #pragma once
 #include "RenderTarget.h"
 #include "graphics/SkinModel.h"
-class C3DModelDraw;
+class SkinModel;
 
 /// <summary>
 /// シャドウマップクラス。
@@ -39,6 +39,12 @@ class C3DModelDraw;
 class ShadowMap
 {
 public:
+	static ShadowMap& instance()
+	{
+		static ShadowMap instance;
+		return instance;
+	}
+
 	/// <summary>
 	/// コンストラクタ。
 	/// </summary>
@@ -48,11 +54,12 @@ public:
 	/// デストラクタ。
 	/// </summary>
 	~ShadowMap();
-
+public:
 	/// <summary>
 	/// ライトビュー行列を取得。
 	/// </summary>
 	/// <returns></returns>
+
 	CMatrix GetLighViewMatrix() const
 	{
 		return m_lightViewMatrix;
@@ -113,14 +120,10 @@ public:
 	/// 毎フレームこの関数を呼び出す必要があります。
 	/// </remarks>
 	/// <param name="shadowCaster">シャドウキャスター</param>
-	void RegistShadowCaster(C3DModelDraw* shadowCaster)
+	void RegistShadowCaster(SkinModel* shadowCaster)
 	{
 		m_shadowCasters.push_back(shadowCaster);
 	}
-	/*void RegistShadowCaster(SkinModel* shadowCaster)
-	{
-		m_shadowCasters.push_back(shadowCaster);
-	}*/
 	/// <summary>
 	/// シャドウマップのSRVを取得。
 	/// </summary>
@@ -135,8 +138,8 @@ private:
 	CMatrix m_lightViewMatrix = CMatrix::Identity();	//ライトビュー行列。
 	CMatrix m_lightProjMatrix = CMatrix::Identity();	//ライトプロジェクション行列。
 	RenderTarget m_shadowMapRT;						//シャドウマップを描画するレンダリングターゲット。
-	std::vector<C3DModelDraw*> m_shadowCasters;	//シャドウキャスターの配列。
-	//std::vector<SkinModel*> m_shadowCasters;	//シャドウキャスターの配列。
+	//std::vector<C3DModelDraw*> m_shadowCasters;	//シャドウキャスターの配列。
+	std::vector<SkinModel*> m_shadowCasters;	//シャドウキャスターの配列。
 
 };
 

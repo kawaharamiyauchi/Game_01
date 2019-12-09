@@ -122,25 +122,24 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 }
-void SkinModel::Draw(/*EnRenderMode renderMode*/ CMatrix viewMatrix, CMatrix projMatrix)
+void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)
 {
 
-	//auto shadowMap = Game::instance()->GetShadowMap();
-
+	auto shadowMap = &ShadowMap::instance();
 
 	SModelFxConstantBuffer modelFxCb;
 	modelFxCb.mWorld = m_worldMatrix;
 	modelFxCb.mProj = projMatrix;
 	modelFxCb.mView = viewMatrix;
 	//todo ライトカメラのビュー、プロジェクション行列を送る。
-	/*modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
-	modelFxCb.mLightView = shadowMap->GetLighViewMatrix();*/
-	/*if (m_isShadowReciever == true) {
+	modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
+	modelFxCb.mLightView = shadowMap->GetLighViewMatrix();
+	if (m_isShadowReciever == true) {
 		modelFxCb.isShadowReciever = 1;
 	}
 	else {
 		modelFxCb.isShadowReciever = 0;
-	}*/
+	}
 
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
@@ -157,20 +156,23 @@ void SkinModel::Draw(/*EnRenderMode renderMode*/ CMatrix viewMatrix, CMatrix pro
 	if (lightFlag == true) {
 		
 		d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
+		//todo ライトカメラのビュー、プロジェクション行列を送る。
+		modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
+		modelFxCb.mLightView = shadowMap->GetLighViewMatrix();
 	}
-	 
+	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
 	if (lightFlag == true&&colorFlag ==false) {
 		
-		d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_lightCb);
+		d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 		
 	}
 
-	else if (colorFlag)
+	/*else if (colorFlag)
 	{
 		d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
-	}
+	}*/
 	else d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_nullCb);
 
 
@@ -178,7 +180,11 @@ void SkinModel::Draw(/*EnRenderMode renderMode*/ CMatrix viewMatrix, CMatrix pro
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();
-
+	//エフェクトにクエリを行う。
+	m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
+		auto modelMaterial = reinterpret_cast<SkinModelEffect*>(material);
+		modelMaterial->SetRenderMode(renderMode);
+		});
 	//描画。
 	if (IsActiveflag == true)
 	{
@@ -186,8 +192,8 @@ void SkinModel::Draw(/*EnRenderMode renderMode*/ CMatrix viewMatrix, CMatrix pro
 			d3dDeviceContext,
 			state,
 			m_worldMatrix,
-			viewMatrix,
-			projMatrix
+			g_camera3D.GetViewMatrix(),
+			g_camera3D.GetProjectionMatrix()
 		);
 	}
 }

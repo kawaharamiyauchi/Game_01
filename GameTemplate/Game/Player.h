@@ -90,8 +90,8 @@ public:
 	
 	const SkinModel* GetskinModel()const
 	{
-		//return &m_skinModelRender[Hunter]->GetSkinModel();
-		return m_model;
+		return m_skinModelRender[Hunter]->GetSkinModel();
+		//return m_model;
 	}
 
 	CharacterController& GetcharaCon()
@@ -119,8 +119,8 @@ private:
 	Animation m_animation;
 	AnimationClip m_animationClip[enAnimationClip_num];
 	//SkinModel m_model[] = new Modeltype[4]{};	//スキンモデル。
-	SkinModel m_model[ModelType_num];
-	//SkinModelRender *m_skinModelRender[ModelType_num] = { nullptr };
+	//SkinModel m_model[ModelType_num];
+	SkinModelRender *m_skinModelRender[ModelType_num] = { nullptr };
 	Skeleton* m_skeleton;
 	CVector3 m_speed = CVector3::Zero();
 	CVector3 m_position[ModelType_num]; //位置

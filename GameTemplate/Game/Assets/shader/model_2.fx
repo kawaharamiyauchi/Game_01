@@ -7,6 +7,7 @@
 /////////////////////////////////////////////////////////////
 Texture2D<float4> g_albedoTexture : register(t0);	//アルベドテクスチャ。
 Texture2D<float4> g_shadowMap : register(t1);		//todo シャドウマップ。
+
 /////////////////////////////////////////////////////////////
 // SamplerState
 /////////////////////////////////////////////////////////////
@@ -95,6 +96,8 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 	
 	return psInput;
 }
+
+
 /// <summary>
 /// ピクセルシェーダーのエントリ関数。
 /// </summary>

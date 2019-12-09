@@ -35,6 +35,12 @@ GameObjectManager::~GameObjectManager()
 }
 void GameObjectManager::Update()
 {
+	auto m_shadowMap = &ShadowMap::instance();
+	//シャドウマップを更新。
+	m_shadowMap->UpdateFromLightTarget(
+		{ 1000.0f, 1000.0f, 1000.0f },
+		{ 0.0f, 0.0f, 0.0f }
+	);
 	//登録済みのゲームオブジェクトの
 	//Update関数を呼ぶ。
 	for (auto go : m_goList)
@@ -83,7 +89,6 @@ void GameObjectManager::BackUp()
 }
 void GameObjectManager::Draw()
 {
-	
 
 	//プリレンダリング
 	PreRender();
@@ -94,12 +99,15 @@ void GameObjectManager::Draw()
 	//ポストレンダリング
 	PostRender();
 
-	
+
 
 }
 
 void GameObjectManager::PreRender()
 {
+
+	auto m_shadowMap = &ShadowMap::instance();
+	m_shadowMap->RenderToShadowMap();
 }
 
 void GameObjectManager::ForwordRender()
@@ -155,6 +163,7 @@ void GameObjectManager::ChangeRenderTarget(ID3D11DeviceContext * d3dDeviceContex
 	if (viewport != nullptr) {
 		//ビューポートが指定されていたら、ビューポートも変更する。
 		d3dDeviceContext->RSSetViewports(1, viewport);
+		
 	}
 }
 

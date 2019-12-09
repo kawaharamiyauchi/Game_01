@@ -23,11 +23,11 @@ public:
 	C3DModelEffect()
 	{
 		//頂点シェーダーをロード。
-		m_vsShader.Load("Assets/shader/model_2.fx", "VSMain", Shader::EnType::VS);
-		m_psShader.Load("Assets/shader/model_2.fx", "PSMain", Shader::EnType::PS);
+		m_vsShader.Load("Assets/shader/model.fx", "VSMain", Shader::EnType::VS);
+		m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
 		//todo シャドウマップ用のシェーダーをロード。
-		m_psShadowMap.Load("Assets/shader/model_2.fx", "PSMain_ShadowMap", Shader::EnType::PS);
-		m_vsShadowMap.Load("Assets/shader/model_2.fx", "VSMain_ShadowMap", Shader::EnType::VS);
+		m_psShadowMap.Load("Assets/shader/model.fx", "PSMain_ShadowMap", Shader::EnType::PS);
+		m_vsShadowMap.Load("Assets/shader/model.fx", "VSMain_ShadowMap", Shader::EnType::VS);
 	}
 	~C3DModelEffect()
 	{

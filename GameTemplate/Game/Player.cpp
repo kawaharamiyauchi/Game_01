@@ -7,9 +7,9 @@
 Player::Player()
 {
 	m_position[Hunter].Set(0.0f, 200.0f, -300.0f);
-	/*for (int i = 0; i < Modeltype::ModelType_num; i++) {
-		m_skinModelRender[i] = g_goMgr.NewGO<SkinModelRender>();
-	}*/
+	for (int i = 0; i < Modeltype::ModelType_num; i++) {
+		m_skinModelRender[i] =GameObjectManager::instance().NewGO<SkinModelRender>();
+	}
 	m_charaCon.Init(
 
 		20.0f,		//半径
@@ -17,15 +17,20 @@ Player::Player()
 		m_position[Hunter]	//初期座標
 	);	
 	//cmoファイルの読み込み。
-	/*m_skinModelRender[Hunter]->Init(L"Assets/modelData/hunter_weapon.cmo");
+	m_skinModelRender[Hunter]->Init(L"Assets/modelData/hunter_weapon.cmo");
 	m_skinModelRender[RightHand]->Init(L"Assets/modelData/testbox_small.cmo");
 	m_skinModelRender[LeftHand]->Init(L"Assets/modelData/testbox_small.cmo");
-	m_skinModelRender[Weapon]->Init(L"Assets/modelData/testbox_small.cmo");*/
+	m_skinModelRender[Weapon]->Init(L"Assets/modelData/testbox_small.cmo");
 
-	m_model[Hunter].Init(L"Assets/modelData/hunter_weapon.cmo");
+	m_skinModelRender[Hunter]->SetShadowCasterFlag(true);
+	m_skinModelRender[Hunter]->SetShadowRecieverFlag(false);
+	m_skinModelRender[RightHand]->SetShadowCasterFlag(true);
+	m_skinModelRender[LeftHand]->SetShadowCasterFlag(true);
+	m_skinModelRender[Weapon]->SetShadowCasterFlag(true);
+	/*m_model[Hunter].Init(L"Assets/modelData/hunter_weapon.cmo");
 	m_model[RightHand].Init(L"Assets/modelData/testbox_small.cmo");
 	m_model[LeftHand].Init(L"Assets/modelData/testbox_small.cmo");
-	m_model[Weapon].Init(L"Assets/modelData/testbox_small.cmo");
+	m_model[Weapon].Init(L"Assets/modelData/testbox_small.cmo");*/
 
 	//m_model[Hunter].SetlightFlag(false);
 	/*m_animationClip[enAnimationClip_run].Load(L"Assets/animData/hunter_run.tka",L"enAnimation(h)Run");
@@ -33,10 +38,10 @@ Player::Player()
 	m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter_damage.tka",L"enAnimtion(h)Damage");
 	m_animationClip[enAnimationClip_damage].SetLoopFlag(false);
 	m_animation.Init(m_model, m_animationClip, enAnimationClip_num);*/
-
+	m_skinModelRender[Hunter]->SetActiveFlag(false);
 	
-	m_skeleton = &m_model[Hunter].GetSkeleton();
-	//m_skeleton = &m_skinModelRender[Hunter]->GetSkeleton();
+	//m_skeleton = &m_model[Hunter].GetSkeleton();
+	m_skeleton = m_skinModelRender[Hunter]->GetSkeleton();
 	const wchar_t * bonename[41];
 
 
@@ -170,7 +175,7 @@ void Player::StateChange()
 	if (m_damageFlag)
 	{
 		p_state = damage;
-		m_plinfo.HP -= 20.0f;
+		m_plinfo.HP -= 100.0f;
 		m_damageFlag = false;
 	}
 	if (p_state != damage && p_state != die)
@@ -223,27 +228,27 @@ void Player::Update()
 	Turn();
 	//ワールド行列の更新。
 	
-	m_model[Hunter].UpdateWorldMatrix(m_position[Hunter], m_rotation[Hunter], m_scale);
-	/*m_skinModelRender[Hunter]->SetPosition(m_position[Hunter]);
+	//m_model[Hunter].UpdateWorldMatrix(m_position[Hunter], m_rotation[Hunter], m_scale);
+	m_skinModelRender[Hunter]->SetPosition(m_position[Hunter]);
 	m_skinModelRender[Hunter]->SetRotation(m_rotation[Hunter]);
-	m_skinModelRender[Hunter]->SetScale(m_scale);*/
+	m_skinModelRender[Hunter]->SetScale(m_scale);
 	for (int i = 1; i < Modeltype::ModelType_num; i++) {
-		m_model[i].UpdateWorldMatrix(m_position[i], m_rotation[i], m_scale);
-		/*m_skinModelRender[i]->SetPosition(m_position[i]);
+		//m_model[i].UpdateWorldMatrix(m_position[i], m_rotation[i], m_scale);
+		m_skinModelRender[i]->SetPosition(m_position[i]);
 		m_skinModelRender[i]->SetRotation(m_rotation[i]);
-		m_skinModelRender[i]->SetScale(m_scale);*/
+		m_skinModelRender[i]->SetScale(m_scale);
 	}
 }
 void Player::Render()
 {
 	//MessageBox(NULL, "aa", "aaa",MB_OK);
-	for (int i = 0; i < Modeltype::ModelType_num; i++)
+	/*for (int i = 0; i < Modeltype::ModelType_num; i++)
 	{
 		m_model[i].Draw(
 			g_camera3D.GetViewMatrix(),
 			g_camera3D.GetProjectionMatrix()
 		);
-	}
+	}*/
 	
 }
 

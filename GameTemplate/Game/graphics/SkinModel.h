@@ -18,15 +18,7 @@ enum EnFbxUpAxis {
 class SkinModel
 {
 public:
-	/// <summary>
-/// レンダリングモード。
-/// </summary>
-	enum EnRenderMode {
-		enRenderMode_Invalid,			//不正なレンダリングモード。
-		enRenderMode_CreateShadowMap,	//シャドウマップ生成。
-		enRenderMode_Normal,			//通常レンダリング。
-		enRenderMode_Num,				//レンダリングモードの数。
-	};
+
 	/// <summary>
 	/// モデルエフェクト用の構造体。
 	/// </summary>
@@ -113,7 +105,7 @@ public:
 	*@param[in]	projMatrix		プロジェクション行列。
 	*  カメラ座標系の3Dモデルをスクリーン座標系に変換する行列です。
 	*/
-	void Draw(/*EnRenderMode renderMode*/CMatrix viewMatrix, CMatrix projMatrix );
+	void Draw(EnRenderMode renderMode,CMatrix viewMatrix, CMatrix projMatrix );
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -168,10 +160,10 @@ public:
 	/// マテリアルに対してクエリを行う。
 	/// </summary>
 	/// <param name="func">問い合わせ関数</param>
-	void QueryMaterials(std::function<void(C3DModelEffect*)> func)
+	void QueryMaterials(std::function<void(SkinModelEffect*)> func)
 	{
 		m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
-			func(reinterpret_cast<C3DModelEffect*>(material));
+			func(reinterpret_cast<SkinModelEffect*>(material));
 			});
 	}
 private:
