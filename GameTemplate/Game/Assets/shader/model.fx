@@ -2,6 +2,7 @@
  * @brief	モデルシェーダー。
  */
 
+
  /////////////////////////////////////////////////////////////
  // Shader Resource View
  /////////////////////////////////////////////////////////////
@@ -224,35 +225,36 @@ float4 PSMain(PSInput In) : SV_Target0
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
 		lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) *  dligColor[i];
 	}
+	lig += float3(1.0f, 1.0f, 1.0f);
+	
+		if (isShadowReciever == 1) {	//シャドウレシーバー。
+			//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
+			float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;
+			shadowMapUV *= float2(0.5f, -0.5f);
+			shadowMapUV += 0.5f;
+			//シャドウマップの範囲内かどうかを判定する。
+			if (shadowMapUV.x < 1.0f
+				&& shadowMapUV.x > 0.0f
+				&& shadowMapUV.y < 1.0f
+				&& shadowMapUV.y > 0.0f
+				) {
 
-	if (isShadowReciever == 1) {	//シャドウレシーバー。
-		//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
-		float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;
-		shadowMapUV *= float2(0.5f, -0.5f);
-		shadowMapUV += 0.5f;
-		//シャドウマップの範囲内かどうかを判定する。
-		if (shadowMapUV.x < 1.0f
-			&& shadowMapUV.x > 0.0f
-			&& shadowMapUV.y < 1.0f
-			&& shadowMapUV.y > 0.0f
-			) {
-
-	//		///LVP空間での深度値を計算。
-			float zInLVP = In.posInLVP.z / In.posInLVP.w;
-	//		//シャドウマップに書き込まれている深度値を取得。
-			float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV);
-
-			if (zInLVP > zInShadowMap + 0.01f) {
-			//	//影が落ちているので、光を弱くする
-				lig *= 0.5f;
-				
+				///LVP空間での深度値を計算。
+				float zInLVP = In.posInLVP.z / In.posInLVP.w;
+				//シャドウマップに書き込まれている深度値を取得。
+				float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV);
+				//for (int i = 0; i < 4; i++) {
+					if (zInLVP > zInShadowMap + 0.01f) {
+						//影が落ちているので、光を弱くする
+						lig *= 0.5f;
+					}
+				//}
 			}
 		}
 		
-		
-	}
-	//lig *= 0.5f;
-	lig += float3(0.5f, 0.5f, 0.5f);
+	
+	
+	
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz * lig;
 	return finalColor;

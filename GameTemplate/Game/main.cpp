@@ -36,10 +36,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//ゲームオブジェクトマネージャーの更新。
 		GameObjectManager::instance().Update();
 		//g_physics.DebugDraw();
-		if (g_pad->IsTrigger(enButtonSelect))
-		{
-			abort();
-		}
 		//描画終了。
 		g_graphicsEngine->EndRender();
 	}

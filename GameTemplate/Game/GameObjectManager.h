@@ -53,7 +53,12 @@ public:
 			}
 		}
 	}
-	
+	void SetLightCameraPos(CVector3 pos)
+	{
+		LightCameraPos = pos;
+		
+
+	}
 private:
 	void Draw();
 	/// <summary>
@@ -83,6 +88,7 @@ private:
 
 
 private:
+	CVector3 LightCameraPos = CVector3::Zero();
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。												
 	//ゲームオブジェクトのリスト	

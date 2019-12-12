@@ -11,9 +11,11 @@ Dragon::Dragon()
 	m_scale *= 2.5f;
 	
 	m_skinModelRender = GameObjectManager::instance().NewGO<SkinModelRender>();
-
+	
 	m_skinModelRender->Init(L"Assets/modelData/DragonBoar.cmo");
-	m_skinModelRender->SetActiveFlag(false);
+	m_skinModelRender->SetShadowCasterFlag(true);
+	m_skinModelRender->SetShadowRecieverFlag(false);
+	//m_skinModelRender->SetActiveFlag(false);
 	//m_model.Init(L"Assets/modelData/DragonBoar.cmo");
 	animationClip[enAnimationClip_idle].Load(L"Assets/animData/DragonBoar_idle.tka",L"enAnimationIdle");
 	animationClip[enAnimationClip_idle].SetLoopFlag(true);

@@ -31,7 +31,7 @@ void GameCamera::Update()
 	{
 		auto plPos = m_game->m_player->GetPosition();
 		plPos.y += 100.0f;
-		//m_position.Set(plPos);
+		
 		auto d = m_position - plPos;
 		if (d.Length() > 100.0f)
 		{

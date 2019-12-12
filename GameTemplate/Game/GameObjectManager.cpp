@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameObjectManager.h"
-
+#include "Player.h"
 //GameObjectManagerクラスのインスタンス作成
 
 
@@ -35,11 +35,14 @@ GameObjectManager::~GameObjectManager()
 }
 void GameObjectManager::Update()
 {
+	
 	auto m_shadowMap = &ShadowMap::instance();
 	//シャドウマップを更新。
 	m_shadowMap->UpdateFromLightTarget(
-		{ 1000.0f, 1000.0f, 1000.0f },
-		{ 0.0f, 0.0f, 0.0f }
+		{ LightCameraPos.x+1000.0f ,
+		  LightCameraPos.y +1000.0f,
+		  LightCameraPos.z +1000.0f},
+		{ LightCameraPos }
 	);
 	//登録済みのゲームオブジェクトの
 	//Update関数を呼ぶ。

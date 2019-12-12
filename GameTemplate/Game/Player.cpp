@@ -38,7 +38,7 @@ Player::Player()
 	m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter_damage.tka",L"enAnimtion(h)Damage");
 	m_animationClip[enAnimationClip_damage].SetLoopFlag(false);
 	m_animation.Init(m_model, m_animationClip, enAnimationClip_num);*/
-	m_skinModelRender[Hunter]->SetActiveFlag(false);
+	m_skinModelRender[Hunter]->SetActiveFlag(true);
 	
 	//m_skeleton = &m_model[Hunter].GetSkeleton();
 	m_skeleton = m_skinModelRender[Hunter]->GetSkeleton();

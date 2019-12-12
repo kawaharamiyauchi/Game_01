@@ -127,19 +127,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 
 	auto shadowMap = &ShadowMap::instance();
 
-	SModelFxConstantBuffer modelFxCb;
-	modelFxCb.mWorld = m_worldMatrix;
-	modelFxCb.mProj = projMatrix;
-	modelFxCb.mView = viewMatrix;
-	//todo ライトカメラのビュー、プロジェクション行列を送る。
-	modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
-	modelFxCb.mLightView = shadowMap->GetLighViewMatrix();
-	if (m_isShadowReciever == true) {
-		modelFxCb.isShadowReciever = 1;
-	}
-	else {
-		modelFxCb.isShadowReciever = 0;
-	}
+	
 
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
@@ -150,31 +138,41 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	vsCb.mWorld = m_worldMatrix;
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
-	
+	vsCb.mLightProj = shadowMap->GetLightProjMatrix();
+	vsCb.mLightView = shadowMap->GetLighViewMatrix();
+	if (m_isShadowReciever == true) {
+		vsCb.isShadowReciever = 1;
+		ID3D11ShaderResourceView* srvArray[] = {
+			ShadowMap::instance().GetShadowMapSRV()
+		};
+		d3dDeviceContext->PSSetShaderResources(2, 1, srvArray);
+	}
+	else {
+		vsCb.isShadowReciever = 0;
+	}
+	if (m_isShadowCaster && renderMode == enRenderMode_CreateShadowMap) {
+		vsCb.mProj = shadowMap->GetLightProjMatrix();
+		vsCb.mView = shadowMap->GetLighViewMatrix();
+	}
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	
 	if (lightFlag == true) {
 		
 		d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 		//todo ライトカメラのビュー、プロジェクション行列を送る。
-		modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
-		modelFxCb.mLightView = shadowMap->GetLighViewMatrix();
+		//modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
+		//modelFxCb.mLightView = shadowMap->GetLighViewMatrix();
 	}
 	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	if (lightFlag == true&&colorFlag ==false) {
+	/*if (lightFlag == true&&colorFlag ==false) {
 		
 		d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 		
-	}
-
-	/*else if (colorFlag)
-	{
-		d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 	}*/
-	else d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_nullCb);
 
+	
 
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);

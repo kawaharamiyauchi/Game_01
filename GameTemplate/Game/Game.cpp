@@ -27,7 +27,7 @@ Game::Game()
 		
 		
 		m_UI = GameObjectManager::instance().NewGO<UI>();
-	
+		
 }
 
 Game::~Game()
@@ -42,24 +42,10 @@ Game::~Game()
 }
 void Game::Update()
 {
-	
-//	m_unityChanPos.x += g_pad[0].GetLStickXF() * -50.0f;
-//	m_unityChanPos.z += g_pad[0].GetLStickYF() * -50.0f;
-//
-//	m_unityChanModelDraw.Update(m_unityChanPos);
-//
-//	////シャドウキャスターを登録。
-//	m_shadowMap.RegistShadowCaster(&m_unityChanModelDraw);
-//	m_shadowMap.RegistShadowCaster(&m_bgModelDraw);
-//	//シャドウマップを更新。
-
-	/*m_shadowMap.UpdateFromLightTarget(
-		{ 1000.0f, 1000.0f, 1000.0f },
-		{ 0.0f, 0.0f, 0.0f }
-	);*/
-//
-//	
-	if (g_pad[0].IsTrigger(enButtonSelect))
+	if (m_player != nullptr) {
+		GameObjectManager::instance().SetLightCameraPos(m_player->GetPosition());
+	}
+if (g_pad[0].IsTrigger(enButtonSelect))
 	{
 
 		GameObjectManager::instance().DeleteGO(this);
