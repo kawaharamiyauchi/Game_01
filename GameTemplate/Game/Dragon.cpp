@@ -4,6 +4,9 @@
 #include "Player.h"
 
 #define pai 3.14159265
+const CVector3 ATTACK_SCALE = { 100.0f, 200.0f, 300.0f };
+
+
 Dragon::Dragon()
 {	
 	d_state = normal;
@@ -35,6 +38,12 @@ Dragon::Dragon()
 			OnAnimationEvent(clipName, eventName);
 		
 		});
+	m_charaCon.Init(
+		200.0f,
+		100.0f,
+		m_position
+	);
+	//m_charaCon.RemoveRigidBoby();
 	//m_aniCon->Init(&m_skeleton);
 	for (int i = 0; i < 40; i++)
 	{
@@ -86,7 +95,7 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 	
 	if (d_state ==attack)
 	{
-		m_collisionScale.Set(100.0f, 200.0f, 300.0f);
+		m_collisionScale.Set(ATTACK_SCALE);
 		auto bone = m_skeleton->GetBone(11);
 		m_collisionPosition.x = bone->GetWorldMatrix().m[3][0];
 		m_collisionPosition.y = bone->GetWorldMatrix().m[3][1];
@@ -94,8 +103,10 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 		//m_collisionPosition = bone->GetWorldMatrix().v[3];
 		CVector3 attackpoint;
 		attackpoint.Set(m_collisionPosition);
+		
 		(void)clipName;
 		m_ghost.CreateBox(attackpoint, m_rotation, m_collisionScale);
+		
 		g_physics.ContactTest(m_game->m_player->GetcharaCon(), [&](const btCollisionObject & contactObject)
 			{
 				if (m_ghost.IsSelf(contactObject))
@@ -109,19 +120,14 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 }
 void Dragon::Move()
 {
-	float angle;
+	float angle=0.0f;
+
 	auto m_game = Game::instance();
+	auto agoPos = m_collisionPosition;
 	diff.Set(m_game->m_player->GetPosition() - m_position);
-	//auto m_bone = m_skeleton->GetBone(12);
-
-	/*diff.Set(
-		m_game->m_player->GetPosition().x - m_bone->GetWorldMatrix().m[3][0],
-		m_game->m_player->GetPosition().y - m_bone->GetWorldMatrix().m[3][1],
-		m_game->m_player->GetPosition().z - m_bone->GetWorldMatrix().m[3][2]
-
-	);*/
-
+	//diff.Set(m_game->m_player->GetPosition() - agoPos);
 	auto move = diff;
+	move.y = 0.0f;
 	move.Normalize();
 	switch(d_state)
 
@@ -129,17 +135,14 @@ void Dragon::Move()
 	case normal:
 		break;
 	case walk:
-		
-		
-			if (diff.Length() > 10.0f)
-			{
+		if (diff.Length() > 10.0f)
+		{
 				m_position += move * 10.0f;
-			}
+		}
 			
 
 			 angle= atan2(move.x, move.z);
-			m_rotation.SetRotation(CVector3::AxisY(), angle);
-
+			 m_rotation.SetRotation(CVector3::AxisY(), angle);
 		break;
 	case run:
 		
@@ -150,13 +153,17 @@ void Dragon::Move()
 			}
 
 			 angle = atan2(move.x, move.z);
-			m_rotation.SetRotation(CVector3::AxisY(), angle);
-
-		
+			 m_rotation.SetRotation(CVector3::AxisY(), angle);
+			 
 		break;
 	case attack:
 		break;
 	}
+	m_charaCon.SetPosition(m_position);
+	m_charaCon.Execute(1.0f, CVector3::Zero());
+	
+	
+
 }
 
 void Dragon::SetState()
@@ -184,20 +191,29 @@ void Dragon::SetState()
 	nor_diff.Normalize();
 	angle = acos(nor_diff.Dot(forward));
 
-	auto hoge = angle / (pai / 180.0);
+	auto hoge = angle / (pai / 180.0f);
 	
 	//debug
 	
 	auto a = fabsf(hoge);
-	auto d = diff_2.Length();
+	
 	switch (d_state)
 	{
 	case Dragon::normal:
-		if (diff_2.Length() < 1200.0f&&fabsf(hoge) < 90.0f)
+	
+		if (diff_2.Length() < 150.0f)
+		{
+			SetDragonState(attack);
+		}
+		else if (diff_2.Length() < 1200.0f&&fabsf(hoge) < 90.0f||d_info.isFind ==true)
 		{
 				//MessageBox(NULL, "ミツケタ…", "発見", MB_OK);
 				OutputDebugStringA("ミツケタ…\n");
-				SetDragonState(run);
+				SetDragonState(walk);
+				/*if (!d_info.isFind)
+				{
+					d_info.isFind = true;
+				}*/
 		}
 		break;
 	case Dragon::walk:
@@ -245,45 +261,18 @@ void Dragon::SetState()
 void Dragon::Update()
 {
 	
-
-	m_ghost.Release();
-	
-	m_timer ++ ;
-	/*if (g_pad[0].IsTrigger(enButtonY))
+	//ゴーストオブジェクトを１フレーム削除
+	if (&m_ghost != nullptr)
 	{
-		if (GetDragonState() == normal)
-		{
-			SetDragonState(walk);
-		}
-		else if (GetDragonState() == walk)
-		{
-			SetDragonState(run);
-		}
-		else if (GetDragonState() == run)
-		{
-			SetDragonState(attack);
-		}
-		
-
-	}*/
+		m_ghost.Release();
+	}
 
 	a += 0.1f;
 	
-	
-	/*if (g_pad[0].IsTrigger(enButtonA))
-	{
-		if (m_model.GetActiveFlag() == false) {
-			m_model.SetActiveFlag(true);
-		}
-		else m_model.SetActiveFlag(false);
-	}*/
-
-
-	
 	Move();
+	auto a = m_charaCon.GetPosition();
 	SetState();
 	AnimationPlay();
-	//m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetRotation(m_rotation);
 	m_skinModelRender->SetScale(m_scale);
@@ -291,8 +280,5 @@ void Dragon::Update()
 
 void Dragon::Render()
 {
-	/*m_model.Draw(
-		g_camera3D.GetViewMatrix(),
-		g_camera3D.GetProjectionMatrix()
-	);*/
+	
 }

@@ -16,9 +16,11 @@ public:
 	enum PlayerState {
 		idle,
 		run,
+		jump,
 		damage,
 		die,
-		attack
+		attack,
+		useitem
 		
 	};
 	

@@ -22,8 +22,7 @@ public:
 	/// </summary>
 	/// <returns>GameƒNƒ‰ƒX</returns>
 	static Game* instance()
-	{
-		
+	{	
 		static Game* gam = GameObjectManager::instance().NewGO<Game>();
 		return gam;
 	}

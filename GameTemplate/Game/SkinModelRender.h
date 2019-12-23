@@ -76,9 +76,9 @@ public:
 	}
 	void Update();
 	void Render();
-	SkinModel m_skinModel;
+	
 private:
-
+	SkinModel m_skinModel;
 	EnRenderMode m_renderMode = enRenderMode_Normal;
 	CVector3 m_position = CVector3::Zero();
 	CQuaternion m_rotation = CQuaternion::Identity();

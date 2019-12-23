@@ -22,6 +22,13 @@ public:
 		attack,			///UŒ‚
 		escape,			///“¦‘–
 	};
+	struct DragonInfo
+	{
+		bool isFind =false;
+		bool isDead = false;
+		float HP = 1000.0f;
+		
+	};
 	/// <summary>
 	/// ƒhƒ‰ƒSƒ“‚ÌˆÊ’u‚ğæ“¾
 	/// </summary>
@@ -82,8 +89,9 @@ private:
 		enAnimationClip_num,
 
 	};
-	
+	CharacterController m_charaCon;
 	Dragon_anim d_anim;
+	DragonInfo d_info;
 	DragonState d_state;
 	AnimationClip animationClip[enAnimationClip_num];
 	
@@ -104,7 +112,6 @@ private:
 	
 	Skeleton* m_skeleton;
 	
-	CharacterController m_charaCon[5];
 	float a = 0.0;
 	int m_timer = 0;
 	const wchar_t * bonename[41];

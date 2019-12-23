@@ -71,7 +71,25 @@ public:
 	{
 		return &m_viewport;
 	}
+	/// <summary>
+	/// レンダリングターゲットの幅を取得。
+	/// </summary>
+	/// <returns></returns>
+	float GetWidth() const
+	{
+		return m_width;
+	}
+	/// <summary>
+	/// レンダリングターゲットの高さを取得。
+	/// </summary>
+	/// <returns></returns>
+	float GetHeight() const
+	{
+		return m_height;
+	}
 private:
+	float m_width =0.0f;
+	float m_height = 0.0f;
 	ID3D11Texture2D*			m_renderTargetTex = nullptr;		//!<レンダリングターゲットとなるテクスチャ。
 	ID3D11RenderTargetView*		m_renderTargetView = nullptr;		//!<レンダーターゲットビュー。
 	ID3D11ShaderResourceView*	m_renderTargetSRV = nullptr;		//!<レンダリングターゲットのSRV

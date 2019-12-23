@@ -100,6 +100,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="C3DModelDraw.cpp" />
     <ClCompile Include="C3DModelEffect.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="physics\CapsuleCollider.cpp" />
     <ClCompile Include="physics\PhysicsStaticObject.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PostEffect.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
@@ -155,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Bloom.h" />
     <ClInclude Include="C3DModelDraw.h" />
     <ClInclude Include="C3DModelEffect.h" />
     <ClInclude Include="character\CharacterController.h" />
@@ -197,6 +200,7 @@
     <ClInclude Include="physics\CollisionAttr.h" />
     <ClInclude Include="physics\PhysicsStaticObject.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PostEffect.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShadowMap.h" />
@@ -215,7 +219,7 @@
     <MeshContentTask Include="Assets\modelData\bg.fbx" />
     <MeshContentTask Include="Assets\modelData\Desert stage.FBX" />
     <MeshContentTask Include="Assets\modelData\DragonBoar.fbx" />
-    <MeshContentTask Include="Assets\modelData\hunter.fbx" />
+    <MeshContentTask Include="Assets\modelData\hunter02.fbx" />
     <MeshContentTask Include="Assets\modelData\hunter_weapon.fbx" />
     <MeshContentTask Include="Assets\modelData\sky_01.FBX" />
     <MeshContentTask Include="Assets\modelData\testbox.FBX" />

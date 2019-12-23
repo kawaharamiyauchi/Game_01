@@ -62,8 +62,8 @@ void C3DModelDraw::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix pro
 	modelFxCb.mProj = projMatrix;
 	modelFxCb.mView = viewMatrix;
 	//todo ライトカメラのビュー、プロジェクション行列を送る。
-	modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
-	modelFxCb.mLightView = shadowMap->GetLighViewMatrix();
+	/*modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
+	modelFxCb.mLightView = shadowMap->GetLighViewMatrix();*/
 	if (m_isShadowReciever == true) {
 		modelFxCb.isShadowReciever = 1;
 	}

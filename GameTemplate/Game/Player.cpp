@@ -17,7 +17,9 @@ Player::Player()
 		m_position[Hunter]	//初期座標
 	);	
 	//cmoファイルの読み込み。
-	m_skinModelRender[Hunter]->Init(L"Assets/modelData/hunter_weapon.cmo");
+	//m_skinModelRender[Hunter]->Init(L"Assets/modelData/hunter_weapon.cmo");
+	m_skinModelRender[Hunter]->Init(L"Assets/modelData/hunter02.cmo");
+
 	m_skinModelRender[RightHand]->Init(L"Assets/modelData/testbox_small.cmo");
 	m_skinModelRender[LeftHand]->Init(L"Assets/modelData/testbox_small.cmo");
 	m_skinModelRender[Weapon]->Init(L"Assets/modelData/testbox_small.cmo");
@@ -27,32 +29,35 @@ Player::Player()
 	m_skinModelRender[RightHand]->SetShadowCasterFlag(true);
 	m_skinModelRender[LeftHand]->SetShadowCasterFlag(true);
 	m_skinModelRender[Weapon]->SetShadowCasterFlag(true);
+	//m_skinModelRender[Hunter]
 	/*m_model[Hunter].Init(L"Assets/modelData/hunter_weapon.cmo");
 	m_model[RightHand].Init(L"Assets/modelData/testbox_small.cmo");
 	m_model[LeftHand].Init(L"Assets/modelData/testbox_small.cmo");
 	m_model[Weapon].Init(L"Assets/modelData/testbox_small.cmo");*/
 
 	//m_model[Hunter].SetlightFlag(false);
-	/*m_animationClip[enAnimationClip_run].Load(L"Assets/animData/hunter_run.tka",L"enAnimation(h)Run");
+	m_animationClip[enAnimationClip_run].Load(L"Assets/animData/hunter_run.tka",L"enAnimation(h)Run");
 	m_animationClip[enAnimationClip_run].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter_damage.tka",L"enAnimtion(h)Damage");
 	m_animationClip[enAnimationClip_damage].SetLoopFlag(false);
-	m_animation.Init(m_model, m_animationClip, enAnimationClip_num);*/
+	//m_animation.Init(m_model, m_animationClip, enAnimationClip_num);
 	m_skinModelRender[Hunter]->SetActiveFlag(true);
-	
+	m_skinModelRender[RightHand]->SetActiveFlag(false);
+	m_skinModelRender[LeftHand]->SetActiveFlag(false);
+	m_skinModelRender[Weapon]->SetActiveFlag(false);
 	//m_skeleton = &m_model[Hunter].GetSkeleton();
 	m_skeleton = m_skinModelRender[Hunter]->GetSkeleton();
 	const wchar_t * bonename[41];
 
 
-	for (int i = 0; i < 27; i++)
+	/*for (int i = 0; i < 27; i++)
 	{
 		bonename[i] = m_skeleton->GetBone(i)->GetName();
 		if (i==26)
 		{
 			bonename[i+1] = L"end";
 		}
-	}
+	}*/
 	
 }
 
@@ -175,7 +180,7 @@ void Player::StateChange()
 	if (m_damageFlag)
 	{
 		p_state = damage;
-		m_plinfo.HP -= 100.0f;
+		m_plinfo.HP -= 20.0f;
 		m_damageFlag = false;
 	}
 	if (p_state != damage && p_state != die)

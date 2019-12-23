@@ -166,11 +166,11 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	/*if (lightFlag == true&&colorFlag ==false) {
+	if (lightFlag == true&&colorFlag ==false) {
 		
 		d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 		
-	}*/
+	}
 
 	
 

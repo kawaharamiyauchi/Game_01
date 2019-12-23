@@ -138,7 +138,8 @@ void Sprite::CreateVertexBuffer(float w, float h)
 	Vertex vertices[] = {
 		{
 			CVector4(-halfW, -halfH, 0.0f, 1.0f),
-			CVector2(0.0f, 1.0f),
+			CVector2(0.0f, 1.0f)
+			/*CVector2(0.0f,0.5f)*/,
 		},
 		{
 			CVector4(halfW, -halfH, 0.0f, 1.0f),

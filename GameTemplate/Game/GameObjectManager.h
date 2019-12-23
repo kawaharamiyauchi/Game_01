@@ -3,6 +3,7 @@
 #include <iostream>
 #include "RenderTarget.h"
 #include "Sprite.h"
+#include "PostEffect.h"
 
 using namespace std;
 class GameObjectManager
@@ -13,11 +14,22 @@ public:
 		static GameObjectManager instance;
 		return instance;
 	}
+
+	/// <summary>
+	/// メインレンダリングターゲットを取得。
+	/// </summary>
+	/// 
+	RenderTarget* GetMainRenderTarget()
+	{
+		return &m_mainRenderTarget;
+	}
 private:
 
 	GameObjectManager();
 	~GameObjectManager();
 public:
+
+
 	/// <summary>
 	/// 更新処理
 	/// </summary>
@@ -74,6 +86,11 @@ private:
 	/// </summary>
 	void PostRender();
 	/// <summary>
+	/// カメラを初期化。
+	/// </summary>
+	void InitCamera();
+public:
+	/// <summary>
 	/// レンダリングターゲットの切り替え。
 	/// </summary>
 	/// <param name="d3dDeviceContext">D3Dデバイスコンテキスト</param>
@@ -81,16 +98,17 @@ private:
 	/// <param name="viewport">ビューポート</param>
 	void ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, RenderTarget* renderTarget, D3D11_VIEWPORT* viewport);
 	void ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStensil, D3D11_VIEWPORT* viewport);
-	/// <summary>
-	/// カメラを初期化。
-	/// </summary>
-	void InitCamera();
+	
 
 
 private:
+
 	CVector3 LightCameraPos = CVector3::Zero();
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。												
+	PostEffect m_postEffect;
+	CVector4 m_ligPower = { 2.0f,2.0f,2.0f,1.0f };
+
 	//ゲームオブジェクトのリスト	
 	std::vector<IGameObject*> m_goList;
 

@@ -12,7 +12,8 @@ GameObjectManager::GameObjectManager()
 	m_mainRenderTarget.Create(
 		FRAME_BUFFER_W,
 		FRAME_BUFFER_H,
-		DXGI_FORMAT_R8G8B8A8_UNORM
+		//DXGI_FORMAT_R8G8B8A8_UNORM
+		DXGI_FORMAT_R16G16B16A16_FLOAT
 	);
 
 	//メインレンダリングターゲットに描かれた絵を
@@ -74,8 +75,10 @@ void GameObjectManager::Update()
 	{
 		delete (go);
 	}
+	
 	m_deleteObject.clear();
-
+	//ポストエフェクトの更新処理。
+	m_postEffect.Update();
 }
 void GameObjectManager::BackUp()
 {
@@ -130,6 +133,8 @@ void GameObjectManager::ForwordRender()
 
 void GameObjectManager::PostRender()
 {
+	//ポストエフェクトの描画処理。
+	m_postEffect.Draw();
 	//レンダリングターゲットをフレームバッファに戻す。
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	ChangeRenderTarget(
@@ -148,6 +153,7 @@ void GameObjectManager::PostRender()
 
 void GameObjectManager::ChangeRenderTarget(ID3D11DeviceContext * d3dDeviceContext, RenderTarget * renderTarget, D3D11_VIEWPORT * viewport)
 {
+	
 	ChangeRenderTarget(
 		d3dDeviceContext,
 		renderTarget->GetRenderTargetView(),

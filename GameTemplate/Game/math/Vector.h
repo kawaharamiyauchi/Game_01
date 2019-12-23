@@ -76,7 +76,7 @@ public:
 		z = _v.z();
 		return *this;
 	}
-	CVector3() {}
+	CVector3(){}
 	/*!
 	* @brief	コンストラクタ。
 	*/

@@ -225,8 +225,9 @@ float4 PSMain(PSInput In) : SV_Target0
 	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
 		lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) *  dligColor[i];
 	}
-	lig += float3(1.0f, 1.0f, 1.0f);
-	
+	//lig += float3(1.0f, 1.0f, 1.0f);
+	lig += float3(0.5f,0.5f,0.5f);
+
 		if (isShadowReciever == 1) {	//シャドウレシーバー。
 			//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
 			float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;
@@ -243,13 +244,22 @@ float4 PSMain(PSInput In) : SV_Target0
 				float zInLVP = In.posInLVP.z / In.posInLVP.w;
 				//シャドウマップに書き込まれている深度値を取得。
 				float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV);
-				//for (int i = 0; i < 4; i++) {
-					if (zInLVP > zInShadowMap + 0.01f) {
+				//VSM??
+				//Variance Shadow Maps（分散シャドウマップ）
+				//for (int i = 1; i < 20; i++) {
+				//	if (zInLVP > zInShadowMap + 0.005f*i) {
+				//		//影が落ちているので、光を弱くする
+				//		lig *= 0.9f;
+				//		//lig *= 0.5f;
+				//	}
+				//}
+					if (zInLVP > zInShadowMap + 0.001f) {
 						//影が落ちているので、光を弱くする
 						lig *= 0.5f;
+						//lig += 2.0f;
 					}
-				//}
-			}
+				}
+			
 		}
 		
 	

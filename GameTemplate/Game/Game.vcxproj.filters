@@ -172,6 +172,12 @@
     <ClCompile Include="dbgDraw.cpp">
       <Filter>physics</Filter>
     </ClCompile>
+    <ClCompile Include="Bloom.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="PostEffect.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -307,6 +313,12 @@
     <ClInclude Include="dbgDraw.h">
       <Filter>physics</Filter>
     </ClInclude>
+    <ClInclude Include="Bloom.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="PostEffect.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\sky_01.FBX">
@@ -319,9 +331,6 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\DragonBoar.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\hunter.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\bg.fbx">
@@ -337,6 +346,9 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\testbox_small.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\hunter02.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
