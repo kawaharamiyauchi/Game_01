@@ -14,6 +14,7 @@ Game::Game()
 	m_gamecamera = m_manager->NewGO<GameCamera>();
 	m_player = m_manager->NewGO<Player>();
 	m_dragon = m_manager->NewGO<Dragon>();
+
 	m_background = m_manager->NewGO<BackGround>();
 	m_UI = m_manager->NewGO<UI>();
 	/*m_gamecamera = GameObjectManager::instance().NewGO<GameCamera>();

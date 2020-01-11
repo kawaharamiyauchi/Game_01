@@ -61,10 +61,12 @@ Dragon::Dragon()
 
 Dragon::~Dragon()
 {
+	
 }
 
 void Dragon::AnimationPlay()
 {
+
 	switch (d_state)
 	{
 	case normal:
@@ -254,7 +256,9 @@ void Dragon::SetState()
 	}
 	
 	
-		
+	m_front = bonePos - m_position;
+	m_front.y = 0.0f;
+	m_front.Normalize();
 
 
 }
@@ -276,6 +280,7 @@ void Dragon::Update()
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetRotation(m_rotation);
 	m_skinModelRender->SetScale(m_scale);
+	
 }
 
 void Dragon::Render()

@@ -15,6 +15,7 @@ public:
 	};
 	enum PlayerState {
 		idle,
+		walk,
 		run,
 		jump,
 		damage,
@@ -105,6 +106,8 @@ private:
 		enAnimationClip_idle,
 		enAnimationClip_walk,
 		enAnimationClip_run,
+		enAnimationClip_jump,
+		enAnimationClip_attack,
 		enAnimationClip_damage,
 		enAnimationClip_num
 	};
@@ -131,5 +134,8 @@ private:
 	CharacterController m_charaCon;
 	plinfo m_plinfo;
 	bool m_damageFlag =false;
+	bool m_jumpflag = false;
+	int m_damageTimer = 0;
+	int m_attackTimer = 0;
 };
 

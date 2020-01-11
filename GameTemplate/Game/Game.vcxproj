@@ -219,7 +219,9 @@
     <MeshContentTask Include="Assets\modelData\bg.fbx" />
     <MeshContentTask Include="Assets\modelData\Desert stage.FBX" />
     <MeshContentTask Include="Assets\modelData\DragonBoar.fbx" />
+    <MeshContentTask Include="Assets\modelData\humanoids.fbx" />
     <MeshContentTask Include="Assets\modelData\hunter02.fbx" />
+    <MeshContentTask Include="Assets\modelData\hunter03.fbx" />
     <MeshContentTask Include="Assets\modelData\hunter_weapon.fbx" />
     <MeshContentTask Include="Assets\modelData\sky_01.FBX" />
     <MeshContentTask Include="Assets\modelData\testbox.FBX" />

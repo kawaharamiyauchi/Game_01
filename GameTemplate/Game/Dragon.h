@@ -37,7 +37,12 @@ public:
 	{
 		return m_position;
 	}
+	CVector3 GetFront()const
+	{
+		return m_front;
+	}
 
+	
 	/// <summary>
 	/// ƒhƒ‰ƒSƒ“‚Ìó‘Ô‚ğİ’è
 	/// </summary>
@@ -105,7 +110,7 @@ private:
 
 	CVector3 m_collisionPosition = CVector3::Zero();
 	CVector3 m_collisionScale = CVector3::One();
-
+	CVector3 m_front = CVector3::Zero();
 
 	float angle = 0.0f;
 	CVector3 diff = CVector3::Zero();

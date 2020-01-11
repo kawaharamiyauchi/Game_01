@@ -226,7 +226,7 @@ float4 PSMain(PSInput In) : SV_Target0
 		lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) *  dligColor[i];
 	}
 	//lig += float3(1.0f, 1.0f, 1.0f);
-	lig += float3(0.5f,0.5f,0.5f);
+	lig += float3(0.1f,0.1f,0.1f);
 
 		if (isShadowReciever == 1) {	//シャドウレシーバー。
 			//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。

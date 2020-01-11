@@ -5,6 +5,7 @@
 #include "UI.h"
 #include "ShadowMap.h"
 #include"C3DModelDraw.h"
+//#include "Level.h"
 class Player;
 class BackGround;
 class GameCamera;
@@ -36,11 +37,12 @@ public:
 	Player*m_player = nullptr;				//ÉvÉåÉCÉÑÅ[
 	BackGround*m_background = nullptr;		
 	GameCamera *m_gamecamera = nullptr;
-	Dragon *m_dragon = nullptr;
+	Dragon *m_dragon = nullptr ;
 	UI*m_UI = nullptr;
 	ShadowMap m_shadowMap;
 	
 private:
+	//Level m_level;
 	Sprite m_sprite;
 	C3DModelDraw m_unityChanModelDraw;
 	C3DModelDraw m_bgModelDraw;
