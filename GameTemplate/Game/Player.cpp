@@ -13,7 +13,7 @@ Player::Player()
 	}
 	m_charaCon.Init(
 
-		80.0f,		//半径
+		40.0f,		//半径
 		80.0f,		//高さ
 		m_position[Hunter]	//初期座標
 	);	
@@ -64,8 +64,10 @@ Player::Player()
 	for (int i = 0; i < 23; i++)
 	{
 		bonename[i] = m_skeleton->GetBone(i)->GetName();
+
 		if (i==22)
 		{
+			
 			bonename[i+1] = L"end";
 		}
 	}
@@ -133,7 +135,8 @@ void Player::Move()
 
 		}
 		CVector3 bonePos[Modeltype::ModelType_num];
-		bonePos[Hunter] =CVector3::Zero();
+		//bonePos[Hunter] =CVector3::Zero();
+		//auto a = m_skeleton->GetBone(22)->GetWorldMatrix().v;
 		/*for (int i = 1; i < Modeltype::ModelType_num; i++)
 		{
 			
@@ -197,58 +200,59 @@ void Player::Turn()
 }
 void Player::StateChange()
 {	
-	
-	if (g_pad[0].IsTrigger(enButtonY)&&m_charaCon.IsOnGround())
-	{
-		p_state = attack;
-		
-	}
-	if (m_attackTimer == 10)
-	{
-		MessageBox(NULL, "ハンターの攻撃！！", "Game Over", MB_OK);
-	}
-	if (m_attackTimer > 20)
-	{
-		m_attackTimer = 0;
-		p_state = idle;
-	}
-	if (m_damageFlag)
-	{
-		m_damageTimer++;
-		p_state = damage;
-		if(m_damageTimer ==1)
+	if (p_state != die) {
+		if (g_pad[0].IsTrigger(enButtonY) && m_charaCon.IsOnGround())
 		{
-			m_plinfo.HP -= 20.0f;
-			
+			p_state = attack;
+
 		}
-		if (m_damageTimer > 30)
+		if (m_attackTimer == 10)
 		{
-			m_damageFlag = false;
-			m_damageTimer =0;
+			//MessageBox(NULL, "ハンターの攻撃！！", "Game Over", MB_OK);
+		}
+		if (m_attackTimer > 20)
+		{
+			m_attackTimer = 0;
 			p_state = idle;
 		}
-		
-	}
-	if (p_state != damage && p_state != die)
-	{
-		if (m_charaCon.IsOnGround()&&p_state !=attack) {
-			if (fabsf(m_speed.x*m_speed.z) > 0.01f)
+		if (m_damageFlag)
+		{
+			m_damageTimer++;
+			p_state = damage;
+			if (m_damageTimer == 1)
 			{
-				p_state = walk;
-				if (g_pad[0].IsPress(enButtonRB1))
-				{
-					p_state = run;
-				}
+				m_plinfo.HP -= 20.0f;
+
 			}
-			else p_state = idle;
+			if (m_damageTimer > 30)
+			{
+				m_damageFlag = false;
+				m_damageTimer = 0;
+				p_state = idle;
+			}
+
 		}
-	}
-	if (m_plinfo.HP < 0.001f)
-	{
-		p_state = die;
-		
+		if (p_state != damage && p_state != die)
+		{
+			if (m_charaCon.IsOnGround() && p_state != attack) {
+				if (fabsf(m_speed.x*m_speed.z) > 0.01f)
+				{
+					p_state = walk;
+					if (g_pad[0].IsPress(enButtonRB1))
+					{
+						p_state = run;
+					}
+				}
+				else p_state = idle;
+			}
+		}
+		if (m_plinfo.HP < 0.001f)
+		{
+			p_state = die;
+
 			MessageBox(NULL, "力尽きました…", "Game Over", MB_OK);
-		
+
+		}
 	}
 }
 void Player::AnimationPlay()
@@ -281,7 +285,7 @@ void Player::AnimationPlay()
 	}
 	if (p_state == attack)
 	{
-		//bone[13] Weapon
+		
 		m_animation.Play(enAnimationClip_attack);
 		
 		m_animation.Update(0.04f);
@@ -299,10 +303,7 @@ void Player::AnimationPlay()
 void Player::Update()
 {
 	
-	if (p_state != die)
-	{
-		StateChange();
-	}
+	StateChange();
 	AnimationPlay();
 	Move();
 	Turn();
@@ -321,14 +322,6 @@ void Player::Update()
 }
 void Player::Render()
 {
-	//MessageBox(NULL, "aa", "aaa",MB_OK);
-	/*for (int i = 0; i < Modeltype::ModelType_num; i++)
-	{
-		m_model[i].Draw(
-			g_camera3D.GetViewMatrix(),
-			g_camera3D.GetProjectionMatrix()
-		);
-	}*/
 	
 }
 

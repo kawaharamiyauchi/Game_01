@@ -16,8 +16,8 @@ public:
 	enum DragonState
 	{
 		normal,			///’Êí
-		walk,			///œpœj
-		run,			///’ÇÕ
+		walk,			///•às
+		run,			///¾‘–
 		die,			///€–S
 		attack,			///UŒ‚
 		escape,			///“¦‘–
@@ -52,6 +52,8 @@ public:
 
 		d_state = state;
 	}
+	void DamageEvent();
+	
 	/// <summary>
 	/// Œ»İ‚Ìƒhƒ‰ƒSƒ“‚Ìó‘Ô‚ğæ“¾
 	/// </summary>
@@ -91,10 +93,24 @@ private:
 		enAnimationClip_attack,
 		enAnimationClip_run,
 		enAnimationClip_scream,
+		enAnimationClip_die,
 		enAnimationClip_num,
 
 	};
-	CharacterController m_charaCon;
+	enum anim_event {
+		D_attack00,
+		P_attack00,
+		EventSize,
+	};
+	enum CharaConType
+	{
+		Head,
+		UpBody,
+		DownBody,
+		Tail,
+		CharaConTypeSize,
+	};
+	CharacterController m_charaCon[CharaConTypeSize];
 	Dragon_anim d_anim;
 	DragonInfo d_info;
 	DragonState d_state;
@@ -123,6 +139,5 @@ private:
 	SkinModel m_model;		//ƒXƒLƒ“ƒ‚ƒfƒ‹
 	//SkinModel m_test;
 	SkinModelRender * m_skinModelRender = nullptr;
-	GhostObject m_ghost;
+	GhostObject m_ghost[EventSize];
 };
-

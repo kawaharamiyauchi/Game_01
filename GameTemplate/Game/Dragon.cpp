@@ -10,7 +10,7 @@ const CVector3 ATTACK_SCALE = { 100.0f, 200.0f, 300.0f };
 Dragon::Dragon()
 {	
 	d_state = normal;
-	m_position.Set(0.0f, 50.0f, 100.0f);
+	m_position.Set(0.0f, 100.0f, 100.0f);
 	m_scale *= 2.5f;
 	
 	m_skinModelRender = GameObjectManager::instance().NewGO<SkinModelRender>();
@@ -30,6 +30,8 @@ Dragon::Dragon()
 	animationClip[enAnimationClip_run].SetLoopFlag(true);
 	animationClip[enAnimationClip_scream].Load(L"Assets/animData/DragonBoar_scream.tka",L"num");
 	animationClip[enAnimationClip_scream].SetLoopFlag(false);
+	animationClip[enAnimationClip_die].Load(L"Assets/animData/DragonBoar_Die.tka", L"num");
+	animationClip[enAnimationClip_die].SetLoopFlag(false);
 	m_animation.Init(*m_skinModelRender->GetSkinModel(), animationClip, enAnimationClip_num);
 	//m_animation.Init(m_model, animationClip, enAnimationClip_num);
 	m_skeleton = m_skinModelRender->GetSkeleton();
@@ -38,7 +40,7 @@ Dragon::Dragon()
 			OnAnimationEvent(clipName, eventName);
 		
 		});
-	m_charaCon.Init(
+	m_charaCon[Head].Init(
 		200.0f,
 		100.0f,
 		m_position
@@ -85,6 +87,10 @@ void Dragon::AnimationPlay()
 		m_animation.Play(enAnimationClip_attack,1.0f);
 		m_animation.Update(0.03f);
 		break;
+	case die:
+		m_animation.Play(enAnimationClip_die, 1.0f);
+		m_animation.Update(0.025f);
+		break;
 	default:
 		return;
 	}
@@ -107,11 +113,11 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 		attackpoint.Set(m_collisionPosition);
 		
 		(void)clipName;
-		m_ghost.CreateBox(attackpoint, m_rotation, m_collisionScale);
+		m_ghost[D_attack00].CreateBox(attackpoint, m_rotation, m_collisionScale);
 		
 		g_physics.ContactTest(m_game->m_player->GetcharaCon(), [&](const btCollisionObject & contactObject)
 			{
-				if (m_ghost.IsSelf(contactObject))
+				if (m_ghost[D_attack00].IsSelf(contactObject))
 				{
 					MessageBox(NULL, "attack", "attack", MB_OK);
 					m_game->m_player->SetDamageFlag(true);
@@ -161,8 +167,8 @@ void Dragon::Move()
 	case attack:
 		break;
 	}
-	m_charaCon.SetPosition(m_position);
-	m_charaCon.Execute(1.0f, CVector3::Zero());
+	m_charaCon[Head].SetPosition(m_position);
+	m_charaCon[Head].Execute(1.0f, CVector3::Zero());
 	
 	
 
@@ -170,6 +176,7 @@ void Dragon::Move()
 
 void Dragon::SetState()
 {
+
 	CVector3 bonePos;
 	float angle;
 	auto m_game = Game::instance();
@@ -198,17 +205,22 @@ void Dragon::SetState()
 	//debug
 	
 	auto a = fabsf(hoge);
-	
-	switch (d_state)
-	{
-	case Dragon::normal:
-	
-		if (diff_2.Length() < 150.0f)
+
+	if (d_state != die) {
+		if (d_info.HP < 0.01f)
 		{
-			SetDragonState(attack);
+			SetDragonState(die);
 		}
-		else if (diff_2.Length() < 1200.0f&&fabsf(hoge) < 90.0f||d_info.isFind ==true)
+		switch (d_state)
 		{
+		case Dragon::normal:
+
+			if (diff_2.Length() < 150.0f)
+			{
+				SetDragonState(attack);
+			}
+			else if (diff_2.Length() < 1200.0f&&fabsf(hoge) < 90.0f || d_info.isFind == true)
+			{
 				//MessageBox(NULL, "ミツケタ…", "発見", MB_OK);
 				OutputDebugStringA("ミツケタ…\n");
 				SetDragonState(walk);
@@ -216,45 +228,45 @@ void Dragon::SetState()
 				{
 					d_info.isFind = true;
 				}*/
-		}
-		break;
-	case Dragon::walk:
-		if (diff_2.Length() < 150.0f)
-		{
-			SetDragonState(attack);
-		}
-		else if (diff_2.Length() < 1200.0f&&diff_2.Length() > 600.0f)
-		{
-			SetDragonState(run);
-		}
-		
-		break;
-	case Dragon::run:
-		if (diff_2.Length() < 600.0f)
-		{
-			SetDragonState(walk);
-		}
-		else if (diff_2.Length() >= 1200.0f)
-		{
-			SetDragonState(normal);
-		}
-		break;
-	case Dragon::die:
+			}
+			break;
+		case Dragon::walk:
+			if (diff_2.Length() < 150.0f)
+			{
+				SetDragonState(attack);
+			}
+			else if (diff_2.Length() < 1200.0f&&diff_2.Length() > 600.0f)
+			{
+				SetDragonState(run);
+			}
 
-		break;
-	case Dragon::attack:
-		if (!m_animation.IsPlaying())
-		{
-			SetDragonState(normal);
+			break;
+		case Dragon::run:
+			if (diff_2.Length() < 600.0f)
+			{
+				SetDragonState(walk);
+			}
+			else if (diff_2.Length() >= 1200.0f)
+			{
+				SetDragonState(normal);
+			}
+			break;
+		case Dragon::die:
+
+			break;
+		case Dragon::attack:
+			if (!m_animation.IsPlaying())
+			{
+				SetDragonState(normal);
+			}
+			break;
+		case Dragon::escape:
+
+			break;
+		default:
+			break;
 		}
-		break;
-	case Dragon::escape:
-		
-		break;
-	default:
-		break;
 	}
-	
 	
 	m_front = bonePos - m_position;
 	m_front.y = 0.0f;
@@ -262,21 +274,67 @@ void Dragon::SetState()
 
 
 }
+void Dragon::DamageEvent()
+{
+	if (d_state != die) {
+		auto m_game = Game::instance();
+		if (m_game->m_player != nullptr)
+		{
+
+
+
+			if (m_game->m_player->Getattack() > 10)
+			{
+				auto plbone = m_game->m_player->GetPlayerBone(22);
+				auto plpower = m_game->m_player->GetPlayerInformation().AttackPower;
+				CVector3 forward;
+				forward.x = plbone->GetWorldMatrix().m[2][0];
+				forward.y = plbone->GetWorldMatrix().m[2][1];
+				forward.z = plbone->GetWorldMatrix().m[2][2];
+				forward *= 60.0f;
+				CVector3 bonePos;
+				CQuaternion boneQua;
+				bonePos.Set(
+					plbone->GetWorldMatrix().m[3][0] + forward.x,
+					plbone->GetWorldMatrix().m[3][1] + forward.y,
+					plbone->GetWorldMatrix().m[3][2] + forward.z
+				);
+				boneQua.SetRotation(plbone->GetWorldMatrix());
+				m_ghost[P_attack00].CreateBox(bonePos, boneQua, { 30.0f,5.0f, 150.0f });
+
+				g_physics.ContactTest(m_charaCon[Head], [&](const btCollisionObject & contactObject)
+					{
+						if (m_ghost[P_attack00].IsSelf(contactObject))
+						{
+							MessageBox(NULL, "Hit!!", "PlayerAttack", MB_OK);
+							d_info.HP -= plpower*3.0f;
+							//m_game->m_player->SetDamageFlag(true);
+						}
+					});
+			}
+		}
+	}
+}
 void Dragon::Update()
 {
 	
 	//ゴーストオブジェクトを１フレーム削除
-	if (&m_ghost != nullptr)
+	if (&m_ghost[D_attack00] != nullptr)
 	{
-		m_ghost.Release();
+		m_ghost[D_attack00].Release();
 	}
 
+	if (&m_ghost[P_attack00] != nullptr)
+	{
+		m_ghost[P_attack00].Release();
+	}
 	a += 0.1f;
 	
 	Move();
-	auto a = m_charaCon.GetPosition();
+	auto a = m_charaCon[Head].GetPosition();
 	SetState();
 	AnimationPlay();
+	DamageEvent();
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetRotation(m_rotation);
 	m_skinModelRender->SetScale(m_scale);

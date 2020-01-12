@@ -11,6 +11,7 @@ public:
 
 	struct plinfo {
 		float HP = 100.0f;
+		float AttackPower = 30.0f;
 		float Stamina = 100.0f;
 	};
 	enum PlayerState {
@@ -96,11 +97,19 @@ public:
 		return m_skinModelRender[Hunter]->GetSkinModel();
 		//return m_model;
 	}
-
+	const int Getattack()const
+	{
+		return m_attackTimer;
+	}
 	CharacterController& GetcharaCon()
 	{
 		return m_charaCon;
 	}
+	Bone *GetPlayerBone(int bonenum)const
+	{
+		return m_skeleton->GetBone(bonenum);
+	}
+
 private:
 	enum Player_anim {
 		enAnimationClip_idle,
@@ -137,5 +146,6 @@ private:
 	bool m_jumpflag = false;
 	int m_damageTimer = 0;
 	int m_attackTimer = 0;
+
 };
 
