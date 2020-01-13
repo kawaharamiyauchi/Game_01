@@ -261,7 +261,7 @@ void Player::AnimationPlay()
 	{
 			m_animation.Play(enAnimationClip_idle);
 
-			m_animation.Update(0.1f);
+			m_animation.Update(0.05f);
 		
 	}
 	if (p_state ==walk)

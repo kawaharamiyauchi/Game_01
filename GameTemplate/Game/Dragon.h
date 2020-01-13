@@ -77,6 +77,7 @@ public:
 	
 	void SetState();
 	void Move();
+	void CharaConMove();
 	/// <summary>
 	/// ÉhÉâÉSÉìÇÃçXêVèàóù
 	/// </summary>
@@ -117,13 +118,14 @@ private:
 	AnimationClip animationClip[enAnimationClip_num];
 	
 	Animation m_animation;
-	CAnimationEvent m_canimation;
+	//CAnimationEvent m_canimation;
 	AnimationEventListener m_listener;
-
+	Bone *m_bone[CharaConTypeSize];
 	CVector3 m_position = CVector3::Zero();
+	CVector3 m_charaConPos[CharaConTypeSize] ={CVector3::Zero()};
 	CVector3 m_scale = CVector3::One();
 	CQuaternion m_rotation = CQuaternion::Identity();
-
+	CVector3 moveSpeed =CVector3::Zero();
 	CVector3 m_collisionPosition = CVector3::Zero();
 	CVector3 m_collisionScale = CVector3::One();
 	CVector3 m_front = CVector3::Zero();

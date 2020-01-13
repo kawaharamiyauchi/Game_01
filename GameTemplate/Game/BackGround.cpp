@@ -11,7 +11,7 @@ BackGround::BackGround()
 	add.SetRotationDeg(CVector3::AxisX(), 90.0f);
 
 	m_scale[1].Set(0.5f, 0.5f, 0.2f);
-	m_skinModelRender[MH_Ground]->Init(L"Assets/modelData/testbox.cmo");
+	m_skinModelRender[MH_Ground]->Init(L"Assets/modelData/Desert stage.cmo");
 	
 	m_skinModelRender[MH_Sky]->Init(L"Assets/modelData/MH_sky.cmo");
 	m_skinModelRender[MH_Ground]->SetShadowCasterFlag(true);

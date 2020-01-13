@@ -10,7 +10,7 @@ const CVector3 ATTACK_SCALE = { 100.0f, 200.0f, 300.0f };
 Dragon::Dragon()
 {	
 	d_state = normal;
-	m_position.Set(0.0f, 100.0f, 100.0f);
+	m_position.Set(0.0f,0.0f, 100.0f);
 	m_scale *= 2.5f;
 	
 	m_skinModelRender = GameObjectManager::instance().NewGO<SkinModelRender>();
@@ -40,11 +40,27 @@ Dragon::Dragon()
 			OnAnimationEvent(clipName, eventName);
 		
 		});
-	m_charaCon[Head].Init(
-		200.0f,
-		100.0f,
-		m_position
-	);
+	
+		m_charaCon[Head].Init(
+			90.0f,
+			80.0f,
+			m_charaConPos[Head]
+		);
+		m_charaCon[UpBody].Init(
+			90.0f,
+			100.0f,
+			m_charaConPos[UpBody]
+		);
+		m_charaCon[DownBody].Init(
+			90.0f,
+			80.0f,
+			m_charaConPos[DownBody]
+		);
+		m_charaCon[Tail].Init(
+			40.0f,
+			50.0f,
+			m_charaConPos[Tail]
+		);
 	//m_charaCon.RemoveRigidBoby();
 	//m_aniCon->Init(&m_skeleton);
 	for (int i = 0; i < 40; i++)
@@ -128,8 +144,9 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 }
 void Dragon::Move()
 {
-	float angle=0.0f;
-
+	
+	float angle = 0.0f;
+	
 	auto m_game = Game::instance();
 	auto agoPos = m_collisionPosition;
 	diff.Set(m_game->m_player->GetPosition() - m_position);
@@ -137,7 +154,7 @@ void Dragon::Move()
 	auto move = diff;
 	move.y = 0.0f;
 	move.Normalize();
-	switch(d_state)
+	switch (d_state)
 
 	{
 	case normal:
@@ -145,33 +162,60 @@ void Dragon::Move()
 	case walk:
 		if (diff.Length() > 10.0f)
 		{
-				m_position += move * 10.0f;
+			m_position += move * 10.0f;
 		}
-			
 
-			 angle= atan2(move.x, move.z);
-			 m_rotation.SetRotation(CVector3::AxisY(), angle);
+
+		angle = atan2(move.x, move.z);
+		m_rotation.SetRotation(CVector3::AxisY(), angle);
 		break;
 	case run:
-		
-		
-			if (diff.Length() > 20.0f)
-			{
-				m_position += move * 20.0f;
-			}
 
-			 angle = atan2(move.x, move.z);
-			 m_rotation.SetRotation(CVector3::AxisY(), angle);
-			 
+
+		if (diff.Length() > 20.0f)
+		{
+			m_position += move * 20.0f;
+		}
+
+		angle = atan2(move.x, move.z);
+		m_rotation.SetRotation(CVector3::AxisY(), angle);
+
 		break;
 	case attack:
 		break;
 	}
-	m_charaCon[Head].SetPosition(m_position);
-	m_charaCon[Head].Execute(1.0f, CVector3::Zero());
-	
 	
 
+}
+
+void Dragon::CharaConMove()
+{
+	m_bone[Head] = m_skeleton->GetBone(3);
+	m_bone[UpBody] = m_skeleton->GetBone(2);
+	m_bone[DownBody] = m_skeleton->GetBone(0);
+	m_bone[Tail] = m_skeleton->GetBone(30);
+	for (int i = 0; i < CharaConTypeSize; i++) {
+		m_charaConPos[i].Set(
+			m_bone[i]->GetWorldMatrix().m[3][0],
+			/*m_position.y*/0.0f,
+			m_bone[i]->GetWorldMatrix().m[3][2]
+
+		);
+		if (i == Tail)
+		{
+			m_charaConPos[Tail].y += 150.0f;
+		}
+		if (m_charaCon[i].IsOnGround())
+		{
+			/*m_charaConPos[i].y += 10.0f;*/
+			//moveSpeed.y += 50.0f;
+		}
+		//else moveSpeed.y -= 20.0f;/*m_charaConPos[i].y -= 10.0f;*/
+			
+		m_charaCon[i].SetPosition(m_charaConPos[i]);
+		m_charaCon[i].Execute(1.0f,moveSpeed);
+	}
+	
 }
 
 void Dragon::SetState()
@@ -280,9 +324,6 @@ void Dragon::DamageEvent()
 		auto m_game = Game::instance();
 		if (m_game->m_player != nullptr)
 		{
-
-
-
 			if (m_game->m_player->Getattack() > 10)
 			{
 				auto plbone = m_game->m_player->GetPlayerBone(22);
@@ -301,16 +342,17 @@ void Dragon::DamageEvent()
 				);
 				boneQua.SetRotation(plbone->GetWorldMatrix());
 				m_ghost[P_attack00].CreateBox(bonePos, boneQua, { 30.0f,5.0f, 150.0f });
-
-				g_physics.ContactTest(m_charaCon[Head], [&](const btCollisionObject & contactObject)
-					{
-						if (m_ghost[P_attack00].IsSelf(contactObject))
+				for (int i = 0; i < CharaConTypeSize; i++) {
+					g_physics.ContactTest(m_charaCon[i], [&](const btCollisionObject & contactObject)
 						{
-							MessageBox(NULL, "Hit!!", "PlayerAttack", MB_OK);
-							d_info.HP -= plpower*3.0f;
-							//m_game->m_player->SetDamageFlag(true);
-						}
-					});
+							if (m_ghost[P_attack00].IsSelf(contactObject))
+							{
+								MessageBox(NULL, "Hit!!", "PlayerAttack", MB_OK);
+								d_info.HP -= plpower * 3.0f;
+								//m_game->m_player->SetDamageFlag(true);
+							}
+						});
+				}
 			}
 		}
 	}
@@ -331,10 +373,12 @@ void Dragon::Update()
 	a += 0.1f;
 	
 	Move();
-	auto a = m_charaCon[Head].GetPosition();
+	CharaConMove();
 	SetState();
 	AnimationPlay();
 	DamageEvent();
+	m_position.y = m_charaConPos[UpBody].y;
+
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetRotation(m_rotation);
 	m_skinModelRender->SetScale(m_scale);
