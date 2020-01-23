@@ -178,6 +178,8 @@
     <ClCompile Include="PostEffect.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="QuestManager.cpp" />
+    <ClCompile Include="Fade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -319,6 +321,8 @@
     <ClInclude Include="PostEffect.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="QuestManager.h" />
+    <ClInclude Include="Fade.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\sky_01.FBX">
@@ -357,6 +361,9 @@
     <MeshContentTask Include="Assets\modelData\hunter03.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\MH_0-0.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\ago_free_03.png">
@@ -369,6 +376,27 @@
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\MH_stamina.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\MH_menu.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\MH_Exit_Grey.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\MH_Exit_Yellow.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\MH_GameStart_Grey.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\MH_GameStart_Yellow.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\yellowTriangle.jpg">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Triangle.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>

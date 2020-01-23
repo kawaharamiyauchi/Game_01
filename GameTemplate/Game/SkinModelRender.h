@@ -69,10 +69,17 @@ public:
 	{
 		return &m_skinModel;
 	}
-
+	 /// <summary>
+	 /// ƒXƒPƒ‹ƒgƒ“‚ğæ“¾
+	 /// </summary>
+	 /// <returns></returns>
 	Skeleton* GetSkeleton()
 	{
 		return &m_skinModel.GetSkeleton();
+	}
+	CMatrix* GetWorldMatrix()
+	{
+		return &m_skinModel.GetWorldMatrix();
 	}
 	void Update();
 	void Render();

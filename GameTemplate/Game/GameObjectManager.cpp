@@ -3,6 +3,14 @@
 #include "Player.h"
 //GameObjectManagerクラスのインスタンス作成
 
+void GameObjectManager::Start()
+{
+	for (auto go:m_goList) {
+		for (IGameObject* obj : m_goList) {
+			obj->StartWrapper();
+		}
+	}
+}
 
 GameObjectManager::GameObjectManager()
 {

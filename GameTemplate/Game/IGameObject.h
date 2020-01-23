@@ -2,6 +2,10 @@
 class IGameObject
 {
 public:
+	IGameObject()
+	{
+		m_isStart =false;
+	}
 	virtual ~IGameObject() {}
 	/// <summary>
 	///	更新関数
@@ -21,6 +25,26 @@ public:
 	{
 		isReqDelete = true;
 	}
+	virtual bool Start()
+	{
+		return true;
+	}
+	//条件を満たせば一度だけStart関数を実行する
+	void StartWrapper()
+	{
+		if (!m_isStart&&!isReqDelete) {
+			if (Start()) {
+				m_isStart = true;
+			}
+		}
+	}
+	//条件を満たせばUpdate関数を実行する
+	void UpdateWrapper()
+	{
+		if ( m_isStart && !isReqDelete) {
+			Update();
+		}
+	}
 	/// <summary>
 	/// 削除リクエストを受けているか調べる。
 	/// </summary>
@@ -32,8 +56,12 @@ public:
 	{
 		return isReqDelete;
 	}
+
+	virtual void OnDestroy() {}
 private:
 	bool isReqDelete = false;
+protected:
+	bool m_isStart = false;					//スタート関数が完了したかどうか
 
 
 

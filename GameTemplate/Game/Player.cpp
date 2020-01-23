@@ -45,11 +45,13 @@ Player::Player()
 	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_attack].Load(L"Assets/animData/hunter03_attack.tka", L"enAnimation(h)Attack");
 	m_animationClip[enAnimationClip_attack].SetLoopFlag(false);
-	//m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter_damage.tka",L"enAnimtion(h)Damage");
+	m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter03_damage.tka",L"enAnimtion(h)Damage");
 	//m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter_test.tka", L"enAnimtion(h)Damage");
 	m_animationClip[enAnimationClip_idle].Load(L"Assets/animData/hunter03_idle.tka",L"enAnimation(h)Idle");
 	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
-	//m_animationClip[enAnimationClip_damage].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_damage].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_die].Load(L"Assets/animData/hunter03_die.tka", L"enAnimation(h)Die");
+	m_animationClip[enAnimationClip_die].SetLoopFlag(false);
 	//m_animation.Init(m_model, m_animationClip, enAnimationClip_num);
 	m_animation.Init(*m_skinModelRender[Hunter]->GetSkinModel(), m_animationClip, enAnimationClip_num);
 	m_skinModelRender[Hunter]->SetActiveFlag(true);
@@ -77,18 +79,31 @@ Player::Player()
 
 Player::~Player()
 {
+	for (int i = 0; i < ModelType_num; i++) {
+		GameObjectManager::instance().DeleteGO(m_skinModelRender[i]);
+
+	}
 	
+
 }
 
 void Player::Move()
 {
-	auto m_dragon = Game::instance()->m_dragon;
+	Dragon*m_dragon;
 
-	if (p_state != die&&p_state !=attack)
+	if (Game::instance()->m_dragon != nullptr) {
+		m_dragon = Game::instance()->m_dragon;
+	}
+	if (p_state != die)
 	{
-		float IStick_x = g_pad[0].GetLStickXF();
-		float IStick_y = g_pad[0].GetLStickYF();
+		float IStick_y = 0.0f;
+		float IStick_x = 0.0f;
+		if (p_state != attack) {
+			 IStick_x = g_pad[0].GetLStickXF();
+			 IStick_y = g_pad[0].GetLStickYF();
 
+		}
+			
 		CVector3 cameraForward = g_camera3D.GetFront();
 		CVector3 cameraRight = g_camera3D.GetRight();
 
@@ -104,16 +119,19 @@ void Player::Move()
 			m_speed.y -= 4.0f;
 
 
-			m_speed += cameraForward * IStick_y*20.0f;
-			m_speed += cameraRight * IStick_x*20.0f;
+			m_speed += cameraForward * IStick_y*10.0f;
+			m_speed += cameraRight * IStick_x*10.0f;
 
 		}
-		if (g_pad[0].IsTrigger(enButtonB)&&p_state !=jump)
-		{
-			m_speed.y += 40.0f;
-			p_state = jump;
-			m_jumpflag = true;
-
+		if (p_state != damage) {
+			if (g_pad[0].IsTrigger(enButtonB) && p_state != jump)
+			{
+				if (p_state != attack) {
+					m_speed.y += 40.0f;
+					p_state = jump;
+					m_jumpflag = true;
+				}
+			}
 		}
 		if (p_state == run)
 		{
@@ -123,16 +141,30 @@ void Player::Move()
 			{
 				m_plinfo.Stamina -= 1.0f;
 			}
+			else m_dashflag = false;
 
 		}
 		else if (p_state != run && m_plinfo.Stamina < 100.0f)
 		{
 			m_plinfo.Stamina += 2.0f;
 		}
+		/*if (p_state == attack)
+		{
+			auto mat = m_skinModelRender[Hunter]->GetWorldMatrix();
+			CVector3 m_front;
+			m_front.Set(
+				mat->m[3][0],
+				mat->m[3][1],
+				mat->m[3][2]);
+			m_front.Normalize();
+			m_speed += m_front*10.0f;
+		}*/
 		if (p_state == damage)
 		{
-			m_speed += m_dragon->GetFront();
-
+			if (m_damageTimer == 1) {
+				m_speed += m_dragon->GetFront()*30.0f;
+			}
+			
 		}
 		CVector3 bonePos[Modeltype::ModelType_num];
 		//bonePos[Hunter] =CVector3::Zero();
@@ -168,6 +200,10 @@ void Player::Move()
 			
 		}
 	}
+	if (p_state == die)
+	{
+		m_speed.y = 0.0f;
+	}
 	m_position[Hunter] = m_charaCon.Execute(1.0f, m_speed);
 
 }
@@ -201,6 +237,10 @@ void Player::Turn()
 void Player::StateChange()
 {	
 	if (p_state != die) {
+		if (m_plinfo.Stamina > 99)
+		{
+			m_dashflag = true;
+		}
 		if (g_pad[0].IsTrigger(enButtonY) && m_charaCon.IsOnGround())
 		{
 			p_state = attack;
@@ -238,7 +278,7 @@ void Player::StateChange()
 				if (fabsf(m_speed.x*m_speed.z) > 0.01f)
 				{
 					p_state = walk;
-					if (g_pad[0].IsPress(enButtonRB1))
+					if (g_pad[0].IsPress(enButtonRB1)&&m_dashflag)
 					{
 						p_state = run;
 					}
@@ -259,9 +299,8 @@ void Player::AnimationPlay()
 {
 	if (p_state == idle)
 	{
-			m_animation.Play(enAnimationClip_idle);
-
-			m_animation.Update(0.05f);
+		m_animation.Play(enAnimationClip_idle);
+		m_animation.Update(0.05f);
 		
 	}
 	if (p_state ==walk)
@@ -292,11 +331,16 @@ void Player::AnimationPlay()
 		m_attackTimer++;
 
 	}
-	/*if (p_state == damage)
+	if (p_state == damage)
 	{
 		m_animation.Play(enAnimationClip_damage);
-		m_animation.Update(0.3f);
-	}*/
+		m_animation.Update(0.06f);
+	}
+	if (p_state == die)
+	{
+		m_animation.Play(enAnimationClip_die);
+		m_animation.Update(0.04f);
+	}
 }
 
 
@@ -307,6 +351,7 @@ void Player::Update()
 	AnimationPlay();
 	Move();
 	Turn();
+	GameObjectManager::instance().SetLightCameraPos(m_position[Hunter]);
 	//ワールド行列の更新。
 	
 	//m_model[Hunter].UpdateWorldMatrix(m_position[Hunter], m_rotation[Hunter], m_scale);

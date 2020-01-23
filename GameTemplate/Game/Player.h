@@ -11,7 +11,7 @@ public:
 
 	struct plinfo {
 		float HP = 100.0f;
-		float AttackPower = 30.0f;
+		float AttackPower = 50.0f;
 		float Stamina = 100.0f;
 	};
 	enum PlayerState {
@@ -37,8 +37,8 @@ public:
 	/// </summary>
 	/// <returns>m_position プレイヤーの位置</returns>
 	CVector3 GetPosition() const
-	{
-		return m_position[Hunter];
+	{	
+			return m_position[Hunter];	
 	}
 	/// <summary>
 	/// プレイヤーの位置設定
@@ -118,6 +118,7 @@ private:
 		enAnimationClip_jump,
 		enAnimationClip_attack,
 		enAnimationClip_damage,
+		enAnimationClip_die,
 		enAnimationClip_num
 	};
 	enum Modeltype {
@@ -129,7 +130,6 @@ private:
 	};
 	float move_x = 0.0f;
 	float move_z = 0.0f;
-	
 	Animation m_animation;
 	AnimationClip m_animationClip[enAnimationClip_num];
 	//SkinModel m_model[] = new Modeltype[4]{};	//スキンモデル。
@@ -137,13 +137,14 @@ private:
 	SkinModelRender *m_skinModelRender[ModelType_num] = { nullptr };
 	Skeleton* m_skeleton;
 	CVector3 m_speed = CVector3::Zero();
-	CVector3 m_position[ModelType_num]; //位置
+	CVector3 m_position[ModelType_num] = {CVector3::Zero()}; //位置
 	CQuaternion m_rotation[ModelType_num] = { CQuaternion::Identity() };	//回転
 	CVector3 m_scale =CVector3::One();					//拡大率
 	CharacterController m_charaCon;
 	plinfo m_plinfo;
 	bool m_damageFlag =false;
 	bool m_jumpflag = false;
+	bool m_dashflag = true;
 	int m_damageTimer = 0;
 	int m_attackTimer = 0;
 

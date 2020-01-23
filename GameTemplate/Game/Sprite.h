@@ -42,6 +42,10 @@ public:
 	{
 		m_pivot = piv;
 	}
+	void SetAlpha(float alpha)
+	{
+		m_alpha = alpha;
+	}
 	/// <summary>
 	/// XVˆ—
 	/// </summary>

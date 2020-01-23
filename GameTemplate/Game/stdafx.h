@@ -5,6 +5,7 @@
 #include <memory>
 #include <math.h>
 #include <vector>
+
 #include <list>
 #include <D3Dcompiler.h>
 #include <Windows.h>

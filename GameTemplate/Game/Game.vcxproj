@@ -109,6 +109,7 @@
     </ClCompile>
     <ClCompile Include="DebugWireframe.cpp" />
     <ClCompile Include="Dragon.cpp" />
+    <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="physics\PhysicsStaticObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PostEffect.cpp" />
+    <ClCompile Include="QuestManager.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
@@ -166,6 +168,7 @@
     </ClInclude>
     <ClInclude Include="DebugWireframe.h" />
     <ClInclude Include="Dragon.h" />
+    <ClInclude Include="Fade.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -201,6 +204,7 @@
     <ClInclude Include="physics\PhysicsStaticObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PostEffect.h" />
+    <ClInclude Include="QuestManager.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShadowMap.h" />
@@ -223,6 +227,7 @@
     <MeshContentTask Include="Assets\modelData\hunter02.fbx" />
     <MeshContentTask Include="Assets\modelData\hunter03.fbx" />
     <MeshContentTask Include="Assets\modelData\hunter_weapon.fbx" />
+    <MeshContentTask Include="Assets\modelData\MH_0-0.fbx" />
     <MeshContentTask Include="Assets\modelData\sky_01.FBX" />
     <MeshContentTask Include="Assets\modelData\testbox.FBX" />
     <MeshContentTask Include="Assets\modelData\testbox_small.FBX" />
@@ -238,6 +243,19 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\MH_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\MH_Exit_Grey.png" />
+    <ImageContentTask Include="Assets\sprite\MH_Exit_Yellow.png" />
+    <ImageContentTask Include="Assets\sprite\MH_GameStart_Grey.png" />
+    <ImageContentTask Include="Assets\sprite\MH_GameStart_Yellow.png" />
+    <ImageContentTask Include="Assets\sprite\yellowTriangle.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\Triangle.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

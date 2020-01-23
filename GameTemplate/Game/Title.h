@@ -11,18 +11,30 @@ public:
 	void Update();
 	void Render();
 
-	void SetPosition(CVector3 pos)
+	void SetPosition(CVector3 pos,int type)
 	{
-		m_position = pos;
+		m_position[type] = pos;
 	}
 
 private:
-	
-	SpriteRender*m_spriteRender;
+	enum SpriteType {
+		
+		Menu,
+		GameStart_Grey,
+		GameStart_Yellow,
+		Exit_Grey,
+		
+		Exit_Yellow,
+		Triangle,
+		
+		Typenum
+	};
+	SpriteRender* m_spriteRender[Typenum];
 	Sprite m_sprite;
 	CVector3 m_scale = CVector3::One();
-	CVector3 m_position = CVector3::Zero();
-
+	CVector3 m_position[Typenum] = { CVector3::Zero() };
+	bool StartFlag = true;
+	bool ExitFlag = false;
 
 };
 

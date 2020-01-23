@@ -19,7 +19,6 @@ UI::UI()
 	m_spriteRender[1]->Init(L"Assets/sprite/MH_stamina.dds", 10.0f, 10.0f);
 	
 	m_spriteRender[2]->Init(L"Assets/sprite/MH_Red.dds", 10.0f, 10.0f);
-
 	m_spriteRender[2]->SetIsActive(false);
 
 }
@@ -27,25 +26,31 @@ UI::UI()
 
 UI::~UI()
 {
+	for (int i = 0; i < 3; i++) {
+		GameObjectManager::instance().DeleteGO(m_spriteRender[i]);
+	}
 }
 void UI::Update()
 {
 	auto m_game = Game::instance();
-	float hp = m_game->m_player->GetPlayerInformation().HP;
-	float stamina = m_game->m_player->GetPlayerInformation().Stamina;
-	if (hp < 30.0f)
-	{
-		m_spriteRender[0]->SetIsActive(false);
-		m_spriteRender[2]->SetIsActive(true);
-	}
-	if (hp >= 30.0f) {
-		m_spriteRender[0]->SetIsActive(true);
-		m_spriteRender[2]->SetIsActive(false);
-	}
+	float hp = 0.0f;
+	if (m_game->m_player != nullptr) {
+		hp = m_game->m_player->GetPlayerInformation().HP;
+		float stamina = m_game->m_player->GetPlayerInformation().Stamina;
+		if (hp < 30.0f)
+		{
+			m_spriteRender[0]->SetIsActive(false);
+			m_spriteRender[2]->SetIsActive(true);
+		}
+		if (hp >= 30.0f) {
+			m_spriteRender[0]->SetIsActive(true);
+			m_spriteRender[2]->SetIsActive(false);
+		}
 
-	m_spriteSca[0].x = hp;
-	m_spriteSca[1].x = stamina;
-	m_spriteSca[2].x = hp;
+		m_spriteSca[0].x = hp;
+		m_spriteSca[1].x = stamina;
+		m_spriteSca[2].x = hp;
+	}
 	for (int i = 0; i < 3; i++)
 	{
 		m_spriteRender[i]->SetPosition(m_spritePos[i]);

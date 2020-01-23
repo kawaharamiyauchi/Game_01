@@ -20,13 +20,17 @@ public:
 		run,			///¾‘–
 		die,			///€–S
 		attack,			///UŒ‚
+		hornattack,		///‹­UŒ‚
+		tailattack,		///”ÍˆÍUŒ‚
+		scream,			///™ôšK
+		damage,			///”í’e
 		escape,			///“¦‘–
 	};
 	struct DragonInfo
 	{
 		bool isFind =false;
 		bool isDead = false;
-		float HP = 1000.0f;
+		float HP = 300.0f;
 		
 	};
 	/// <summary>
@@ -70,7 +74,10 @@ public:
 	{
 		m_position = pos;
 	}
-
+	void SetRotation(CQuaternion rot)
+	{
+		m_rotation = rot;
+	}
 	void AnimationPlay();
 
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
@@ -92,6 +99,9 @@ private:
 		enAnimationClip_idle,
 		enAnimationClip_walk,
 		enAnimationClip_attack,
+		enAnimationClip_hornAttack,
+		enAnimationClip_tailAttack,
+		enAnimationClip_getHit,
 		enAnimationClip_run,
 		enAnimationClip_scream,
 		enAnimationClip_die,
@@ -135,10 +145,12 @@ private:
 	
 	Skeleton* m_skeleton;
 	
-	float a = 0.0;
 	int m_timer = 0;
+	int rand_damage = 0;
+	bool m_damageflag = false;
+	bool h_attackflag = false;
 	const wchar_t * bonename[41];
-	SkinModel m_model;		//ƒXƒLƒ“ƒ‚ƒfƒ‹
+	//SkinModel m_model;		//ƒXƒLƒ“ƒ‚ƒfƒ‹
 	//SkinModel m_test;
 	SkinModelRender * m_skinModelRender = nullptr;
 	GhostObject m_ghost[EventSize];

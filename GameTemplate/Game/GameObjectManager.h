@@ -25,11 +25,13 @@ public:
 	}
 private:
 
+	
+
 	GameObjectManager();
 	~GameObjectManager();
 public:
 
-
+	void Start();
 	/// <summary>
 	/// 更新処理
 	/// </summary>
@@ -61,7 +63,7 @@ public:
 			if ((*it) == go) {
 
 				go->RequestDelete();
-				
+				go->OnDestroy();
 			}
 		}
 	}
@@ -98,11 +100,18 @@ public:
 	/// <param name="viewport">ビューポート</param>
 	void ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, RenderTarget* renderTarget, D3D11_VIEWPORT* viewport);
 	void ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStensil, D3D11_VIEWPORT* viewport);
-	
-
+public:
+	void CountPlus()
+	{
+		GameCount++;
+	}
+	int GetGameCount()const
+	{
+		return GameCount;
+	}
 
 private:
-
+	int GameCount = 0;
 	CVector3 LightCameraPos = CVector3::Zero();
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。												

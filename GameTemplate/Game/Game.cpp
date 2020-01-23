@@ -11,42 +11,234 @@
 Game::Game()
 {
 	auto m_manager = &GameObjectManager::instance();
+	
+	
+	m_level.Init(L"Assets/level/MH_Stage0-0.tkl",[&](const LevelObjectData& objData)
+		{
+			if (wcscmp(objData.name, L"MH_0-0")==0)
+			{
+				
+				m_background = m_manager->NewGO<BackGround>();
+				m_background->LoadStage(0);
+				m_background->SetPosition(objData.position);
+				return true;
+			}
+			if (wcscmp(objData.name, L"hunter03")==0)
+			{
+				m_player = m_manager->NewGO<Player>();
+				m_player->SetPosition(objData.position);
+				m_player->SetRotation(objData.rotation);
+				return true;
+			}
+			if (wcscmp(objData.name, L"bord_ghorst") == 0)
+			{
+				
+				return true;
+			}
+			if (wcscmp(objData.name, L"Quest_bord") == 0)
+			{
+				
+				return true;
+			}
+			if (wcscmp(objData.name, L"unityChan") == 0)
+			{
+				return true;
+			}
+			if (wcscmp(objData.name, L"nextstage") == 0)
+			{
+				m_ghost[1].CreateBox(objData.position, objData.rotation, {2600.0f,200.0f,1600.0f});
+				return true;
+			}
+			
+			return false;
+		});
 	m_gamecamera = m_manager->NewGO<GameCamera>();
-	m_player = m_manager->NewGO<Player>();
-	m_dragon = m_manager->NewGO<Dragon>();
-
-	m_background = m_manager->NewGO<BackGround>();
 	m_UI = m_manager->NewGO<UI>();
-	/*m_gamecamera = GameObjectManager::instance().NewGO<GameCamera>();
-	m_player = GameObjectManager::instance().NewGO<Player>();	
-	m_background = GameObjectManager::instance().NewGO<BackGround>();
-	m_dragon = GameObjectManager::instance().NewGO<Dragon>();
-	m_UI = GameObjectManager::instance().NewGO<UI>();*/
 		
 }
 
 Game::~Game()
+{	
+}
+void Game::DeleteGame()
 {
-	
-	GameObjectManager::instance().DeleteGO(m_background);
-	GameObjectManager::instance().DeleteGO(m_gamecamera);
-	GameObjectManager::instance().DeleteGO(m_dragon);
-	GameObjectManager::instance().DeleteGO(m_UI);
-	GameObjectManager::instance().DeleteGO(m_player);
-	
+	if (m_background != nullptr) {
+		GameObjectManager::instance().DeleteGO(m_background);
+	}
+	if (m_dragon != nullptr) {
+		GameObjectManager::instance().DeleteGO(m_dragon);
+	}
+	if (m_player != nullptr) {
+		GameObjectManager::instance().DeleteGO(m_player);
+	}
+	if (m_gamecamera != nullptr) {
+
+		GameObjectManager::instance().DeleteGO(m_gamecamera);
+	}
+
+	if (m_UI != nullptr) {
+		GameObjectManager::instance().DeleteGO(m_UI);
+	}
+	m_ghost[1].Release();
+}
+void Game::EventChange()
+{
+	if (m_player->GetPlayerInformation().HP < 0.1f)
+	{
+		GameOverFlag = true;
+	}
 }
 void Game::Update()
 {
-	if (m_player != nullptr) {
-		GameObjectManager::instance().SetLightCameraPos(m_player->GetPosition());
-	}
-if (g_pad[0].IsTrigger(enButtonSelect))
+	//EventChange();
+	
+	if (g_pad[0].IsTrigger(enButtonSelect)&&!isNonGame)
 	{
-
-		GameObjectManager::instance().DeleteGO(this);
+		DeleteGame();
+		//LoadGame(0);
+		GameObjectManager::instance().NewGO<Title>();
+	
+		isNonGame = true;
 	}
+	
+	if (!isNonGame) {
+		g_physics.ContactTest(m_player->GetcharaCon(), [&](const btCollisionObject & contactObject)
+			{
+				if (m_ghost[1].IsSelf(contactObject))
+				{
+					DeleteGame();
+					LoadGame(1);
+					m_ghost[1].Release();
+				}
+			});
+	}
+//if (!isNonGame) {
+//	ChangeMap();
+//}
 }
 void Game::Render()
 {
 
 }
+
+void Game::LoadGame(int LoadNum)
+{
+	StageNum = LoadNum;
+	isNonGame = false;
+	auto m_manager = &GameObjectManager::instance();
+	switch (LoadNum)
+	{
+	case(0):
+		m_level.Init(L"Assets/level/MH_Stage0-0.tkl", [&](const LevelObjectData& objData)
+			{
+				if (wcscmp(objData.name, L"MH_0-0") == 0)
+				{
+					m_background = m_manager->NewGO<BackGround>();
+					m_background->LoadStage(0);
+					m_background->SetPosition(objData.position);
+					return true;
+				}
+				if (wcscmp(objData.name, L"hunter03") == 0)
+				{
+					m_player = m_manager->NewGO<Player>();
+					m_player->SetPosition(objData.position);
+					m_player->SetRotation(objData.rotation);
+					return true;
+				}
+				if (wcscmp(objData.name, L"bord_ghorst") == 0)
+				{
+					m_ghost[0].CreateBox(objData.position, objData.rotation, objData.scale);
+					return true;
+				}
+				if (wcscmp(objData.name, L"Quest_bord") == 0)
+				{
+					//m_ghost[1].CreateBox(objData.position, objData.rotation, objData.scale);
+					return true;
+				}
+				if (wcscmp(objData.name, L"nextstage") == 0)
+				{
+					m_ghost[1].CreateBox(objData.position, objData.rotation, { 2600.0f,200.0f,1600.0f });
+					return true;
+				}
+				if (wcscmp(objData.name, L"unityChan") == 0)
+				{
+					return true;
+				}
+				return false;
+			});
+		break;
+	case(1):
+		m_level.Init(L"Assets/level/MH_Stage0-4.tkl", [&](const LevelObjectData& objData)
+			{
+				if (wcscmp(objData.name, L"Desert stage") == 0)
+				{
+					
+					m_background = m_manager->NewGO<BackGround>();
+					m_background->LoadStage(1);
+					m_background->SetPosition(objData.position);
+					return true;
+				}
+				if (wcscmp(objData.name, L"hunter03") == 0)
+				{
+					m_player = m_manager->NewGO<Player>();
+					m_player->SetPosition(objData.position);
+					m_player->SetRotation(objData.rotation);
+					return true;
+				}
+
+				if (wcscmp(objData.name, L"DragonBoar") == 0)
+				{
+					m_dragon = m_manager->NewGO<Dragon>();
+					m_dragon->SetPosition(objData.position);
+					m_dragon->SetRotation(objData.rotation);
+					return true;
+				}
+
+				return false;
+			});
+		break;
+
+	default:
+		break;
+	}
+	/*m_level.Init(L"Assets/level/MH_Stage0-0.tkl",[&](const LevelObjectData& objData)
+		{
+			if (wcscmp(objData.name, L"MH_0-0")==0)
+			{
+				m_background = m_manager->NewGO<BackGround>();
+				m_background->SetPosition(objData.position);
+				return true;
+			}
+			if (wcscmp(objData.name, L"hunter03")==0)
+			{
+				m_player = m_manager->NewGO<Player>();
+				m_player->SetPosition(objData.position);
+				m_player->SetRotation(objData.rotation);
+				return true;
+			}
+			if (wcscmp(objData.name, L"bord_ghorst") == 0)
+			{
+
+				return true;
+			}
+			if (wcscmp(objData.name, L"Quest_bord") == 0)
+			{
+
+				return true;
+			}
+			if (wcscmp(objData.name, L"nextstage") == 0)
+			{
+
+				return true;
+			}
+
+			return false;
+		});*/
+	
+	m_gamecamera = m_manager->NewGO<GameCamera>();
+	
+	m_UI = m_manager->NewGO<UI>();
+	
+}
+
+

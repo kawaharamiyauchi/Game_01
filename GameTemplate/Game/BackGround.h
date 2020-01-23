@@ -8,7 +8,7 @@ class BackGround:public IGameObject
 public:
 	BackGround();
 	~BackGround();
-
+	bool Start()override;
 	CVector3 GetPosition()
 	{
 		return m_position;
@@ -17,7 +17,12 @@ public:
 	{
 		m_position = pos;
 	}
-
+	void SetStageType(int type)
+	{
+		m_stageType = type;
+	}
+	void LoadStage(int stagetype);
+	
 	/*CVector3 GetScale(int i)
 	{
 		return m_scale;
@@ -51,8 +56,9 @@ private:
 	CQuaternion add_2;
 	//SkinModel m_skinModel[2];
 	SkinModelRender *m_skinModelRender[ModelTypenum] = { nullptr };
-	CharacterController m_charaCon;
 	PhysicsStaticObject m_physicsStaticObject;
-	
+	wchar_t*m_loadname;
+	bool isLoad = false;
+	int m_stageType =0;
 };
 

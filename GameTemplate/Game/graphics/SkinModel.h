@@ -113,6 +113,11 @@ public:
 	{
 		return m_skeleton;
 	}
+	//ワールド行列の取得
+	CMatrix& GetWorldMatrix()
+	{
+		return m_worldMatrix;
+	}
 	/*!
 	*@brief	メッシュを検索する。
 	*@param[in] onFindMesh		メッシュが見つかったときのコールバック関数

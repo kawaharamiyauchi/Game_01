@@ -30,7 +30,10 @@ public:
 	{
 		m_pivot = piv;
 	}
-
+	void SetAlpha(float alpha)
+	{
+		m_sprite.SetAlpha(alpha);
+	}
 	void Update() override final;
 	
 	void Render();

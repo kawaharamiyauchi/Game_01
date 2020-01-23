@@ -4,10 +4,13 @@
 
 cbuffer cb : register(b0){
 	float4x4 mvp;		//ワールドビュープロジェクション行列。
+	float alpha;
+	
 };
 struct VSInput{
 	float4 pos : POSITION;
 	float2 uv  : TEXCOORD0;
+	
 };
 
 struct PSInput{
@@ -27,5 +30,7 @@ PSInput VSMain(VSInput In)
 }
 float4 PSMain( PSInput In ) : SV_Target0
 {
-	return colorTexture.Sample(Sampler, In.uv);
+	float4 Color = colorTexture.Sample(Sampler, In.uv);
+	Color.w *= alpha;
+	return Color;
 }
