@@ -5,6 +5,8 @@
 
 Title::Title()
 {
+	
+	
 	StartFlag = true;
 	ExitFlag = false;
 	//m_sprite.Init(L"Assets/sprite/ago_free_03.dds", 1280.0f, 720.0f);
@@ -29,6 +31,7 @@ Title::Title()
 	m_position[Exit_Grey].y -= 200.0f;
 	m_position[Exit_Yellow].y -= 200.0f;
 	m_position[Triangle].x -= 200.0f;
+
 	/*m_spriteRender[1] = GameObjectManager::instance().NewGO<SpriteRender>();
 	m_spriteRender[1]->SetAlpha(0.5f);
 	m_spriteRender[1]->Init(L"Assets/sprite/MH_Red.dds", 1280.0f, 720.0f);*/
@@ -83,12 +86,10 @@ void Title::Update()
 	{
 		if (StartFlag)
 		{
-			auto m_game = Game::instance();
-			GameObjectManager::instance().CountPlus();
-			if (GameObjectManager::instance().GetGameCount() > 1) {
-				m_game->LoadGame(0);
-			}
-			GameObjectManager::instance().DeleteGO(this);
+			Fade::instance().FadeIn();
+			FadeFlag = true;
+				
+			//}
 		}
 		else if (ExitFlag)
 		{
@@ -96,6 +97,16 @@ void Title::Update()
 		}
 
 
+	}
+
+	if (Fade::instance().IsFade() == false&&FadeFlag ==true)
+	{
+		auto m_game = Game::instance();
+		GameObjectManager::instance().CountPlus();
+		if (GameObjectManager::instance().GetGameCount() > 1) {
+			m_game->LoadGame(0);
+		}
+		GameObjectManager::instance().DeleteGO(this);
 	}
 }
 void Title::Render()

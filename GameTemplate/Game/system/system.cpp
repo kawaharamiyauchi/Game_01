@@ -91,6 +91,7 @@ void InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 	g_graphicsEngine->Init(g_hWnd);
 
 	GameObjectManager::instance();
+	Fade::instance();
 	//ゲームパッドの初期化。
 	//最大４つのコントローラーを接続できるようにしましょう。
 	g_pad[0].Init(0);

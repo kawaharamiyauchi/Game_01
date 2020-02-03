@@ -62,7 +62,7 @@ void BackGround::LoadStage(int stagetype)
 		m_loadname = L"Assets/modelData/MH_0-0.cmo";
 		break;
 	case(1):
-		m_loadname = L"Assets/modelData/Desert stage.cmo";
+		m_loadname = L"Assets/modelData/MH_Stage1-4.cmo";
 		break;
 	default:
 		break;

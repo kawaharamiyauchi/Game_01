@@ -7,7 +7,9 @@
 
 Player::Player()
 {
-	m_position[Hunter].Set(0.0f, 200.0f, -300.0f);
+
+
+	//m_position[Hunter].Set(0.0f, 200.0f, -300.0f);
 	for (int i = 0; i < Modeltype::ModelType_num; i++) {
 		m_skinModelRender[i] =GameObjectManager::instance().NewGO<SkinModelRender>();
 	}
@@ -124,7 +126,7 @@ void Player::Move()
 
 		}
 		if (p_state != damage) {
-			if (g_pad[0].IsTrigger(enButtonB) && p_state != jump)
+			if (g_pad[0].IsTrigger(enButtonB)/* && p_state != jump*/)
 			{
 				if (p_state != attack) {
 					m_speed.y += 40.0f;
@@ -195,10 +197,7 @@ void Player::Move()
 	{
 	//	m_speed.y = 0;
 		m_speed.y -= 6.0f;
-		if (m_charaCon.IsOnGround())
-		{
-			
-		}
+		
 	}
 	if (p_state == die)
 	{

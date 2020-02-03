@@ -2,6 +2,7 @@
 #include"IGameObject.h"
 #include"Sprite.h"
 #include"SpriteRender.h"
+#include "Fade.h"
 class Game;
 class Title:public IGameObject
 {
@@ -31,10 +32,13 @@ private:
 	};
 	SpriteRender* m_spriteRender[Typenum];
 	Sprite m_sprite;
+	Fade *m_fade;
 	CVector3 m_scale = CVector3::One();
 	CVector3 m_position[Typenum] = { CVector3::Zero() };
 	bool StartFlag = true;
 	bool ExitFlag = false;
+	bool FadeFlag = false;
+	float m_alpha =1.0f;
 
 };
 

@@ -7,12 +7,12 @@ FBXHeaderExtension:  {
 	CreationTimeStamp:  {
 		Version: 1000
 		Year: 2020
-		Month: 1
-		Day: 20
-		Hour: 9
-		Minute: 59
-		Second: 4
-		Millisecond: 405
+		Month: 2
+		Day: 2
+		Hour: 18
+		Minute: 27
+		Second: 9
+		Millisecond: 937
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.0"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,13 +34,13 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "3ds Max"
 			P: "Original|ApplicationVersion", "KString", "", "", "2019"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "20/01/2020 00:59:04.400"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "02/02/2020 09:27:09.929"
 			P: "Original|FileName", "KString", "", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\MH_0-0.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "3ds Max"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2019"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "20/01/2020 00:59:04.400"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "02/02/2020 09:27:09.929"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\GC1826\Documents\3dsMax"
 			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\GC1826\Documents\3dsMax\scenes\MH_Stage1-1.max"
 		}
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 2362952313792, "", "Scene" {
+	Document: 1877049085408, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", ""
@@ -327,7 +327,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 2362956620640, "Geometry::", "Mesh" {
+	Geometry: 1878603363936, "Geometry::", "Mesh" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.768627450980392,0.345098039215686,0.882352941176471
 		}
@@ -468,7 +468,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 2362956623904, "Geometry::", "Mesh" {
+	Geometry: 1878603360672, "Geometry::", "Mesh" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0,0,0
 		}
@@ -731,7 +731,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 2362956626080, "Geometry::", "Mesh" {
+	Geometry: 1878603351424, "Geometry::", "Mesh" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0,0,0
 		}
@@ -924,7 +924,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 2362956621184, "Geometry::", "Mesh" {
+	Geometry: 1878603352512, "Geometry::", "Mesh" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0,0,0
 		}
@@ -1204,7 +1204,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 2362338473152, "Geometry::", "Mesh" {
+	Geometry: 1878603349792, "Geometry::", "Mesh" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0,0,0
 		}
@@ -1445,7 +1445,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 2362338474784, "Geometry::", "Mesh" {
+	Geometry: 1878603355776, "Geometry::", "Mesh" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0,0,0
 		}
@@ -1821,7 +1821,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 2362338476416, "Geometry::", "Mesh" {
+	Geometry: 1878603350336, "Geometry::", "Mesh" {
 		Vertices: *1224 {
 			a: 44.1574325561523,16.2153339385986,4.91544342041016,51.6058807373047,21.443359375,9.71337032318115,56.6777725219727,13.2558307647705,9.48956775665283,50.3218574523926,9.64155673980713,7.52013301849365,39.359058380127,23.5327072143555,5.44124507904053,46.7509574890137,28.3821582794189,9.63710403442383,58.5547103881836,26.4078426361084,13.158878326416,64.8180847167969,17.2509174346924,14.8682651519775,54.5831718444824,33.5862884521484,12.2282056808472,60.4398460388184,28.432165145874,21.3057956695557,71.2814865112305,20.4971714019775,24.1249656677246,53.7120056152344,34.2284965515137,19.451509475708,58.2437782287598,30.0234622955322,28.8550930023193,50.5943565368652,32.6472473144531,24.5450839996338,61.6955184936523,12.727518081665,42.2762756347656,69.5715255737305,18.5198230743408,33.0932540893555,50.2700309753418,24.0923023223877,35.4562568664551,45.1537322998047,30.4796314239502,27.5395736694336,38.0605659484863,23.0571384429932,39.2614440917969,28.5760726928711,19.7458057403564,43.2418441772461,26.9616470336914,10.1116762161255,48.4454345703125,35.6069984436035,10.6753711700439,45.4157371520996,37.0931434631348,28.2766056060791,32.8434906005859,29.029857635498,26.1988391876221,39.3066673278809,18.9592113494873,17.8389358520508,48.2644805908203,18.1624221801758,10.4027013778687,53.100471496582,20.4881706237793,24.5704174041748,45.1974105834961,5.64734697341919,18.3201656341553,56.3410682678223,5.48764085769653,11.8223743438721,60.0345878601074,6.96873044967651,24.9450225830078,52.496021270752,-9.85797500610352,23.027961730957,62.650074005127,-9.74080944061279,15.4329605102539,66.0125885009766,22.7038345336914,40.0897254943848,-1.52479934692383,26.7266407012939,42.176700592041,3.92193984985352,34.6493072509766,40.1846199035645,1.81999778747559,31.6443824768066,38.2864418029785,-1.50741386413574,14.2789497375488,42.6872978210449,-1.69400024414063,18.9486179351807,45.6222839355469,4.6497917175293,31.5564517974854,46.1167221069336,9.15602874755859,37.9220962524414,43.6835746765137,7.09470081329346,24.835132598877,49.7090835571289,10.7144775390625,
 36.1410102844238,49.466796875,13.7061862945557,41.4185829162598,47.6519470214844,12.2227811813354,30.4559535980225,52.1239128112793,16.1983432769775,39.3116188049316,52.0550689697266,18.6603221893311,43.9141693115234,51.2296142578125,16.6836128234863,42.4410285949707,55.0740127563477,22.9852867126465,42.7136001586914,50.3164215087891,23.6259155273438,45.8235664367676,50.8205184936523,21.2415351867676,39.2903213500977,54.8899574279785,26.2719764709473,38.6447410583496,49.7293701171875,27.1655731201172,42.9092483520508,39.8679466247559,24.962776184082,45.9332809448242,40.3895149230957,22.1719341278076,37.051097869873,38.5836067199707,28.7788753509521,12.185115814209,47.2553100585938,6.04684829711914,18.3940258026123,53.1922760009766,12.406626701355,6.53747367858887,43.7698631286621,-1.02063369750977,3.77663612365723,49.252742767334,6.76294898986816,10.6133050918579,57.1281204223633,13.8580780029297,-1.40079510211945,44.1220397949219,-0.586311340332031,-7.23282623291016,51.459789276123,7.39725971221924,-0.875884890556335,61.1302833557129,17.2159404754639,-9.81817626953125,41.540111541748,0.120033264160156,-14.8024587631226,48.9000091552734,9.63396453857422,-10.4652404785156,60.6741065979004,20.3049907684326,-16.6473999023438,37.9321060180664,1.5203857421875,-21.0736961364746,45.7998733520508,11.2477245330811,-22.7849884033203,35.4808006286621,1.53594589233398,-29.0673713684082,44.585376739502,10.3346080780029,-29.2093505859375,34.5902481079102,2.94636535644531,-37.5123558044434,40.0229339599609,10.6572256088257,-36.3321266174316,46.8207473754883,20.4756622314453,-28.2487621307373,53.8879470825195,22.2449054718018,-37.6062126159668,32.902889251709,2.82810020446777,-158.308975219727,34.7943725585938,-32.9029426574707,-156.98518371582,40.150089263916,-23.3496265411377,-155.97346496582,29.7131824493408,-37.6899528503418,-165.39079284668,32.0563468933105,-32.3546142578125,-165.515914916992,36.1620979309082,-22.9537086486816,-164.12629699707,26.9680118560791,-39.5074348449707,-168.743148803711,25.58447265625,-25.3529376983643,
@@ -2193,7 +2193,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 2362338470432, "Geometry::", "Mesh" {
+	Geometry: 1878603371552, "Geometry::", "Mesh" {
 		Vertices: *1224 {
 			a: 49.3469429016113,19.6173877716064,-2.32866096496582,58.1990051269531,25.7696857452393,-3.18816947937012,64.3231430053711,16.5322113037109,-3.5523099899292,57.4225158691406,12.3524398803711,-1.32192230224609,43.7121238708496,27.8908729553223,-1.61952781677246,52.3359565734863,33.5837821960449,-2.8416805267334,66.084358215332,31.5512771606445,-4.84500217437744,74.239128112793,21.3269519805908,-3.93771553039551,104.3984375,42.938159942627,-4.61643218994141,70.6882400512695,34.2764282226563,0.355487823486328,83.8608322143555,25.4894466400146,-0.235677719116211,104.973022460938,45.6404113769531,-0.82536506652832,70.8830032348633,36.4810829162598,7.03822326660156,104.036865234375,45.8526611328125,5.88190650939941,61.6955184936523,12.7275190353394,31.9751892089844,85.4644393920898,23.7505130767822,8.29621696472168,65.5800399780273,30.1581344604492,17.5253524780273,56.7447166442871,36.92333984375,11.800479888916,54.3308334350586,29.1992702484131,26.4098873138428,28.5760803222656,19.7458000183105,32.7303466796875,26.9616470336914,10.1116752624512,36.8000144958496,35.6069946289063,10.6753692626953,34.4305267333984,50.4733276367188,34.7303123474121,20.3142433166504,29.0298614501953,26.1988334655762,29.6526947021484,18.9592208862305,17.8389320373535,36.6584968566895,18.1624298095703,10.4027004241943,40.4406623840332,20.4881591796875,24.5704116821289,34.2597694396973,5.64735412597656,18.320161819458,42.9750823974609,5.48764038085938,11.8223743438721,45.8637428283691,6.96872711181641,24.9450225830078,39.9679222106934,-75.1540145874023,23.0279579162598,47.9092864990234,-75.036865234375,15.4329538345337,50.5390625,63.5992698669434,44.224666595459,-7.61371803283691,67.9069900512695,47.5964431762695,-9.16262149810791,76.8430786132813,45.3073883056641,-11.1761989593506,74.0290985107422,42.7287750244141,-9.09369277954102,53.1730766296387,46.3361701965332,-7.58985900878906,57.8605499267578,50.683048248291,-10.1050968170166,71.847770690918,52.4469146728516,-13.8443737030029,79.4480590820313,49.802921295166,-14.4985551834106,
 63.0260696411133,55.9049987792969,-14.9800271987915,75.7218475341797,56.6011123657227,-17.9825668334961,81.9559631347656,54.645206451416,-18.6786193847656,68.802848815918,59.5608367919922,-17.6993026733398,78.7028961181641,60.2423324584961,-20.1525726318359,83.4912948608398,58.9620056152344,-22.2458763122559,81.2097091674805,64.0532836914063,-23.2928199768066,84.6164398193359,60.2851715087891,-16.2573795318604,86.9191589355469,59.9892654418945,-19.8101844787598,78.9005737304688,64.8863906860352,-19.6389846801758,81.6680450439453,60.8587226867676,-11.4617071151733,91.6605911254883,51.9887161254883,-0.665248870849609,93.757209777832,51.5853958129883,-4.44646835327148,87.3552398681641,52.0647850036621,6.10100173950195,50.1704711914063,52.4617004394531,-8.52695751190186,54.5986633300781,59.3123016357422,-16.0075950622559,44.6188430786133,47.4394226074219,-5.21546840667725,40.3647079467773,54.3393173217773,-7.1273946762085,44.4331398010254,63.0241851806641,-17.2154121398926,-66.6968383789063,44.1220436096191,-1.54708385467529,-72.5288619995117,51.4597854614258,4.69676494598389,-66.1719284057617,61.1302757263184,12.3758277893066,-75.1142272949219,41.5401039123535,-0.994659423828125,-80.098503112793,48.9000015258789,6.44606113433838,-75.7612762451172,60.6741065979004,14.7917356491089,-81.9434509277344,37.9320983886719,0.10053825378418,-123.68098449707,45.7998809814453,-3.22490692138672,-125.392295837402,35.4807891845703,-10.9472703933716,-131.674682617188,44.5853691101074,-3.95097637176514,-131.816665649414,34.5902366638184,-9.82576656341553,-140.119659423828,40.0229263305664,-3.69444274902344,-138.939422607422,46.8207397460938,4.11272430419922,-130.856079101563,53.887939453125,5.51954507827759,-140.213516235352,32.9028778076172,-9.91980457305908,-150.218460083008,34.794361114502,-4.87676525115967,-148.894622802734,40.1500930786133,2.71959495544434,-147.882949829102,29.7131576538086,-8.68316745758057,-170.840667724609,32.056324005127,-30.1940155029297,-170.965789794922,36.1620788574219,-22.7188415527344,-169.576171875,26.9679870605469,-35.8816184997559,
@@ -2564,7 +2564,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 2362338474240, "Geometry::", "Mesh" {
+	Geometry: 1878603373184, "Geometry::", "Mesh" {
 		Vertices: *1224 {
 			a: 44.1574325561523,24.0230693817139,4.91544532775879,51.6058807373047,29.2510948181152,9.71337127685547,56.6777648925781,21.0635662078857,9.48956871032715,50.3218536376953,17.449291229248,7.52013206481934,39.3590621948242,33.2808418273926,17.1712951660156,46.7509498596191,38.522102355957,18.4333057403564,58.5547103881836,37.1238021850586,22.9356594085693,64.8180770874023,25.0586528778076,14.8682651519775,54.5831680297852,43.8778343200684,17.9541473388672,60.4398345947266,40.2111129760742,29.596378326416,71.2814788818359,28.3049087524414,24.1249675750732,53.7120018005371,49.5902862548828,26.9221668243408,58.2437629699707,42.7990570068359,35.9305725097656,50.5943412780762,50.0014114379883,32.8708419799805,61.6955108642578,20.5352516174316,42.2762756347656,69.5715255737305,26.3275566101074,33.0932540893555,50.2700309753418,38.0387878417969,45.6402473449707,45.1537322998047,43.0515670776367,34.4090118408203,38.0605583190918,37.5811080932617,49.8794746398926,28.5760707855225,27.553539276123,43.2418441772461,26.9616470336914,17.9194107055664,48.4454345703125,35.6069946289063,18.4831047058105,45.4157409667969,37.0931434631348,41.6845474243164,40.7509078979492,29.029857635498,40.6007041931152,48.1333160400391,18.9592094421387,25.646671295166,48.2644805908203,18.1624202728271,18.2104377746582,53.100471496582,20.4881687164307,39.8673286437988,54.7107391357422,5.64734554290771,26.1279010772705,56.3410720825195,5.48763847351074,19.6301078796387,60.0345916748047,6.96872663497925,41.2530784606934,61.4975318908691,-9.85797786712646,40.8424453735352,72.3283538818359,-9.74081039428711,23.2406959533691,66.0125885009766,22.7038269042969,47.3981742858887,3.26454544067383,26.7266407012939,50.7354545593262,4.74735832214355,34.6493072509766,48.5373611450195,5.7075023651123,31.6443862915039,46.0205841064453,5.60644340515137,14.2789459228516,49.336612701416,-0.219480514526367,18.948616027832,53.6103096008301,0.856369018554688,31.5564460754395,55.4262542724609,3.67423057556152,37.9220886230469,52.9028091430664,5.23507308959961,
 24.8351287841797,56.9190979003906,-6.14580726623535,36.1410140991211,58.1595764160156,-4.42657470703125,41.4185791015625,56.7176475524902,-1.75831413269043,30.4559440612793,60.4145889282227,-8.1962776184082,39.3116226196289,61.4912033081055,-7.01898813247681,43.9141693115234,60.2504463195801,-6.36174917221069,42.4410247802734,64.7241973876953,-10.6638565063477,42.7136077880859,62.9789962768555,-1.73360729217529,45.8235702514648,62.123233795166,-3.66969966888428,39.2903213500977,66.1220626831055,-8.92449188232422,38.6447448730469,64.3182983398438,0.847092628479004,42.9092330932617,59.1147575378418,17.8487739562988,45.9332656860352,58.0838737487793,15.7071990966797,37.0510787963867,60.2802925109863,21.816333770752,12.1851139068604,55.308292388916,-0.180797576904297,18.3940277099609,59.1677055358887,-11.7604331970215,6.53747320175171,50.3816299438477,-1.10090255737305,3.77663564682007,57.0686531066895,-2.21081924438477,10.6133079528809,61.5016326904297,-18.3015537261963,-1.40079545974731,50.7902297973633,-1.22254371643066,-7.23282623291016,56.1769676208496,-10.7487545013428,-0.875884056091309,64.7203063964844,-24.1486339569092,-9.81817626953125,49.0350494384766,2.65326118469238,-14.8024673461914,57.7134399414063,0.446771621704102,-10.4652442932129,65.9131011962891,-21.9986248016357,-16.6473979949951,46.7141418457031,8.38634204864502,-21.0737037658691,55.8501243591309,5.68771362304688,-22.7849884033203,44.1911544799805,6.61996078491211,-29.0673732757568,54.6274604797363,6.55561256408691,-29.209358215332,43.5353775024414,8.47997093200684,-37.5123634338379,51.2308692932129,12.6945219039917,-36.3321380615234,60.0700035095215,3.28064155578613,-28.2487697601318,63.8847618103027,-8.82219696044922,-37.6062240600586,41.9003791809082,9.32767677307129,-47.6111488342285,44.6064758300781,14.3331604003906,-46.2873573303223,53.9001617431641,18.7173461914063,-45.2756309509277,29.7131748199463,4.38331413269043,-60.9654006958008,34.569034576416,-33.7554931640625,-64.1696014404297,39.829029083252,-34.0163230895996,-52.1845092773438,26.9680118560791,-31.1201820373535,
@@ -2900,7 +2900,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 2363091182976, "Model::Box001", "Mesh" {
+	Model: 1878711496480, "Model::Box001", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -2913,7 +2913,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 2363091185168, "Model::box", "Mesh" {
+	Model: 1878711503056, "Model::box", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -2935,7 +2935,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 2362957775296, "Model::Taru", "Mesh" {
+	Model: 1878711474560, "Model::Taru", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -2956,7 +2956,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 2362957773104, "Model::desert_tent003", "Mesh" {
+	Model: 1878711516208, "Model::desert_tent003", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -2978,7 +2978,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 2362957781872, "Model::desert_tent004", "Mesh" {
+	Model: 1878711524976, "Model::desert_tent004", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -2993,7 +2993,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 2362957795024, "Model::wood", "Mesh" {
+	Model: 1878711514016, "Model::wood", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -3014,7 +3014,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 2362957766528, "Model::StoneBig", "Mesh" {
+	Model: 1878711531552, "Model::StoneBig", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -3030,7 +3030,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 2362957784064, "Model::StoneBig001", "Mesh" {
+	Model: 1878711507440, "Model::StoneBig001", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -3046,7 +3046,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 2362957768720, "Model::StoneBig002", "Mesh" {
+	Model: 1878711533744, "Model::StoneBig002", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -3062,7 +3062,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 2363086798720, "Material::Material #5705", "" {
+	Material: 1877046659232, "Material::Material #5705", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -3085,7 +3085,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Material: 2363086793920, "Material::Material #5795", "" {
+	Material: 1877046664032, "Material::Material #5795", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -3108,7 +3108,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Material: 2363086786720, "Material::Material #5840", "" {
+	Material: 1877046659712, "Material::Material #5840", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -3131,7 +3131,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Material: 2363086800640, "Material::Material #5710", "" {
+	Material: 1877046679392, "Material::Material #5710", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -3154,7 +3154,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Material: 2363086804000, "Material::Material #5863", "" {
+	Material: 1877046671232, "Material::Material #5999", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -3177,7 +3177,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Material: 2363086774720, "Material::Material #5703", "" {
+	Material: 1877046674592, "Material::Material #5703", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -3200,7 +3200,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Material: 2363086780960, "Material::Material #5998", "" {
+	Material: 1877046668832, "Material::Material #6000", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -3223,7 +3223,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Video: 2363086801120, "Video::マップ #6", "Clip" {
+	Video: 1877046662112, "Video::マップ #6", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\テクスチャ\いろいろ\LOOSEDRT.JPG"
@@ -3233,7 +3233,7 @@ Objects:  {
 		Filename: "C:\Users\GC1826\Desktop\テクスチャ\いろいろ\LOOSEDRT.JPG"
 		RelativeFilename: "..\..\..\..\..\..\テクスチャ\いろいろ\LOOSEDRT.JPG"
 	}
-	Video: 2363086789600, "Video::マップ #18", "Clip" {
+	Video: 1877046669312, "Video::マップ #18", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\テクスチャ\いろいろ\OAKWHITE.JPG"
@@ -3243,7 +3243,7 @@ Objects:  {
 		Filename: "C:\Users\GC1826\Desktop\テクスチャ\いろいろ\OAKWHITE.JPG"
 		RelativeFilename: "..\..\..\..\..\..\テクスチャ\いろいろ\OAKWHITE.JPG"
 	}
-	Video: 2363086774240, "Video::マップ #19", "Clip" {
+	Video: 1877046657792, "Video::マップ #19", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\テクスチャ\いろいろ\SHAFTS.JPG"
@@ -3253,7 +3253,7 @@ Objects:  {
 		Filename: "C:\Users\GC1826\Desktop\テクスチャ\いろいろ\SHAFTS.JPG"
 		RelativeFilename: "..\..\..\..\..\..\テクスチャ\いろいろ\SHAFTS.JPG"
 	}
-	Video: 2363086781440, "Video::マップ #11", "Clip" {
+	Video: 1877046671712, "Video::マップ #11", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\テクスチャ\いろいろ\PELT.JPG"
@@ -3263,17 +3263,17 @@ Objects:  {
 		Filename: "C:\Users\GC1826\Desktop\テクスチャ\いろいろ\PELT.JPG"
 		RelativeFilename: "..\..\..\..\..\..\テクスチャ\いろいろ\PELT.JPG"
 	}
-	Video: 2363086794400, "Video::マップ #20", "Clip" {
+	Video: 1877046655872, "Video::マップ #24", "Clip" {
 		Type: "Clip"
 		Properties70:  {
-			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\MH_stage_texture\plants11.jpg"
-			P: "RelPath", "KString", "XRefUrl", "", "MH_stage_texture\plants11.jpg"
+			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\plants11.jpg"
+			P: "RelPath", "KString", "XRefUrl", "", "DH_stage_texture\plants11.jpg"
 		}
 		UseMipMap: 0
-		Filename: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\MH_stage_texture\plants11.jpg"
-		RelativeFilename: "MH_stage_texture\plants11.jpg"
+		Filename: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\plants11.jpg"
+		RelativeFilename: "DH_stage_texture\plants11.jpg"
 	}
-	Video: 2363086803520, "Video::マップ #4", "Clip" {
+	Video: 1877046678912, "Video::マップ #4", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\テクスチャ\いろいろ\BENEDETI.JPG"
@@ -3283,17 +3283,17 @@ Objects:  {
 		Filename: "C:\Users\GC1826\Desktop\テクスチャ\いろいろ\BENEDETI.JPG"
 		RelativeFilename: "..\..\..\..\..\..\テクスチャ\いろいろ\BENEDETI.JPG"
 	}
-	Video: 2363086775200, "Video::マップ #23", "Clip" {
+	Video: 1877046669792, "Video::マップ #25", "Clip" {
 		Type: "Clip"
 		Properties70:  {
-			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\MH_stage_texture\BENEDETI.JPG"
-			P: "RelPath", "KString", "XRefUrl", "", "MH_stage_texture\BENEDETI.JPG"
+			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\BENEDETI.JPG"
+			P: "RelPath", "KString", "XRefUrl", "", "DH_stage_texture\BENEDETI.JPG"
 		}
 		UseMipMap: 0
-		Filename: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\MH_stage_texture\BENEDETI.JPG"
-		RelativeFilename: "MH_stage_texture\BENEDETI.JPG"
+		Filename: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\BENEDETI.JPG"
+		RelativeFilename: "DH_stage_texture\BENEDETI.JPG"
 	}
-	Texture: 2363086799680, "Texture::マップ #6", "" {
+	Texture: 1877046674112, "Texture::マップ #6", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::マップ #6"
@@ -3309,7 +3309,7 @@ Objects:  {
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	Texture: 2363086795360, "Texture::マップ #18", "" {
+	Texture: 1877046665472, "Texture::マップ #18", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::マップ #18"
@@ -3325,7 +3325,7 @@ Objects:  {
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	Texture: 2363086800160, "Texture::マップ #19", "" {
+	Texture: 1877046658752, "Texture::マップ #19", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::マップ #19"
@@ -3341,7 +3341,7 @@ Objects:  {
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	Texture: 2363086773760, "Texture::マップ #11", "" {
+	Texture: 1877046686112, "Texture::マップ #11", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::マップ #11"
@@ -3357,23 +3357,23 @@ Objects:  {
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	Texture: 2363086793440, "Texture::マップ #20", "" {
+	Texture: 1877046681312, "Texture::マップ #24", "" {
 		Type: "TextureVideoClip"
 		Version: 202
-		TextureName: "Texture::マップ #20"
+		TextureName: "Texture::マップ #24"
 		Properties70:  {
 			P: "UVSet", "KString", "", "", "UVmap_0"
 			P: "UseMaterial", "bool", "", "",1
 		}
-		Media: "Video::マップ #20"
-		FileName: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\MH_stage_texture\plants11.jpg"
-		RelativeFilename: "MH_stage_texture\plants11.jpg"
+		Media: "Video::マップ #24"
+		FileName: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\plants11.jpg"
+		RelativeFilename: "DH_stage_texture\plants11.jpg"
 		ModelUVTranslation: 0,0
 		ModelUVScaling: 1,1
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	Texture: 2363086794880, "Texture::マップ #4", "" {
+	Texture: 1877046660192, "Texture::マップ #4", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::マップ #4"
@@ -3389,29 +3389,29 @@ Objects:  {
 		Texture_Alpha_Source: "None"
 		Cropping: 0,0,0,0
 	}
-	Texture: 2363086787200, "Texture::マップ #23", "" {
+	Texture: 1877046661632, "Texture::マップ #25", "" {
 		Type: "TextureVideoClip"
 		Version: 202
-		TextureName: "Texture::マップ #23"
+		TextureName: "Texture::マップ #25"
 		Properties70:  {
 			P: "UVSet", "KString", "", "", ""
 			P: "UseMaterial", "bool", "", "",1
 		}
-		Media: "Video::マップ #23"
-		FileName: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\MH_stage_texture\BENEDETI.JPG"
-		RelativeFilename: "MH_stage_texture\BENEDETI.JPG"
+		Media: "Video::マップ #25"
+		FileName: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\BENEDETI.JPG"
+		RelativeFilename: "DH_stage_texture\BENEDETI.JPG"
 		ModelUVTranslation: 0,0
 		ModelUVScaling: 1,1
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	AnimationStack: 2362778631344, "AnimStack::Take 001", "" {
+	AnimationStack: 1878459675072, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",153953860000
 			P: "ReferenceStop", "KTime", "Time", "",153953860000
 		}
 	}
-	AnimationCurve: 2362951556656, "AnimCurve::", "" {
+	AnimationCurve: 1877047341872, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3432,7 +3432,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362951555536, "AnimCurve::", "" {
+	AnimationCurve: 1877047349072, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3453,7 +3453,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362951554416, "AnimCurve::", "" {
+	AnimationCurve: 1877047345392, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3474,7 +3474,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362951555056, "AnimCurve::", "" {
+	AnimationCurve: 1877047348432, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3495,7 +3495,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362951554896, "AnimCurve::", "" {
+	AnimationCurve: 1877047341072, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3516,7 +3516,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362951554096, "AnimCurve::", "" {
+	AnimationCurve: 1877047346192, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3537,7 +3537,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2363087369744, "AnimCurve::", "" {
+	AnimationCurve: 1877047340272, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3558,7 +3558,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2363087371504, "AnimCurve::", "" {
+	AnimationCurve: 1877047345712, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3579,7 +3579,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362951553296, "AnimCurve::", "" {
+	AnimationCurve: 1877047345872, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3600,7 +3600,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2363087370384, "AnimCurve::", "" {
+	AnimationCurve: 1877047351792, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3621,7 +3621,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2363087372624, "AnimCurve::", "" {
+	AnimationCurve: 1877047350512, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3642,7 +3642,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2363087370864, "AnimCurve::", "" {
+	AnimationCurve: 1877047357712, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3663,7 +3663,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362951554576, "AnimCurve::", "" {
+	AnimationCurve: 1877047358512, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3684,7 +3684,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362951555856, "AnimCurve::", "" {
+	AnimationCurve: 1877047358992, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3705,7 +3705,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362951556336, "AnimCurve::", "" {
+	AnimationCurve: 1877047352112, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3726,7 +3726,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362954660464, "AnimCurve::", "" {
+	AnimationCurve: 1877047352272, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3747,7 +3747,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362954659184, "AnimCurve::", "" {
+	AnimationCurve: 1877047356112, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3768,7 +3768,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362954660624, "AnimCurve::", "" {
+	AnimationCurve: 1877047359952, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3789,7 +3789,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362954662384, "AnimCurve::", "" {
+	AnimationCurve: 1877047354032, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3810,7 +3810,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362954658864, "AnimCurve::", "" {
+	AnimationCurve: 1877047352592, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3831,7 +3831,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362954661584, "AnimCurve::", "" {
+	AnimationCurve: 1877047354832, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3852,7 +3852,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362954659824, "AnimCurve::", "" {
+	AnimationCurve: 1877047355312, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3873,7 +3873,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362954660944, "AnimCurve::", "" {
+	AnimationCurve: 1877047355152, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3894,7 +3894,7 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurve: 2362954660304, "AnimCurve::", "" {
+	AnimationCurve: 1877047354672, "AnimCurve::", "" {
 		Default: 0
 		KeyVer: 4009
 		KeyTime: *1 {
@@ -3915,234 +3915,234 @@ Objects:  {
 			a: 1
 		} 
 	}
-	AnimationCurveNode: 2362826737632, "AnimCurveNode::R", "" {
+	AnimationCurveNode: 1878459599360, "AnimCurveNode::R", "" {
 		Properties70:  {
 			P: "d|X", "Number", "", "A",0
 			P: "d|Y", "Number", "", "A",-0
 			P: "d|Z", "Number", "", "A",-179.9999776882
 		}
 	}
-	AnimationCurveNode: 2362826738048, "AnimCurveNode::R", "" {
+	AnimationCurveNode: 1878459601232, "AnimCurveNode::R", "" {
 		Properties70:  {
 			P: "d|X", "Number", "", "A",0
 			P: "d|Y", "Number", "", "A",0
 			P: "d|Z", "Number", "", "A",0
 		}
 	}
-	AnimationCurveNode: 2362826739296, "AnimCurveNode::R", "" {
+	AnimationCurveNode: 1878459602064, "AnimCurveNode::R", "" {
 		Properties70:  {
 			P: "d|X", "Number", "", "A",0
 			P: "d|Y", "Number", "", "A",0
 			P: "d|Z", "Number", "", "A",0
 		}
 	}
-	AnimationCurveNode: 2362826738672, "AnimCurveNode::R", "" {
+	AnimationCurveNode: 1878459603104, "AnimCurveNode::R", "" {
 		Properties70:  {
 			P: "d|X", "Number", "", "A",0
 			P: "d|Y", "Number", "", "A",-0
 			P: "d|Z", "Number", "", "A",-179.999994991044
 		}
 	}
-	AnimationCurveNode: 2362826737840, "AnimCurveNode::R", "" {
+	AnimationCurveNode: 1878459594160, "AnimCurveNode::R", "" {
 		Properties70:  {
 			P: "d|X", "Number", "", "A",0
 			P: "d|Y", "Number", "", "A",0
 			P: "d|Z", "Number", "", "A",0
 		}
 	}
-	AnimationCurveNode: 2362826739504, "AnimCurveNode::R", "" {
+	AnimationCurveNode: 1878459603936, "AnimCurveNode::R", "" {
 		Properties70:  {
 			P: "d|X", "Number", "", "A",0
 			P: "d|Y", "Number", "", "A",6.8301891700127e-06
 			P: "d|Z", "Number", "", "A",89.999995674289
 		}
 	}
-	AnimationCurveNode: 2362826739920, "AnimCurveNode::R", "" {
+	AnimationCurveNode: 1878459592080, "AnimCurveNode::R", "" {
 		Properties70:  {
 			P: "d|X", "Number", "", "A",-179.999994991044
 			P: "d|Y", "Number", "", "A",6.8301893279664e-06
 			P: "d|Z", "Number", "", "A",84.7868472858825
 		}
 	}
-	AnimationCurveNode: 2362826739712, "AnimCurveNode::R", "" {
+	AnimationCurveNode: 1878459596864, "AnimCurveNode::R", "" {
 		Properties70:  {
 			P: "d|X", "Number", "", "A",-179.999994991044
 			P: "d|Y", "Number", "", "A",6.83018917001269e-06
 			P: "d|Z", "Number", "", "A",-179.999994991044
 		}
 	}
-	AnimationLayer: 2362694497184, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 1878195490656, "AnimLayer::BaseLayer", "" {
 	}
-	CollectionExclusive: 2362784672624, "DisplayLayer::brick002_Parts", "DisplayLayer" {
+	CollectionExclusive: 1878601934896, "DisplayLayer::brick002_Parts", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.552941176470588,0.0274509803921569,0.227450980392157
 		}
 	}
-	CollectionExclusive: 2362784670704, "DisplayLayer::Object046_Parts", "DisplayLayer" {
+	CollectionExclusive: 1878601930864, "DisplayLayer::Object046_Parts", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.603921568627451,0.603921568627451,0.898039215686275
 		}
 	}
-	CollectionExclusive: 2362784671280, "DisplayLayer::brick003_Parts", "DisplayLayer" {
+	CollectionExclusive: 1878601933744, "DisplayLayer::brick003_Parts", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.603921568627451,0.725490196078431,0.898039215686275
 		}
 	}
-	CollectionExclusive: 2362784671472, "DisplayLayer::Object045_Parts", "DisplayLayer" {
+	CollectionExclusive: 1878601931056, "DisplayLayer::Object045_Parts", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.541176470588235,0.0313725490196078,0.431372549019608
 		}
 	}
-	CollectionExclusive: 2362784652464, "DisplayLayer::Brush - Normal", "DisplayLayer" {
+	CollectionExclusive: 1878601931632, "DisplayLayer::Brush - Normal", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.0235294117647059,0.525490196078431,0.227450980392157
 		}
 	}
-	CollectionExclusive: 2362784652848, "DisplayLayer::FX01", "DisplayLayer" {
+	CollectionExclusive: 1878601931824, "DisplayLayer::FX01", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.6,0.890196078431372,0.83921568627451
 		}
 	}
-	CollectionExclusive: 2362784642480, "DisplayLayer::Ro2_AbMr_FTemple03_YH.nif", "DisplayLayer" {
+	CollectionExclusive: 1878601933936, "DisplayLayer::Ro2_AbMr_FTemple03_YH.nif", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.694117647058824,0.105882352941176,0.345098039215686
 		}
 	}
-	CollectionExclusive: 2362784653040, "DisplayLayer::leon", "DisplayLayer" {
+	CollectionExclusive: 1878601932400, "DisplayLayer::leon", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.650980392156863,0.898039215686275,0.898039215686275
 		}
 	}
-	CollectionExclusive: 2362784641136, "DisplayLayer::knight_proto", "DisplayLayer" {
+	CollectionExclusive: 1878601935280, "DisplayLayer::knight_proto", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.341176470588235,0.882352941176471,0.56078431372549
 		}
 	}
-	CollectionExclusive: 2362784645168, "DisplayLayer::object", "DisplayLayer" {
+	CollectionExclusive: 1878601934512, "DisplayLayer::object", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.890196078431372,0.596078431372549,0.596078431372549
 		}
 	}
-	CollectionExclusive: 2362784644208, "DisplayLayer::magician_proto", "DisplayLayer" {
+	CollectionExclusive: 1878601927408, "DisplayLayer::magician_proto", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.0313725490196078,0.431372549019608,0.529411764705882
 		}
 	}
-	CollectionExclusive: 2362784644400, "DisplayLayer::biped", "DisplayLayer" {
+	CollectionExclusive: 1878601928176, "DisplayLayer::biped", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.0313725490196078,0.0313725490196078,0.533333333333333
 		}
 	}
-	CollectionExclusive: 2362784648816, "DisplayLayer::bone", "DisplayLayer" {
+	CollectionExclusive: 1878601934704, "DisplayLayer::bone", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.694117647058824,0.576470588235294,0.105882352941176
 		}
 	}
-	CollectionExclusive: 2362784647856, "DisplayLayer::bone_facial", "DisplayLayer" {
+	CollectionExclusive: 1878601935088, "DisplayLayer::bone_facial", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.690196078431373,0.101960784313725,0.101960784313725
 		}
 	}
-	CollectionExclusive: 2362784642864, "DisplayLayer::bone_add", "DisplayLayer" {
+	CollectionExclusive: 1878601927792, "DisplayLayer::bone_add", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.333333333333333,0.109803921568627,0.694117647058824
 		}
 	}
-	CollectionExclusive: 2362784643440, "DisplayLayer::bone_remove", "DisplayLayer" {
+	CollectionExclusive: 1878601929904, "DisplayLayer::bone_remove", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.882352941176471,0.776470588235294,0.341176470588235
 		}
 	}
-	CollectionExclusive: 2362784641712, "DisplayLayer::ground", "DisplayLayer" {
+	CollectionExclusive: 1878601931248, "DisplayLayer::ground", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.890196078431372,0.83921568627451,0.6
 		}
 	}
-	CollectionExclusive: 2362784643632, "DisplayLayer::a_prop_l", "DisplayLayer" {
+	CollectionExclusive: 1878601930096, "DisplayLayer::a_prop_l", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.694117647058824,0.576470588235294,0.105882352941176
 		}
 	}
-	CollectionExclusive: 2362784643824, "DisplayLayer::a_pillar_l", "DisplayLayer" {
+	CollectionExclusive: 1878601930288, "DisplayLayer::a_pillar_l", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.890196078431372,0.83921568627451,0.6
 		}
 	}
-	CollectionExclusive: 2362784648048, "DisplayLayer::a_wall001_l", "DisplayLayer" {
+	CollectionExclusive: 1878601930672, "DisplayLayer::a_wall001_l", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.898039215686275,0.650980392156863,0.843137254901961
 		}
 	}
-	CollectionExclusive: 2362784644592, "DisplayLayer::high", "DisplayLayer" {
+	CollectionExclusive: 1878601439680, "DisplayLayer::high", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.882352941176471,0.345098039215686,0.780392156862745
 		}
 	}
-	CollectionExclusive: 2362784644784, "DisplayLayer::brick_h", "DisplayLayer" {
+	CollectionExclusive: 1878601440448, "DisplayLayer::brick_h", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.882352941176471,0.345098039215686,0.780392156862745
 		}
 	}
-	CollectionExclusive: 2362784644976, "DisplayLayer::brick_low", "DisplayLayer" {
+	CollectionExclusive: 1878601442560, "DisplayLayer::brick_low", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.443137254901961,0.529411764705882,0.0235294117647059
 		}
 	}
-	CollectionExclusive: 2362784651120, "DisplayLayer::archi_l", "DisplayLayer" {
+	CollectionExclusive: 1878601440640, "DisplayLayer::archi_l", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.341176470588235,0.882352941176471,0.776470588235294
 		}
 	}
-	CollectionExclusive: 2362784648240, "DisplayLayer::archi_h", "DisplayLayer" {
+	CollectionExclusive: 1878601442368, "DisplayLayer::archi_h", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.345098039215686,0.694117647058824,0.105882352941176
 			P: "Show", "bool", "", "",0
 		}
 	}
-	CollectionExclusive: 2362784651504, "DisplayLayer::a_badak001_l", "DisplayLayer" {
+	CollectionExclusive: 1878601443904, "DisplayLayer::a_badak001_l", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.549019607843137,0.345098039215686,0.882352941176471
 		}
 	}
-	CollectionExclusive: 2362784648432, "DisplayLayer::a_badak001_h", "DisplayLayer" {
+	CollectionExclusive: 1878346241120, "DisplayLayer::a_badak001_h", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.345098039215686,0.780392156862745,0.882352941176471
 			P: "Show", "bool", "", "",0
 		}
 	}
-	CollectionExclusive: 2362784649008, "DisplayLayer::fence_l", "DisplayLayer" {
+	CollectionExclusive: 1877399945904, "DisplayLayer::fence_l", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.835294117647059,0.603921568627451,0.898039215686275
 		}
 	}
-	CollectionExclusive: 2362784649200, "DisplayLayer::FENCE_H", "DisplayLayer" {
+	CollectionExclusive: 1876980722288, "DisplayLayer::FENCE_H", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.56078431372549,0.882352941176471,0.341176470588235
 			P: "Show", "bool", "", "",0
 		}
 	}
-	CollectionExclusive: 2362784651312, "DisplayLayer::a_stone001_l", "DisplayLayer" {
+	CollectionExclusive: 1876980719792, "DisplayLayer::a_stone001_l", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.694117647058824,0.345098039215686,0.105882352941176
 		}
 	}
-	CollectionExclusive: 2362784649392, "DisplayLayer::a_pillar_h", "DisplayLayer" {
+	CollectionExclusive: 1876980721136, "DisplayLayer::a_pillar_h", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.423529411764706,0.0313725490196078,0.533333333333333
 		}
 	}
-	CollectionExclusive: 2362784649968, "DisplayLayer::a_stone001_h", "DisplayLayer" {
+	CollectionExclusive: 1876980714992, "DisplayLayer::a_stone001_h", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.83921568627451,0.890196078431372,0.6
 		}
 	}
-	CollectionExclusive: 2362784650160, "DisplayLayer::a_prop_h", "DisplayLayer" {
+	CollectionExclusive: 1876980714224, "DisplayLayer::a_prop_h", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.109803921568627,0.349019607843137,0.694117647058824
 			P: "Show", "bool", "", "",0
 		}
 	}
-	CollectionExclusive: 2362784650544, "DisplayLayer::a_wall001_h", "DisplayLayer" {
+	CollectionExclusive: 1876980724592, "DisplayLayer::a_wall001_h", "DisplayLayer" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.109803921568627,0.349019607843137,0.694117647058824
 			P: "Show", "bool", "", "",0
@@ -4156,256 +4156,256 @@ Objects:  {
 Connections:  {
 	
 	;Model::Box001, Model::RootNode
-	C: "OO",2363091182976,0
+	C: "OO",1878711496480,0
 	
 	;Model::box, Model::RootNode
-	C: "OO",2363091185168,0
+	C: "OO",1878711503056,0
 	
 	;Model::Taru, Model::RootNode
-	C: "OO",2362957775296,0
+	C: "OO",1878711474560,0
 	
 	;Model::desert_tent003, Model::RootNode
-	C: "OO",2362957773104,0
+	C: "OO",1878711516208,0
 	
 	;Model::desert_tent004, Model::RootNode
-	C: "OO",2362957781872,0
+	C: "OO",1878711524976,0
 	
 	;Model::wood, Model::RootNode
-	C: "OO",2362957795024,0
+	C: "OO",1878711514016,0
 	
 	;Model::StoneBig, Model::RootNode
-	C: "OO",2362957766528,0
+	C: "OO",1878711531552,0
 	
 	;Model::StoneBig001, Model::RootNode
-	C: "OO",2362957784064,0
+	C: "OO",1878711507440,0
 	
 	;Model::StoneBig002, Model::RootNode
-	C: "OO",2362957768720,0
+	C: "OO",1878711533744,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",2362694497184,2362778631344
+	C: "OO",1878195490656,1878459675072
 	
 	;AnimCurveNode::R, AnimLayer::BaseLayer
-	C: "OO",2362826737632,2362694497184
+	C: "OO",1878459599360,1878195490656
 	
 	;AnimCurveNode::R, AnimLayer::BaseLayer
-	C: "OO",2362826738048,2362694497184
+	C: "OO",1878459601232,1878195490656
 	
 	;AnimCurveNode::R, AnimLayer::BaseLayer
-	C: "OO",2362826739296,2362694497184
+	C: "OO",1878459602064,1878195490656
 	
 	;AnimCurveNode::R, AnimLayer::BaseLayer
-	C: "OO",2362826738672,2362694497184
+	C: "OO",1878459603104,1878195490656
 	
 	;AnimCurveNode::R, AnimLayer::BaseLayer
-	C: "OO",2362826737840,2362694497184
+	C: "OO",1878459594160,1878195490656
 	
 	;AnimCurveNode::R, AnimLayer::BaseLayer
-	C: "OO",2362826739504,2362694497184
+	C: "OO",1878459603936,1878195490656
 	
 	;AnimCurveNode::R, AnimLayer::BaseLayer
-	C: "OO",2362826739920,2362694497184
+	C: "OO",1878459592080,1878195490656
 	
 	;AnimCurveNode::R, AnimLayer::BaseLayer
-	C: "OO",2362826739712,2362694497184
+	C: "OO",1878459596864,1878195490656
 	
 	;Geometry::, Model::Box001
-	C: "OO",2362956620640,2363091182976
+	C: "OO",1878603363936,1878711496480
 	
 	;Material::Material #5705, Model::Box001
-	C: "OO",2363086798720,2363091182976
+	C: "OO",1877046659232,1878711496480
 	
 	;Material::Material #5795, Model::box
-	C: "OO",2363086793920,2363091185168
+	C: "OO",1877046664032,1878711503056
 	
 	;Geometry::, Model::box
-	C: "OO",2362956623904,2363091185168
+	C: "OO",1878603360672,1878711503056
 	
 	;AnimCurveNode::R, Model::box
-	C: "OP",2362826737632,2363091185168, "Lcl Rotation"
+	C: "OP",1878459599360,1878711503056, "Lcl Rotation"
 	
 	;Material::Material #5795, Model::Taru
-	C: "OO",2363086793920,2362957775296
+	C: "OO",1877046664032,1878711474560
 	
 	;Material::Material #5840, Model::Taru
-	C: "OO",2363086786720,2362957775296
+	C: "OO",1877046659712,1878711474560
 	
 	;Geometry::, Model::Taru
-	C: "OO",2362956626080,2362957775296
+	C: "OO",1878603351424,1878711474560
 	
 	;AnimCurveNode::R, Model::Taru
-	C: "OP",2362826738048,2362957775296, "Lcl Rotation"
+	C: "OP",1878459601232,1878711474560, "Lcl Rotation"
 	
 	;Geometry::, Model::desert_tent003
-	C: "OO",2362956621184,2362957773104
+	C: "OO",1878603352512,1878711516208
 	
 	;Material::Material #5710, Model::desert_tent003
-	C: "OO",2363086800640,2362957773104
+	C: "OO",1877046679392,1878711516208
 	
 	;AnimCurveNode::R, Model::desert_tent003
-	C: "OP",2362826739296,2362957773104, "Lcl Rotation"
+	C: "OP",1878459602064,1878711516208, "Lcl Rotation"
 	
 	;Geometry::, Model::desert_tent004
-	C: "OO",2362338473152,2362957781872
+	C: "OO",1878603349792,1878711524976
 	
 	;Material::Material #5710, Model::desert_tent004
-	C: "OO",2363086800640,2362957781872
+	C: "OO",1877046679392,1878711524976
 	
 	;AnimCurveNode::R, Model::desert_tent004
-	C: "OP",2362826738672,2362957781872, "Lcl Rotation"
+	C: "OP",1878459603104,1878711524976, "Lcl Rotation"
 	
 	;Geometry::, Model::wood
-	C: "OO",2362338474784,2362957795024
+	C: "OO",1878603355776,1878711514016
 	
-	;Material::Material #5863, Model::wood
-	C: "OO",2363086804000,2362957795024
+	;Material::Material #5999, Model::wood
+	C: "OO",1877046671232,1878711514016
 	
 	;AnimCurveNode::R, Model::wood
-	C: "OP",2362826737840,2362957795024, "Lcl Rotation"
+	C: "OP",1878459594160,1878711514016, "Lcl Rotation"
 	
 	;Geometry::, Model::StoneBig
-	C: "OO",2362338476416,2362957766528
+	C: "OO",1878603350336,1878711531552
 	
 	;Material::Material #5703, Model::StoneBig
-	C: "OO",2363086774720,2362957766528
+	C: "OO",1877046674592,1878711531552
 	
 	;AnimCurveNode::R, Model::StoneBig
-	C: "OP",2362826739504,2362957766528, "Lcl Rotation"
+	C: "OP",1878459603936,1878711531552, "Lcl Rotation"
 	
 	;Geometry::, Model::StoneBig001
-	C: "OO",2362338470432,2362957784064
+	C: "OO",1878603371552,1878711507440
 	
 	;Material::Material #5703, Model::StoneBig001
-	C: "OO",2363086774720,2362957784064
+	C: "OO",1877046674592,1878711507440
 	
 	;AnimCurveNode::R, Model::StoneBig001
-	C: "OP",2362826739920,2362957784064, "Lcl Rotation"
+	C: "OP",1878459592080,1878711507440, "Lcl Rotation"
 	
 	;Geometry::, Model::StoneBig002
-	C: "OO",2362338474240,2362957768720
+	C: "OO",1878603373184,1878711533744
 	
-	;Material::Material #5998, Model::StoneBig002
-	C: "OO",2363086780960,2362957768720
+	;Material::Material #6000, Model::StoneBig002
+	C: "OO",1877046668832,1878711533744
 	
 	;AnimCurveNode::R, Model::StoneBig002
-	C: "OP",2362826739712,2362957768720, "Lcl Rotation"
+	C: "OP",1878459596864,1878711533744, "Lcl Rotation"
 	
 	;Texture::マップ #6, Material::Material #5705
-	C: "OP",2363086799680,2363086798720, "DiffuseColor"
+	C: "OP",1877046674112,1877046659232, "DiffuseColor"
 	
 	;Video::マップ #6, Texture::マップ #6
-	C: "OO",2363086801120,2363086799680
+	C: "OO",1877046662112,1877046674112
 	
 	;Texture::マップ #18, Material::Material #5795
-	C: "OP",2363086795360,2363086793920, "DiffuseColor"
+	C: "OP",1877046665472,1877046664032, "DiffuseColor"
 	
 	;Video::マップ #18, Texture::マップ #18
-	C: "OO",2363086789600,2363086795360
+	C: "OO",1877046669312,1877046665472
 	
 	;Texture::マップ #19, Material::Material #5840
-	C: "OP",2363086800160,2363086786720, "DiffuseColor"
+	C: "OP",1877046658752,1877046659712, "DiffuseColor"
 	
 	;Video::マップ #19, Texture::マップ #19
-	C: "OO",2363086774240,2363086800160
+	C: "OO",1877046657792,1877046658752
 	
 	;Texture::マップ #11, Material::Material #5710
-	C: "OP",2363086773760,2363086800640, "DiffuseColor"
+	C: "OP",1877046686112,1877046679392, "DiffuseColor"
 	
 	;Video::マップ #11, Texture::マップ #11
-	C: "OO",2363086781440,2363086773760
+	C: "OO",1877046671712,1877046686112
 	
-	;Texture::マップ #20, Material::Material #5863
-	C: "OP",2363086793440,2363086804000, "DiffuseColor"
+	;Texture::マップ #24, Material::Material #5999
+	C: "OP",1877046681312,1877046671232, "DiffuseColor"
 	
-	;Video::マップ #20, Texture::マップ #20
-	C: "OO",2363086794400,2363086793440
+	;Video::マップ #24, Texture::マップ #24
+	C: "OO",1877046655872,1877046681312
 	
 	;Texture::マップ #4, Material::Material #5703
-	C: "OP",2363086794880,2363086774720, "DiffuseColor"
+	C: "OP",1877046660192,1877046674592, "DiffuseColor"
 	
 	;Video::マップ #4, Texture::マップ #4
-	C: "OO",2363086803520,2363086794880
+	C: "OO",1877046678912,1877046660192
 	
-	;Texture::マップ #23, Material::Material #5998
-	C: "OP",2363086787200,2363086780960, "DiffuseColor"
+	;Texture::マップ #25, Material::Material #6000
+	C: "OP",1877046661632,1877046668832, "DiffuseColor"
 	
-	;Video::マップ #23, Texture::マップ #23
-	C: "OO",2363086775200,2363086787200
+	;Video::マップ #25, Texture::マップ #25
+	C: "OO",1877046669792,1877046661632
 	
 	;Model::Taru, DisplayLayer::Brush - Normal
-	C: "OO",2362957775296,2362784652464
+	C: "OO",1878711474560,1878601931632
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362951556656,2362826737632, "d|X"
+	C: "OP",1877047341872,1878459599360, "d|X"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362951555536,2362826737632, "d|Y"
+	C: "OP",1877047349072,1878459599360, "d|Y"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362951554416,2362826737632, "d|Z"
+	C: "OP",1877047345392,1878459599360, "d|Z"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362951555056,2362826738048, "d|X"
+	C: "OP",1877047348432,1878459601232, "d|X"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362951554896,2362826738048, "d|Y"
+	C: "OP",1877047341072,1878459601232, "d|Y"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362951554096,2362826738048, "d|Z"
+	C: "OP",1877047346192,1878459601232, "d|Z"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2363087369744,2362826739296, "d|X"
+	C: "OP",1877047340272,1878459602064, "d|X"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2363087371504,2362826739296, "d|Y"
+	C: "OP",1877047345712,1878459602064, "d|Y"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362951553296,2362826739296, "d|Z"
+	C: "OP",1877047345872,1878459602064, "d|Z"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2363087370384,2362826738672, "d|X"
+	C: "OP",1877047351792,1878459603104, "d|X"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2363087372624,2362826738672, "d|Y"
+	C: "OP",1877047350512,1878459603104, "d|Y"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2363087370864,2362826738672, "d|Z"
+	C: "OP",1877047357712,1878459603104, "d|Z"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362951554576,2362826737840, "d|X"
+	C: "OP",1877047358512,1878459594160, "d|X"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362951555856,2362826737840, "d|Y"
+	C: "OP",1877047358992,1878459594160, "d|Y"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362951556336,2362826737840, "d|Z"
+	C: "OP",1877047352112,1878459594160, "d|Z"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362954660464,2362826739504, "d|X"
+	C: "OP",1877047352272,1878459603936, "d|X"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362954659184,2362826739504, "d|Y"
+	C: "OP",1877047356112,1878459603936, "d|Y"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362954660624,2362826739504, "d|Z"
+	C: "OP",1877047359952,1878459603936, "d|Z"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362954662384,2362826739920, "d|X"
+	C: "OP",1877047354032,1878459592080, "d|X"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362954658864,2362826739920, "d|Y"
+	C: "OP",1877047352592,1878459592080, "d|Y"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362954661584,2362826739920, "d|Z"
+	C: "OP",1877047354832,1878459592080, "d|Z"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362954659824,2362826739712, "d|X"
+	C: "OP",1877047355312,1878459596864, "d|X"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362954660944,2362826739712, "d|Y"
+	C: "OP",1877047355152,1878459596864, "d|Y"
 	
 	;AnimCurve::, AnimCurveNode::R
-	C: "OP",2362954660304,2362826739712, "d|Z"
+	C: "OP",1877047354672,1878459596864, "d|Z"
 }
 ;Takes section
 ;----------------------------------------------------

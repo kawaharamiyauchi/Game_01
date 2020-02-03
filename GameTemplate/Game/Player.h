@@ -3,7 +3,8 @@
 #include"IGameObject.h"
 #include"character/CharacterController.h"
 #include "SkinModelRender.h"
-class Player:public IGameObject
+#include"Character.h"
+class Player:public Character
 {
 public:
 	Player();
@@ -91,7 +92,19 @@ public:
 	void Turn();
 
 	void StateChange();
-	
+	void ResetMove()
+	{
+		m_speed = CVector3::Zero();
+	}
+	void SetActive(bool isActive)
+	{
+		m_skinModelRender[Hunter]->SetActiveFlag(isActive);
+	}
+
+	void SetCharaConPos(CVector3 pos)
+	{
+		m_charaCon.SetPosition(pos);
+	}
 	const SkinModel* GetskinModel()const
 	{
 		return m_skinModelRender[Hunter]->GetSkinModel();

@@ -38,13 +38,7 @@ public:
 			}
 		}
 	}
-	//条件を満たせばUpdate関数を実行する
-	void UpdateWrapper()
-	{
-		if ( m_isStart && !isReqDelete) {
-			Update();
-		}
-	}
+	virtual void PostRender() {}
 	/// <summary>
 	/// 削除リクエストを受けているか調べる。
 	/// </summary>

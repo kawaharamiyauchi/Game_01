@@ -103,6 +103,7 @@
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="C3DModelDraw.cpp" />
     <ClCompile Include="C3DModelEffect.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="dbgDraw.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -162,6 +163,7 @@
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="C3DModelDraw.h" />
     <ClInclude Include="C3DModelEffect.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="dbgDraw.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -228,6 +230,7 @@
     <MeshContentTask Include="Assets\modelData\hunter03.fbx" />
     <MeshContentTask Include="Assets\modelData\hunter_weapon.fbx" />
     <MeshContentTask Include="Assets\modelData\MH_0-0.fbx" />
+    <MeshContentTask Include="Assets\modelData\MH_Stage1-4.fbx" />
     <MeshContentTask Include="Assets\modelData\sky_01.FBX" />
     <MeshContentTask Include="Assets\modelData\testbox.FBX" />
     <MeshContentTask Include="Assets\modelData\testbox_small.FBX" />
@@ -256,6 +259,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Triangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\black.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

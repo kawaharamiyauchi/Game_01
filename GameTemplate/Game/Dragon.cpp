@@ -376,11 +376,11 @@ void Dragon::SetState()
 	nor_diff.Normalize();
 	angle = acos(nor_diff.Dot(forward));
 
-	auto hoge = angle / (pai / 180.0f);
+	auto eyerange = angle / (pai / 180.0f);
 	
 	//debug
 	
-	auto a = fabsf(hoge);
+	auto a = fabsf(eyerange);
 	
 	if (m_damageflag == true)
 	{
@@ -404,7 +404,7 @@ void Dragon::SetState()
 				{
 					SetDragonState(attack);
 				}*/
-				if (diff_2.Length() < 2000.0f&&fabsf(hoge) < 90.0f || d_info.isFind == true)
+				if (diff_2.Length() < 2000.0f&&fabsf(eyerange) < 90.0f || d_info.isFind == true)
 				{
 					//MessageBox(NULL, "ミツケタ…", "発見", MB_OK);
 					OutputDebugStringA("ミツケタ…\n");

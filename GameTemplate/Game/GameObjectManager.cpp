@@ -59,6 +59,7 @@ void GameObjectManager::Update()
 	{
 		go->Update();
 	}
+	Fade::instance().Update();
 	Draw();
 
 	//全てのゲームオブジェクトの1フレーム分の処理が終わってから、削除する。
@@ -141,8 +142,14 @@ void GameObjectManager::ForwordRender()
 
 void GameObjectManager::PostRender()
 {
+	for (auto go : m_goList)
+	{
+		go->PostRender();
+	}
+	Fade::instance().PostRender();
 	//ポストエフェクトの描画処理。
 	m_postEffect.Draw();
+	
 	//レンダリングターゲットをフレームバッファに戻す。
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	ChangeRenderTarget(

@@ -24,6 +24,10 @@ void SpriteRender::Update()
 }
 void SpriteRender::Render()
 {
+	
+}
+void SpriteRender::PostRender()
+{
 	if (IsActive)
 	{
 		CMatrix mView;

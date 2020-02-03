@@ -8,7 +8,7 @@
 #include"C3DModelDraw.h"
 #include "level/Level.h"
 #include "GhostObject.h"
-
+#include "QuestManager.h"
 
 class Player;
 class BackGround;
@@ -38,6 +38,7 @@ public:
 	}
 	void DeleteGame();
 	void EventChange();
+	void InitQuest(const wchar_t*filePath);
 	void Update();
 	void Render();
 	void LoadGame(int LoadNum);
@@ -64,6 +65,6 @@ private:
 	bool GameLoadFlag = false;
 	bool isNonGame = false;
 	GhostObject m_ghost[2];
-
+	QuestManager *m_quest;
 	//Game* gam = nullptr;
 };

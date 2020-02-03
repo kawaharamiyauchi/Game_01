@@ -34,10 +34,10 @@ public:
 	{
 		m_sprite.SetAlpha(alpha);
 	}
-	void Update() override final;
+	void Update();
 	
 	void Render();
-
+	void PostRender()override;
 	void SetIsActive(bool flag)
 	{
 		IsActive = flag;

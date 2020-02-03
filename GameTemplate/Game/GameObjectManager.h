@@ -3,6 +3,7 @@
 #include <iostream>
 #include "RenderTarget.h"
 #include "Sprite.h"
+#include "Fade.h"
 #include "PostEffect.h"
 
 using namespace std;
@@ -117,7 +118,6 @@ private:
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。												
 	PostEffect m_postEffect;
 	CVector4 m_ligPower = { 2.0f,2.0f,2.0f,1.0f };
-
 	//ゲームオブジェクトのリスト	
 	std::vector<IGameObject*> m_goList;
 

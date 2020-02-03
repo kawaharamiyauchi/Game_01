@@ -34,6 +34,7 @@ public:
 	/// /// <param name="mView">プロジェクション行列</param>
 	void Draw(CMatrix mView, CMatrix mProj);
 	void Draw();
+	void DrawScreen(const CVector2 & pos, const CVector2 & scale, const CVector2 & pivot, float alpha, DirectX::SpriteEffects effects );
 	/// <summary>
 	/// 2Dの基点を設定。
 	/// </summary>
@@ -80,6 +81,8 @@ private:
 	/// </summary>
 	/// <param name="textureFIlePath">ロードするテクスチャのファイルパス。</param>
 	void LoadTexture(const wchar_t* textureFIlePath);
+
+	
 private:
 	struct ConstantBuffer {
 		CMatrix WVP;		//ワールドビュープロジェクション行列。

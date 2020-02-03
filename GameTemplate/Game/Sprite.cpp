@@ -92,7 +92,6 @@ void Sprite::Update(const CVector3 & trans, const CQuaternion & rot, const CVect
 	halfSize.y *= 0.5f;
 	CMatrix mPivotTrans;
 
-	mPivotTrans;
 	mPivotTrans.MakeTranslation({ halfSize.x * localPivot.x, halfSize.y * localPivot.y, 0.0f });
 	CMatrix mTrans, mRot, mScale;
 
@@ -336,4 +335,13 @@ void Sprite::Draw()
 		0				//開始頂点番号。0でいい。
 	);
 }
-
+void Sprite::DrawScreen(
+	const CVector2& pos,
+	const CVector2& scale,
+	const CVector2& pivot,
+	float alpha,
+	DirectX::SpriteEffects effects
+)
+{
+	
+}
