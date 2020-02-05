@@ -88,8 +88,13 @@ void GraphicsEngine::Init(HWND hWnd)
 		NULL,											//NULLでいい。
 		D3D_DRIVER_TYPE_HARDWARE,						//D3Dデバイスがアクセスするドライバーの種類。
 														//基本的にD3D_DRIVER_TYPE_HARDWAREを指定すればよい。
+
 		NULL,											//NULLでいい。
+#ifdef _DEBUG
+		D3D11_CREATE_DEVICE_DEBUG,
+#else
 		0,												//０でいい。
+#endif
 		featureLevels,									//D3Dデバイスのターゲットとなる機能セットを指定する。
 														//今回のサンプルはDirectX10以上をサポートするので、
 														//それらを含むD3D_FEATURE_LEVELの配列を渡す。

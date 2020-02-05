@@ -46,6 +46,12 @@
     <Filter Include="player">
       <UniqueIdentifier>{fd6d04e7-518b-4823-8eb4-1626edcfae5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sound">
+      <UniqueIdentifier>{daa656a7-98f4-40d3-be8a-b698035c575b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\wave">
+      <UniqueIdentifier>{d72b59d7-494b-415e-a48a-dd4ede1f22c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -181,6 +187,18 @@
     <ClCompile Include="QuestManager.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="sound\WaveFile.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\WaveFileBank.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\SoundEngine.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\SoundSource.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -325,6 +343,18 @@
     <ClInclude Include="QuestManager.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="sound\WaveFile.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\WaveFileBank.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\SoundEngine.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\SoundSource.h">
+      <Filter>sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\sky_01.FBX">
@@ -405,6 +435,9 @@
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\black.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\001_line.jpg">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>

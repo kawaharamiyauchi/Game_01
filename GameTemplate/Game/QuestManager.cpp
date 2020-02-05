@@ -19,7 +19,7 @@ bool QuestManager::Load(const wchar_t*filePath)
 	int nameCount = 0;
 	//クエストの名前の文字数を読み込む。
 	fread(&nameCount, 1, 1, fp);
-	char* name = new char[nameCount + 1];
+	char* name = new char[nameCount + 2];
 	fread(name, nameCount + 1, 1, fp);
 
 	int BossType = 0;

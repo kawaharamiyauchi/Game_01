@@ -10,6 +10,7 @@
 #include "GhostObject.h"
 #include "QuestManager.h"
 
+
 class Player;
 class BackGround;
 class GameCamera;

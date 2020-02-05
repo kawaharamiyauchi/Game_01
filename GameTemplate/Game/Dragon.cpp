@@ -110,8 +110,9 @@ void Dragon::AnimationPlay()
 		m_animation.Update(0.03f);
 		break;
 	case damage:
+		GameObjectManager::instance().SetExecuteSpeed(97);
 		m_animation.Play(enAnimationClip_getHit, 1.0f);
-		m_animation.Update(0.06f);
+		m_animation.Update(0.04f);
 		break;
 	case die:
 		m_animation.Play(enAnimationClip_die, 1.0f);
@@ -463,10 +464,12 @@ void Dragon::SetState()
 				{
 					
 					if (a == 0) {
+					
 						SetDragonState(escape);
 					}
 					else if (a == 1||a ==2)
 					{
+					
 						SetDragonState(tailattack);
 					}
 					
@@ -570,7 +573,7 @@ void Dragon::DamageEvent()
 								{
 									if (rand_damage == 0) {
 										m_damageflag = true;
-
+										GameObjectManager::instance().SetExecuteSpeed(90);
 										d_info.HP -= plpower;
 									}
 									
@@ -581,6 +584,8 @@ void Dragon::DamageEvent()
 			//}
 		}
 	}
+	else GameObjectManager::instance().SetExecuteSpeed(100);
+
 }
 void Dragon::Update()
 {

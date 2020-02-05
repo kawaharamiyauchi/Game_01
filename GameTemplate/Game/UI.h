@@ -9,6 +9,7 @@ public:
 		HP,
 		Stamina,
 		Red,
+		actionLine,
 		UITypeNum
 	};
 	UI();

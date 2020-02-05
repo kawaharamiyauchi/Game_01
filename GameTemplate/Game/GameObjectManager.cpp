@@ -44,7 +44,7 @@ GameObjectManager::~GameObjectManager()
 }
 void GameObjectManager::Update()
 {
-	
+	SpeedCount++;
 	auto m_shadowMap = &ShadowMap::instance();
 	//シャドウマップを更新。
 	m_shadowMap->UpdateFromLightTarget(
@@ -53,11 +53,14 @@ void GameObjectManager::Update()
 		  LightCameraPos.z +1000.0f},
 		{ LightCameraPos }
 	);
-	//登録済みのゲームオブジェクトの
-	//Update関数を呼ぶ。
-	for (auto go : m_goList)
-	{
-		go->Update();
+	if (SpeedCount == 101 - ExecuteSpeed) {
+		//登録済みのゲームオブジェクトの
+		//Update関数を呼ぶ。
+		for (auto go : m_goList)
+		{
+			go->Update();
+		}
+		SpeedCount = 0;
 	}
 	Fade::instance().Update();
 	Draw();

@@ -21,6 +21,9 @@ UI::UI()
 	m_spriteRender[Red]->Init(L"Assets/sprite/MH_Red.dds", 10.0f, 10.0f);
 	m_spriteRender[Red]->SetIsActive(false);
 
+	m_spriteRender[actionLine]->Init(L"assets/sprite/001_line.dds", 1.0f, 1.0f);
+	m_spriteRender[actionLine]->SetAlpha(0.0f);
+
 }
 
 

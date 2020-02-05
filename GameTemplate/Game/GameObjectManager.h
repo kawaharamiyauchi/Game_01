@@ -110,9 +110,14 @@ public:
 	{
 		return GameCount;
 	}
-
+	void SetExecuteSpeed(int speed)
+	{
+		ExecuteSpeed = speed;
+	}
 private:
 	int GameCount = 0;
+	int ExecuteSpeed = 100;
+	int SpeedCount = 0;
 	CVector3 LightCameraPos = CVector3::Zero();
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。												
