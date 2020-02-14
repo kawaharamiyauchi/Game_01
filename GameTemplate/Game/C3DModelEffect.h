@@ -1,7 +1,7 @@
 #pragma once
 #include "graphics/Shader.h"
 #include <array>
-#include "Game.h"
+
 
 /*!
 *@brief	モデルエフェクト。

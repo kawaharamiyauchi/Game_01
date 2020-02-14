@@ -6,7 +6,11 @@ class GameCamera:public IGameObject
 public:
 	GameCamera();
 	~GameCamera();
-	
+	enum CameraState {
+		normal,
+		GameClear,
+		GameOver
+	};
 	/// <summary>
 	/// カメラの位置情報を取得
 	/// </summary>
@@ -32,6 +36,7 @@ public:
 	{
 		m_target = t;
 	}
+	void ChangeCameraState();
 	void Update();		//更新処理
 	void Render();		//描画処理
 private:
@@ -39,5 +44,6 @@ private:
 	CVector3 m_target = CVector3::Zero();		//注視点の座標
 	CVector3 m_position;
 	int m_timer = 0;
+	CameraState m_CS = normal;
 };
 

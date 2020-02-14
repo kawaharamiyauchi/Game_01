@@ -8,7 +8,6 @@
 #include"C3DModelDraw.h"
 #include "level/Level.h"
 #include "GhostObject.h"
-#include "QuestManager.h"
 
 
 class Player;
@@ -16,6 +15,8 @@ class BackGround;
 class GameCamera;
 class Dragon;
 class Fade;
+class QuestManager;
+class LittleEnemy;
 class Game:public IGameObject
 {
 
@@ -43,10 +44,17 @@ public:
 	void Update();
 	void Render();
 	void LoadGame(int LoadNum);
+
+	bool GetIsNonGame()const
+	{
+		return isNonGame;
+	}
 	int GetStageNum()const
 	{
 		return StageNum;
 	}
+
+
 	Player*m_player = nullptr;		//ÉvÉåÉCÉÑÅ[
 	BackGround*m_background = nullptr;		
 	GameCamera *m_gamecamera = nullptr;
@@ -54,18 +62,20 @@ public:
 	UI*m_UI = nullptr;
 	Fade *m_fade = nullptr;
 	ShadowMap m_shadowMap;
+	QuestManager *m_quest =nullptr;
+	LittleEnemy *m_little;
+
 	
 private:
 	wchar_t*LoadGameText;
 	int StageNum =0;
 	Level m_level;
 	Sprite m_sprite;
-	C3DModelDraw m_unityChanModelDraw;
-	C3DModelDraw m_bgModelDraw;
+	/*C3DModelDraw m_unityChanModelDraw;
+	C3DModelDraw m_bgModelDraw;*/
 	bool GameOverFlag = false;
 	bool GameLoadFlag = false;
 	bool isNonGame = false;
 	GhostObject m_ghost[2];
-	QuestManager *m_quest;
-	//Game* gam = nullptr;
+	
 };

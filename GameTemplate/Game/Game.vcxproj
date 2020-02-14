@@ -65,7 +65,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>DirectXTK.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies);xinput.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;XAudio2.lib;Winmm.lib</AdditionalDependencies>
+      <AdditionalDependencies>DirectXTK.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies);xinput.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;XAudio2.lib;Winmm.lib;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
     </Link>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)\Assets\sprite\%(Filename).dds</ContentOutput>
@@ -103,7 +103,9 @@
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="C3DModelDraw.cpp" />
     <ClCompile Include="C3DModelEffect.cpp" />
-    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Character.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="dbgDraw.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -133,6 +135,7 @@
     <ClCompile Include="IGameObject.cpp" />
     <ClCompile Include="level\Level.cpp" />
     <ClCompile Include="level\MapChip.cpp" />
+    <ClCompile Include="LittleEnemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\kMath.cpp" />
     <ClCompile Include="math\Matrix.cpp" />
@@ -170,7 +173,9 @@
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="C3DModelDraw.h" />
     <ClInclude Include="C3DModelEffect.h" />
-    <ClInclude Include="Character.h" />
+    <ClInclude Include="Character.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="dbgDraw.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -201,6 +206,7 @@
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\MapChip.h" />
+    <ClInclude Include="LittleEnemy.h" />
     <ClInclude Include="math\kMath.h" />
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Vector.h" />
@@ -243,6 +249,8 @@
     <MeshContentTask Include="Assets\modelData\hunter02.fbx" />
     <MeshContentTask Include="Assets\modelData\hunter03.fbx" />
     <MeshContentTask Include="Assets\modelData\hunter_weapon.fbx" />
+    <MeshContentTask Include="Assets\modelData\Limit.fbx" />
+    <MeshContentTask Include="Assets\modelData\LittleDragon_Blue.fbx" />
     <MeshContentTask Include="Assets\modelData\MH_0-0.fbx" />
     <MeshContentTask Include="Assets\modelData\MH_Stage1-4.fbx" />
     <MeshContentTask Include="Assets\modelData\sky_01.FBX" />
@@ -278,7 +286,13 @@
     <ImageContentTask Include="Assets\sprite\black.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\001_line.jpg" />
+    <ImageContentTask Include="Assets\sprite\001_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\MH_QUESTFAILED.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\MH_QUESTCLEAR .png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

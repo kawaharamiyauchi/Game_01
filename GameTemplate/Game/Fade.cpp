@@ -33,6 +33,7 @@ void Fade::Update()
 		if (m_alpha < 1.0f) {
 			m_alpha += 0.02f;
 			isFade = true;
+			isEnd = false;
 		}
 		else isFade = false;
 		break;
@@ -41,7 +42,7 @@ void Fade::Update()
 			m_alpha -= 0.02f;
 			isFade = true;
 		}
-		
+		else isEnd = true;
 		break;
 	case idle:
 		break;

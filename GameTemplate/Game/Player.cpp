@@ -7,7 +7,7 @@
 
 Player::Player()
 {
-
+	
 
 	//m_position[Hunter].Set(0.0f, 200.0f, -300.0f);
 	for (int i = 0; i < Modeltype::ModelType_num; i++) {
@@ -126,7 +126,7 @@ void Player::Move()
 
 		}
 		if (p_state != damage) {
-			if (g_pad[0].IsTrigger(enButtonB)/* && p_state != jump*/)
+			if (g_pad[0].IsTrigger(enButtonB) && p_state != jump)
 			{
 				if (p_state != attack) {
 					m_speed.y += 40.0f;
@@ -201,6 +201,8 @@ void Player::Move()
 	}
 	if (p_state == die)
 	{
+		m_speed.x = 0.0f;
+		m_speed.z = 0.0f;
 		m_speed.y = 0.0f;
 	}
 	m_position[Hunter] = m_charaCon.Execute(1.0f, m_speed);
@@ -235,6 +237,14 @@ void Player::Turn()
 }
 void Player::StateChange()
 {	
+
+	if (p_state == die)
+	{
+		if (!m_animation.IsPlaying())
+		{
+			m_plinfo.isEnd = true;
+		}
+	}
 	if (p_state != die) {
 		if (m_plinfo.Stamina > 99)
 		{
@@ -257,6 +267,7 @@ void Player::StateChange()
 		if (m_damageFlag)
 		{
 			m_damageTimer++;
+			m_attackTimer = 0;
 			p_state = damage;
 			if (m_damageTimer == 1)
 			{
@@ -285,13 +296,14 @@ void Player::StateChange()
 				else p_state = idle;
 			}
 		}
-		if (m_plinfo.HP < 0.001f)
+		if (p_state == damage&&m_plinfo.HP<0.01f)
 		{
-			p_state = die;
-
-			MessageBox(NULL, "力尽きました…", "Game Over", MB_OK);
-
+			if (m_charaCon.IsOnGround())
+			{
+				p_state = die;
+			}
 		}
+		
 	}
 }
 void Player::AnimationPlay()
@@ -305,7 +317,7 @@ void Player::AnimationPlay()
 	if (p_state ==walk)
 	{
 		m_animation.Play(enAnimationClip_walk);
-		m_animation.Update(0.1f);
+		m_animation.Update(0.07f);
 	}
 	if (p_state  ==jump)
 	{
@@ -319,7 +331,7 @@ void Player::AnimationPlay()
 	if (p_state == run)
 	{
 		m_animation.Play(enAnimationClip_run);
-		m_animation.Update(0.3f);
+		m_animation.Update(0.1f);
 	}
 	if (p_state == attack)
 	{
@@ -346,9 +358,14 @@ void Player::AnimationPlay()
 void Player::Update()
 {
 	
+		
+	
 	StateChange();
 	AnimationPlay();
-	Move();
+	if (Fade::instance().IsEnd())
+	{
+		Move();
+	}
 	Turn();
 	GameObjectManager::instance().SetLightCameraPos(m_position[Hunter]);
 	//ワールド行列の更新。

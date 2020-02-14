@@ -1,6 +1,5 @@
 #pragma once
-#include "SpriteRender.h"
-
+#include "Player.h"
 class QuestData {
 
 public:
@@ -16,8 +15,37 @@ private:
 class QuestManager
 {
 public:
+	enum GameState
+	{
+		normal,
+		clear,
+		over
+	};
 
-
+	void PlayerBackUp(Player::plinfo info)
+	{
+		m_backUp = info;
+	}
+	Player::plinfo GetBackUp()
+	{
+		return m_backUp;
+	}
+	/*void SetIsClear(bool flag)
+	{
+		m_isClear = flag;
+	}
+	void SetIsGameOver(bool flag)
+	{
+		m_isOver = flag;
+	}*/
+	void SetGameState(GameState state)
+	{
+		m_state = state;
+	}
+	GameState GetGameState()const
+	{
+		return m_state;
+	}
 	static QuestManager& instance()
 	{
 		static QuestManager instance;
@@ -26,15 +54,11 @@ public:
 	QuestManager();
 	~QuestManager();
 	bool Load(const wchar_t * filePath);
-	void Update(){}
-	enum LogoType {
-		GameClear,
-		GameOver,
-
-	};
+	void Update();
+	
 private:
-	bool m_isClear = false;
-	bool m_isOver = false;
+	GameState m_state;
+	Player::plinfo m_backUp;
 
 };
 

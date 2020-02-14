@@ -14,6 +14,9 @@
 #include <functional>
 #include <algorithm>
 
+#include"Effekseer.h"
+#include"EffekseerRendererDX11.h"
+
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
 
@@ -42,8 +45,7 @@
 #include <x3daudio.h>
 #include <xaudio2fx.h>
 
-#include"Effekseer.h"
-#include"EffekseerRendererDX11.h"
+
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 

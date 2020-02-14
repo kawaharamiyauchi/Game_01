@@ -1,4 +1,7 @@
 #pragma once
+
+
+#include "stdafx.h"
 #include "IGameObject.h"
 #include <iostream>
 #include "RenderTarget.h"
@@ -10,6 +13,16 @@ using namespace std;
 class GameObjectManager
 {
 public:
+
+	struct EffekseerTool
+	{
+		//Effekseerマネージャ管理。
+		Effekseer::Manager*				m_effekseerManager = nullptr;
+		EffekseerRenderer::Renderer*	m_effekseerRenderer = nullptr;
+
+		Effekseer::Effect* m_sampleEffect = nullptr;
+		Effekseer::Handle m_playEffectHandle = -1;
+	};
 	static GameObjectManager& instance()
 	{
 		static GameObjectManager instance;
@@ -114,6 +127,10 @@ public:
 	{
 		ExecuteSpeed = speed;
 	}
+	/// <summary>
+	/// Effekseerの初期化。
+	/// </summary>
+	void InitEffekseer();
 private:
 	int GameCount = 0;
 	int ExecuteSpeed = 100;
@@ -130,5 +147,14 @@ private:
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
 	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
 	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
+
+
+
+	
+
+	
+
+
 };
 
+extern GameObjectManager::EffekseerTool g_effect;

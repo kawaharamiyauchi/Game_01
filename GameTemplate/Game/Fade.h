@@ -28,6 +28,10 @@ public:
 	{
 		return isFade;
 	}
+	bool IsEnd()const
+	{
+		return isEnd;
+	}
 	float GetAlpha()
 	{
 		return m_alpha;
@@ -44,5 +48,6 @@ private:
 	Sprite m_sprite;
 	float m_alpha = 0.5f;
 	bool isFade = true;
+	bool isEnd = false;
 	int m_timer = 0;
 };

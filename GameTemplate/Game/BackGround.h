@@ -3,12 +3,14 @@
 #include"character/CharacterController.h"
 #include"physics/PhysicsStaticObject.h"
 #include "SkinModelRender.h"
+
+
 class BackGround:public IGameObject
 {
 public:
 	BackGround();
 	~BackGround();
-	bool Start()override;
+	
 	CVector3 GetPosition()
 	{
 		return m_position;
@@ -47,17 +49,19 @@ private:
 	enum ModelType {
 		MH_Ground,
 		MH_Sky,
+		//MH_Limit,
 		ModelTypenum
 	};
 	CVector3 m_position = CVector3::Zero();
 	CVector3 m_scale[ModelTypenum] = { CVector3::One() };
-	CVector3 a = { 1000.0f,20.0f,1000.0f };
+	CVector3 staticscale = { 1000.0f,20.0f,1000.0f };
 	CQuaternion m_rotation = { CQuaternion::Identity() };
-	CQuaternion add_2;
+	CQuaternion add_2 ={ CQuaternion::Identity() };
 	//SkinModel m_skinModel[2];
 	SkinModelRender *m_skinModelRender[ModelTypenum] = { nullptr };
 	PhysicsStaticObject m_physicsStaticObject;
-	wchar_t*m_loadname;
+	//PhysicsStaticObject m_limit;
+	wchar_t*m_loadname =L".cmo";
 	bool isLoad = false;
 	int m_stageType =0;
 };

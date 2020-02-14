@@ -1,18 +1,19 @@
 #include "stdafx.h"
-#include "Game.h"
-#include "Player.h"
 #include"BackGround.h"
 #include "GameCamera.h"
 #include"GameObjectManager.h"
+#include"QuestManager.h"
 #include"Dragon.h"
 #include"Title.h"
 #include"level/Level.h"
-
+#include"LittleEnemy.h"
+#include "Player.h"
 Game::Game()
 {
 	Fade::instance().FadeOut();
+	StageNum = 0;
 	auto m_manager = &GameObjectManager::instance();
-	
+	m_quest = &QuestManager::instance();
 	InitQuest(L"Assets/ModelData/MH01.que");
 
 	m_level.Init(L"Assets/level/MH_Stage0-0.tkl",[&](const LevelObjectData& objData)
@@ -39,7 +40,8 @@ Game::Game()
 			}
 			if (wcscmp(objData.name, L"Quest_bord") == 0)
 			{
-				
+				m_little = m_manager->NewGO<LittleEnemy>();
+				m_little->SetPosition(objData.position);
 				return true;
 			}
 			if (wcscmp(objData.name, L"unityChan") == 0)
@@ -54,6 +56,8 @@ Game::Game()
 			
 			return false;
 		});
+
+	
 	m_gamecamera = m_manager->NewGO<GameCamera>();
 	m_UI = m_manager->NewGO<UI>();
 		
@@ -70,9 +74,9 @@ void Game::DeleteGame()
 	if (m_dragon != nullptr) {
 		GameObjectManager::instance().DeleteGO(m_dragon);
 	}
-	/*if (m_player != nullptr) {
+	if (m_player != nullptr) {
 		GameObjectManager::instance().DeleteGO(m_player);
-	}*/
+	}
 	if (m_gamecamera != nullptr) {
 
 		GameObjectManager::instance().DeleteGO(m_gamecamera);
@@ -104,10 +108,10 @@ void Game::Update()
 	{
 		
 		DeleteGame();
-		//LoadGame(0);
 		GameObjectManager::instance().NewGO<Title>();
 	
 		isNonGame = true;
+		StageNum = 0;
 	}
 	
 	if (!isNonGame) {
@@ -121,17 +125,16 @@ void Game::Update()
 					{
 						
 						DeleteGame();
+						m_quest->instance().PlayerBackUp(m_player->GetPlayerInformation());
 						LoadGame(1);
 						m_ghost[1].Release();
 					}
 				}
 		});
 		
-		
+		m_quest->Update();
 	}
-//if (!isNonGame) {
-//	ChangeMap();
-//}
+	
 }
 void Game::Render()
 {
@@ -160,7 +163,10 @@ void Game::LoadGame(int LoadNum)
 				}
 				if (wcscmp(objData.name, L"hunter03") == 0)
 				{
-					m_player->ResetMove();
+					
+					m_player = m_manager->NewGO<Player>();
+					//m_player->SetPlInfo(m_quest->instance().GetBackUp());
+					m_player->SetCharaConPos(objData.position);
 					m_player->SetPosition(objData.position);
 					m_player->SetRotation(objData.rotation);
 					return true;
@@ -200,7 +206,8 @@ void Game::LoadGame(int LoadNum)
 				}
 				if (wcscmp(objData.name, L"hunter03") == 0)
 				{
-					m_player->ResetMove();
+					m_player = m_manager->NewGO<Player>();
+				//	m_player->SetPlInfo(m_quest->instance().GetBackUp());
 					m_player->SetCharaConPos(objData.position);
 					m_player->SetPosition(objData.position);
 					m_player->SetRotation(objData.rotation);
@@ -214,7 +221,10 @@ void Game::LoadGame(int LoadNum)
 					m_dragon->SetRotation(objData.rotation);
 					return true;
 				}
+				/*if (wcscmp(objData.name, L"Limit") == 0)
+				{
 
+				}*/
 				return false;
 			});
 		break;
@@ -225,44 +235,13 @@ void Game::LoadGame(int LoadNum)
 	default:
 		break;
 	}
-	/*m_level.Init(L"Assets/level/MH_Stage0-0.tkl",[&](const LevelObjectData& objData)
-		{
-			if (wcscmp(objData.name, L"MH_0-0")==0)
-			{
-				m_background = m_manager->NewGO<BackGround>();
-				m_background->SetPosition(objData.position);
-				return true;
-			}
-			if (wcscmp(objData.name, L"hunter03")==0)
-			{
-				m_player = m_manager->NewGO<Player>();
-				m_player->SetPosition(objData.position);
-				m_player->SetRotation(objData.rotation);
-				return true;
-			}
-			if (wcscmp(objData.name, L"bord_ghorst") == 0)
-			{
-
-				return true;
-			}
-			if (wcscmp(objData.name, L"Quest_bord") == 0)
-			{
-
-				return true;
-			}
-			if (wcscmp(objData.name, L"nextstage") == 0)
-			{
-
-				return true;
-			}
-
-			return false;
-		});*/
 	
 	m_gamecamera = m_manager->NewGO<GameCamera>();
 	
 	m_UI = m_manager->NewGO<UI>();
 	
 }
+
+
 
 

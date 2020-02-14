@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "system.h"
-
+#include"GameObjectManager.h"
 HWND			g_hWnd = NULL;				//ウィンドウハンドル。
 GraphicsEngine* g_graphicsEngine = NULL;	//グラフィックスエンジン。
 

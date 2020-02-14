@@ -1113,6 +1113,7 @@ HRESULT DirectX::CreateDDSTextureFromFileEx(ID3D11Device* d3dDevice,
     );
     if (FAILED(hr))
     {
+		OutputDebugStringA("error");
         return hr;
     }
 

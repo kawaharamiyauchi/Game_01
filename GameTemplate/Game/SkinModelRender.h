@@ -1,5 +1,6 @@
 #pragma once
 #include "graphics/SkinModel.h"
+#include"IGameObject.h"
 class SkinModelRender:public IGameObject
 {
 public:
@@ -27,12 +28,8 @@ public:
 		m_isRecieverFlag = flag;
 		m_skinModel.SetShadowReciever(flag);
 	}
-	void SetShadowCasterUpdate()
-	{
-		//ShadowMap::instance().RegistShadowCaster(&m_skinModel);
-		m_shadowMap = &ShadowMap::instance();
-		m_shadowMap->RegistShadowCaster(&m_skinModel);
-	}
+	void SetShadowCasterUpdate();
+	
 	void SetActiveFlag(bool flag)
 	{
 		m_skinModel.SetActiveFlag(flag);
@@ -93,11 +90,10 @@ private:
 	EnFbxUpAxis					m_enFbxUpAxis = enFbxUpAxisZ;		// FBXÇÃè„ï˚å¸ÅB
 	bool m_isRecieverFlag = false;
 	bool m_isCasterFlag = false;
-	ShadowMap *m_shadowMap;
 	//AnimationClip animationClip[enAnimationClip_num];
 
-	Animation m_animation;
+	/*Animation m_animation;
 	CAnimationEvent m_canimation;
-	AnimationEventListener m_listener;
+	AnimationEventListener m_listener;*/
 };
 

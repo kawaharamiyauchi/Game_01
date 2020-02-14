@@ -1,7 +1,6 @@
 #pragma once
 #include "RenderTarget.h"
 #include "graphics/Shader.h"
-#include "GameObjectManager.h"
 class PostEffect;
 
 /// <summary>

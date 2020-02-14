@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "graphics/SkinModelEffect.h"
 #include "graphics/SkinModelShaderConst.h"
-
+#include "ShadowMap.h"
 void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
 {
 	switch (m_renderMode) {

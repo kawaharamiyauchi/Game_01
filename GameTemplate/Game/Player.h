@@ -1,10 +1,7 @@
 #pragma once
-#include "character/CharacterController.h"
-#include"IGameObject.h"
-#include"character/CharacterController.h"
-#include "SkinModelRender.h"
-#include"Character.h"
-class Player:public Character
+#include"SkinModelRender.h"
+
+class Player:public IGameObject
 {
 public:
 	Player();
@@ -14,6 +11,7 @@ public:
 		float HP = 100.0f;
 		float AttackPower = 50.0f;
 		float Stamina = 100.0f;
+		bool isEnd =false;
 	};
 	enum PlayerState {
 		idle,
@@ -27,7 +25,7 @@ public:
 		
 	};
 	
-	PlayerState p_state;
+	PlayerState p_state =idle;
 	plinfo GetPlayerInformation()const
 	{
 		return m_plinfo;
@@ -105,6 +103,11 @@ public:
 	{
 		m_charaCon.SetPosition(pos);
 	}
+
+	void SetPlInfo(plinfo info)
+	{
+		m_plinfo = info;
+	}
 	const SkinModel* GetskinModel()const
 	{
 		return m_skinModelRender[Hunter]->GetSkinModel();
@@ -161,5 +164,8 @@ private:
 	int m_damageTimer = 0;
 	int m_attackTimer = 0;
 
+	Effekseer::Effect* m_sampleEffect = nullptr;
+	Effekseer::Manager*				m_effekseerManager = nullptr;
+	Effekseer::Handle m_playEffectHandle = -1;
 };
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "PhysicsObjectBase.h"
-
+using namespace std;
 void PhysicsObjectBase::CreateBox(CVector3 pos, CQuaternion rot, CVector3 size)
 {
 	Release();

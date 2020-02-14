@@ -2,13 +2,17 @@
 #include "Dragon.h"
 #include "Game.h"
 #include "Player.h"
+#include"QuestManager.h"
+#include "BackGround.h"
 
 #define pai 3.14159265
 const CVector3 ATTACK_SCALE = { 100.0f, 200.0f, 300.0f };
 
-
 Dragon::Dragon()
 {	
+
+	//サンプルのエフェクトをロードする。
+	g_effect.m_sampleEffect = Effekseer::Effect::Create(g_effect.m_effekseerManager, (const EFK_CHAR*)L"Assets/effect/tm_damage.efk");
 	d_state = normal;
 	//m_position.Set(0.0f,0.0f, 1000.0f);
 	m_scale *= 2.5f;
@@ -45,22 +49,28 @@ Dragon::Dragon()
 	m_animation.AddAnimationEventListener([&](const wchar_t* clipName, const wchar_t* eventName) {
 			OnAnimationEvent(clipName, eventName);
 		
-		});
+	});
 	
 		m_charaCon[Head].Init(
 			90.0f,
 			80.0f,
 			m_charaConPos[Head]
 		);
+	/*ColliderInit(
+		Head,
+		90.0f,
+		80.0f,
+		m_charaConPos[Head]
+	);*/
 		m_charaCon[UpBody].Init(
 			90.0f,
 			100.0f,
 			m_charaConPos[UpBody]
 		);
-		m_charaCon[DownBody].Init(
+		m_charaCon[Body].Init(
 			90.0f,
 			80.0f,
-			m_charaConPos[DownBody]
+			m_charaConPos[Body]
 		);
 		m_charaCon[Tail].Init(
 			40.0f,
@@ -110,13 +120,12 @@ void Dragon::AnimationPlay()
 		m_animation.Update(0.03f);
 		break;
 	case damage:
-		GameObjectManager::instance().SetExecuteSpeed(97);
 		m_animation.Play(enAnimationClip_getHit, 1.0f);
 		m_animation.Update(0.04f);
 		break;
 	case die:
 		m_animation.Play(enAnimationClip_die, 1.0f);
-		m_animation.Update(0.02f);
+		m_animation.Update(0.015f);
 		break;
 	case escape:
 		m_animation.Play(enAnimationClip_run, 1.0f);
@@ -130,7 +139,7 @@ void Dragon::AnimationPlay()
 			break;
 		}
 		else m_animation.Play(enAnimationClip_run, 1.0f);
-			 m_animation.Update(0.1f);
+			 m_animation.Update(0.06f);
 			 break;
 	case tailattack:
 		m_animation.Play(enAnimationClip_tailAttack, 1.0f);
@@ -196,19 +205,19 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 					m_game->m_player->SetDamageFlag(true);
 				}
 			});
-	
-	}
+		}
 	else if (d_state == tailattack)
 	{
-		m_collisionScale.Set(300.0f, 50.0f, 300.0f);
+		m_collisionScale.Set(700.0f, 50.0f, 700.0f);
 		auto bone = m_skeleton->GetBone(25);
 		m_collisionPosition.x = bone->GetWorldMatrix().m[3][0];
 		m_collisionPosition.y = bone->GetWorldMatrix().m[3][1];
 		m_collisionPosition.z = bone->GetWorldMatrix().m[3][2];
 		//m_collisionPosition = bone->GetWorldMatrix().v[3];
 		CVector3 attackpoint;
-		attackpoint.Set(m_collisionPosition);
-
+		attackpoint.Set(m_position);
+		move.x *= 50.0f;
+		move.z *= 50.0f;
 		(void)clipName;
 		m_ghost[D_attack00].CreateBox(attackpoint, m_rotation, m_collisionScale);
 
@@ -247,105 +256,118 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 }
 void Dragon::Move()
 {
-	
+	moveSpeed.x = 0.0f;
+	moveSpeed.z = 0.0f;
 	float angle = 0.0f;
 	auto m_game = Game::instance();
 	auto agoPos = m_collisionPosition;
-	if (m_game->m_player != nullptr) {
-		diff.Set(m_game->m_player->GetPosition() - m_position);
-	}
-	//diff.Set(m_game->m_player->GetPosition() - agoPos);
-	auto move = diff; 
-	move.y = 0.0f;
-	move.Normalize();
-	switch (d_state)
-
-	{
-	case normal:
-		break;
-	case walk:
-		if (diff.Length() > 10.0f)
-		{
-			m_position += move * 10.0f;
-			//moveSpeed += move * 10.0f;
-		}
-
-
-		angle = atan2(move.x, move.z);
-		m_rotation.SetRotation(CVector3::AxisY(), angle);
-		break;
-	case run:
-
-
-		if (diff.Length() > 20.0f)
-		{
-			m_position += move * 20.0f;
-			//moveSpeed += move * 20.0f;
-		}
-
-		angle = atan2(move.x, move.z);
-		m_rotation.SetRotation(CVector3::AxisY(), angle);
-
-		break;
-	case attack:
-		break;
-	case damage:
-		break;
-	case escape:
-		m_position -= move*30.0f;
-		//moveSpeed -= move * 30.0f;
-		angle = atan2(-move.x,-move.z);
-		m_rotation.SetRotation(CVector3::AxisY(), angle);
-		break;
-	case hornattack:
-
-		if (!h_attackflag)
-		{
-			m_position += move * 60.0f;
-		}
-		else move.Normalize();
-		
-		angle = atan2(move.x, move.z);
-		m_rotation.SetRotation(CVector3::AxisY(), angle);
-		break;
-	case tailattack:
-		move.Normalize();
-		angle = atan2(move.x, move.z);
-		m_rotation.SetRotation(CVector3::AxisY(), angle);
-		break;
-	case scream:
-		move.Normalize();
-		angle = atan2(move.x, move.z);
-		m_rotation.SetRotation(CVector3::AxisY(), angle);
-		break;
-	}
+	auto MoveLimitDiff = m_game->m_background->GetPosition() - m_position;
 	
+		if (m_game->m_player != nullptr) {
+			diff.Set(m_game->m_player->GetPosition() - m_position);
+		}
+		//diff.Set(m_game->m_player->GetPosition() - agoPos);
+		move = diff;
+		move.y = 0.0f;
+		move.Normalize();
+		switch (d_state)
 
+		{
+		case normal:
+			break;
+		case walk:
+			if (diff.Length() > 10.0f)
+			{
+				
+				moveSpeed = move * 10.0f;
+			}
+
+
+			angle = atan2(move.x, move.z);
+			m_rotation.SetRotation(CVector3::AxisY(), angle);
+			break;
+		case run:
+
+
+			if (diff.Length() > 20.0f)
+			{
+				moveSpeed = move * 40.0f;
+			
+			}
+
+			angle = atan2(move.x, move.z);
+			m_rotation.SetRotation(CVector3::AxisY(), angle);
+
+			break;
+		case attack:
+			break;
+		case damage:
+			break;
+		case escape:
+			
+			moveSpeed = move * -30.0f;
+			angle = atan2(-move.x, -move.z);
+			m_rotation.SetRotation(CVector3::AxisY(), angle);
+			break;
+		case hornattack:
+
+			if (!h_attackflag)
+			{
+				moveSpeed = move * 30.0f;
+			}
+			else move.Normalize();
+
+			angle = atan2(move.x, move.z);
+			m_rotation.SetRotation(CVector3::AxisY(), angle);
+			break;
+		case tailattack:
+
+			move.Normalize();
+			if (diff.Length() > 300.0f) {
+			
+				moveSpeed = move * 10.0f;
+			}
+			
+			angle = atan2(move.x, move.z);
+			m_rotation.SetRotation(CVector3::AxisY(), angle);
+			break;
+		case scream:
+			move.Normalize();
+			angle = atan2(move.x, move.z);
+			m_rotation.SetRotation(CVector3::AxisY(), angle);
+			break;
+		}
+		
+	
 }
 
 void Dragon::CharaConMove()
 {
 	m_bone[Head] = m_skeleton->GetBone(11);
 	m_bone[UpBody] = m_skeleton->GetBone(2);
-	m_bone[DownBody] = m_skeleton->GetBone(0);
+	m_bone[Body] = m_skeleton->GetBone(0);
 	m_bone[Tail] = m_skeleton->GetBone(30);
-	moveSpeed.y -= 1.0f;
+	moveSpeed.y -= 7.0f;
 	for (int i = 0; i < CharaConTypeSize; i++) {
-		m_charaConPos[i].Set(
-			m_bone[i]->GetWorldMatrix().m[3][0],
-			m_position.y,
-			m_bone[i]->GetWorldMatrix().m[3][2]
 
-		);
-		/*if (i == Tail)
-		{
-			m_charaConPos[Tail].y += 150.0f;
-		}*/
+			m_charaConPos[i].Set(
+				m_bone[i]->GetWorldMatrix().m[3][0],
+				m_position.y,
+				m_bone[i]->GetWorldMatrix().m[3][2]
+
+			);
+			m_charaCon[i].SetPosition(m_charaConPos[i]);
+			m_charaCon[i].Execute(1.0f, moveSpeed);
+
 			
-		m_charaCon[i].SetPosition(m_charaConPos[i]);
-		m_charaCon[i].Execute(1.0f,moveSpeed);
 	}
-	m_position.y =m_charaCon[UpBody].GetPosition().y;
+	
+
+	
+
+	//m_position =m_charaCon[UpBody].Execute(1.0f, CVector3::Zero());
+	auto diff = m_charaConPos[Head]-m_position;
+	m_position = m_charaCon[Head].GetPosition() -diff;
 	//m_position = m_charaCon[UpBody].GetPosition();
 }
 
@@ -376,10 +398,9 @@ void Dragon::SetState()
 	nor_diff.y = 0.0f;
 	nor_diff.Normalize();
 	angle = acos(nor_diff.Dot(forward));
-
 	auto eyerange = angle / (pai / 180.0f);
 	
-	//debug
+	
 	
 	auto a = fabsf(eyerange);
 	
@@ -389,11 +410,20 @@ void Dragon::SetState()
 		m_damageflag = false;
 	}
 	
-	
+	if (d_state == die)
+	{
+		m_game->m_quest->SetGameState(QuestManager::GameState::clear);
+		if (!m_animation.IsPlaying())
+		{
+			d_info.isEnd = true;
+			
+		}
+	}
 	if (d_state != die) {
 		if (d_info.HP < 0.01f)
 		{
 			SetDragonState(die);
+			
 		}
 		auto a = rand() % 3;
 		
@@ -441,7 +471,7 @@ void Dragon::SetState()
 				}
 				break;
 			case Dragon::die:
-
+				
 				break;
 			case Dragon::attack:
 				if (!m_animation.IsPlaying())
@@ -476,7 +506,7 @@ void Dragon::SetState()
 				}
 				break;
 			case Dragon::escape:
-				if (diff_3.Length() > 2000.0f)
+				if (diff_3.Length() > 1500.0f)
 				{
 					SetDragonState(hornattack);
 					h_attackflag = false;
@@ -542,14 +572,15 @@ void Dragon::SetState()
 void Dragon::DamageEvent()
 {
 	
-	rand_damage = rand() % 5;
-	if (d_state != die&&d_state !=damage) {
+	rand_damage = rand() % 3;
+	if (d_state != die) {
 		auto m_game = Game::instance();
 		if (m_game->m_player != nullptr)
 		{
-			//if (d_state != attack) {
-				if (m_game->m_player->Getattack() > 12)
+			
+				if (m_game->m_player->Getattack() > 0&&m_game->m_player->Getattack()<15)
 				{
+
 					auto plbone = m_game->m_player->GetPlayerBone(22);
 					auto plpower = m_game->m_player->GetPlayerInformation().AttackPower;
 					CVector3 forward;
@@ -565,31 +596,49 @@ void Dragon::DamageEvent()
 						plbone->GetWorldMatrix().m[3][2] + forward.z
 					);
 					boneQua.SetRotation(plbone->GetWorldMatrix());
-					m_ghost[P_attack00].CreateBox(bonePos, boneQua, { 30.0f,5.0f, 150.0f });
+					if (d_state != damage) {
+
+						m_ghost[P_attack00].CreateBox(bonePos, boneQua, { 30.0f,5.0f, 150.0f });
+					}
 					for (int i = 0; i < CharaConTypeSize; i++) {
 						g_physics.ContactTest(m_charaCon[i], [&](const btCollisionObject & contactObject)
 							{
 								if (m_ghost[P_attack00].IsSelf(contactObject))
 								{
+									//再生中のエフェクトを止める。
+									g_effect.m_effekseerManager->StopEffect(g_effect.m_playEffectHandle);
+									//再生。
+									g_effect.m_playEffectHandle = g_effect.m_effekseerManager->Play(
+										g_effect.m_sampleEffect,
+										bonePos.x,
+										bonePos.y,
+										bonePos.z
+									);
+
 									if (rand_damage == 0) {
-										m_damageflag = true;
-										GameObjectManager::instance().SetExecuteSpeed(90);
 										d_info.HP -= plpower;
+										if (d_state != tailattack) {
+											m_damageflag = true;
+											GameObjectManager::instance().SetExecuteSpeed(93);
+											m_ghost[P_attack00].Release();
+
+										}
 									}
 									
 								}
-							});
+						});
 					}
 				}
-			//}
+			
 		}
+		
 	}
-	else GameObjectManager::instance().SetExecuteSpeed(100);
+	
 
 }
 void Dragon::Update()
 {
-	
+	GameObjectManager::instance().SetExecuteSpeed(100);
 	//ゴーストオブジェクトを１フレーム削除
 	if (&m_ghost[D_attack00] != nullptr)
 	{
@@ -603,12 +652,12 @@ void Dragon::Update()
 
 	Move();
 	CharaConMove();
-
+	//m_position = CVector3::Zero();
 	
 	SetState();
 	AnimationPlay();
 	DamageEvent();
-	//m_position.y = m_charaConPos[UpBody].y;
+	
 
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetRotation(m_rotation);
@@ -619,4 +668,19 @@ void Dragon::Update()
 void Dragon::Render()
 {
 	
+}
+
+void Dragon::ColliderInit(int type,float radius,float height,CVector3& position)
+{
+	m_collider[type].Create(radius, height);
+	RigidBodyInfo rbInfo;
+	rbInfo.collider = &m_collider[type];
+	m_rigidBody.Create(rbInfo);
+	btTransform& trans = m_rigidBody.GetBody()->getWorldTransform();
+	//剛体の位置を更新。
+	trans.setOrigin(btVector3(position.x, position.y + height * 0.5f + radius, position.z));
+	//@todo 未対応。trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
+	m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
+	g_physics.AddRigidBody(m_rigidBody);
+
 }

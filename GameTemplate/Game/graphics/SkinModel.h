@@ -2,7 +2,7 @@
 
 #include "Skeleton.h"
 #include "C3DModelEffect.h"
-
+#include"SkinModelEffect.h"
 
 
 /*!

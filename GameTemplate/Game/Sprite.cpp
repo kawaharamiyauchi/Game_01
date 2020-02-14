@@ -227,6 +227,7 @@ void Sprite::LoadTexture(const wchar_t* textureFIlePath)
 		false,
 		nullptr,
 		&m_texture);
+	
 }
 
 void Sprite::UpdateWorldMatrix(CVector3 pos, CQuaternion rot, CVector3 scale)

@@ -3,6 +3,7 @@
 #pragma once
 #include "sound/WaveFileBank.h"
 #include "IGameObject.h"
+#include "GameObjectmanager.h"
 #define INPUTCHANNELS 2  // number of source channels
 #define OUTPUTCHANNELS 8	//最大出力チャンネル数。
 class CWaveFile;

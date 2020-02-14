@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "physics/Physics.h"
 #include "Physics/RigidBody.h"
-
+#include<functional>
 
 PhysicsWorld g_physics;
+
+using namespace std;
 
 struct MyContactResultCallback : public btCollisionWorld::ContactResultCallback {
 	using ContantTestCallback = function<void(const btCollisionObject& contactCollisionObject)>;

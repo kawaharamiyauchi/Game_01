@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GameObjectManager.h"
 #include "Player.h"
+#include"ShadowMap.h"
+GameObjectManager::EffekseerTool g_effect;
 //GameObjectManagerクラスのインスタンス作成
 
 void GameObjectManager::Start()
@@ -14,6 +16,13 @@ void GameObjectManager::Start()
 
 GameObjectManager::GameObjectManager()
 {
+
+	//Effekseerを初期化。
+	InitEffekseer();
+
+	
+	//エフェクトを再生する。
+	//m_playEffectHandle = m_effekseerManager->Play(m_sampleEffect, 0.0f, 0.0f, 0.0f);
 	m_deleteObject.reserve(32);
 	InitCamera();
 	//メインとなるレンダリングターゲットを作成する。
@@ -44,15 +53,7 @@ GameObjectManager::~GameObjectManager()
 }
 void GameObjectManager::Update()
 {
-	SpeedCount++;
-	auto m_shadowMap = &ShadowMap::instance();
-	//シャドウマップを更新。
-	m_shadowMap->UpdateFromLightTarget(
-		{ LightCameraPos.x+1000.0f ,
-		  LightCameraPos.y +1000.0f,
-		  LightCameraPos.z +1000.0f},
-		{ LightCameraPos }
-	);
+
 	if (SpeedCount == 101 - ExecuteSpeed) {
 		//登録済みのゲームオブジェクトの
 		//Update関数を呼ぶ。
@@ -62,6 +63,30 @@ void GameObjectManager::Update()
 		}
 		SpeedCount = 0;
 	}
+	//Effekseerカメラ行列を設定。
+	//まずはEffeseerの行列型の変数に、カメラ行列とプロジェクション行列をコピー。
+	Effekseer::Matrix44 efCameraMat;
+	g_camera3D.GetViewMatrix().CopyTo(efCameraMat);
+	Effekseer::Matrix44 efProjMat;
+	g_camera3D.GetProjectionMatrix().CopyTo(efProjMat);
+	//カメラ行列とプロジェクション行列を設定。
+	g_effect.m_effekseerRenderer->SetCameraMatrix(efCameraMat);
+	g_effect.m_effekseerRenderer->SetProjectionMatrix(efProjMat);
+	
+	//Effekseerを更新。
+	g_effect.m_effekseerManager->Update();
+
+	
+	SpeedCount++;
+	auto m_shadowMap = &ShadowMap::instance();
+	//シャドウマップを更新。
+	m_shadowMap->UpdateFromLightTarget(
+		{ LightCameraPos.x+1000.0f ,
+		  LightCameraPos.y +1000.0f,
+		  LightCameraPos.z +1000.0f},
+		{ LightCameraPos }
+	);
+	
 	Fade::instance().Update();
 	Draw();
 
@@ -91,6 +116,8 @@ void GameObjectManager::Update()
 	m_deleteObject.clear();
 	//ポストエフェクトの更新処理。
 	m_postEffect.Update();
+
+	
 }
 void GameObjectManager::BackUp()
 {
@@ -141,6 +168,11 @@ void GameObjectManager::ForwordRender()
 	{
 		go->Render();
 	}
+	//エフェクトは不透明オブジェクトを描画した後で描画する。
+	g_effect.m_effekseerRenderer->BeginRendering();
+	g_effect.m_effekseerManager->SetScale(g_effect.m_playEffectHandle,20.0f,20.0f,20.0f);
+	g_effect.m_effekseerManager->Draw();
+	g_effect.m_effekseerRenderer->EndRendering();
 }
 
 void GameObjectManager::PostRender()
@@ -205,4 +237,30 @@ void GameObjectManager::InitCamera()
 	g_camera2D.SetPosition({ 0.0f, 0.0f, -10.0f });
 	g_camera2D.SetTarget(CVector3::Zero());
 	g_camera2D.Update();
+}
+void GameObjectManager::InitEffekseer()
+{
+	//レンダラーを初期化。
+	g_effect.m_effekseerRenderer = EffekseerRendererDX11::Renderer::Create(
+		g_graphicsEngine->GetD3DDevice(),			//D3Dデバイス。
+		g_graphicsEngine->GetD3DDeviceContext(),	//D3Dデバイスコンテキスト。
+		20000										//板ポリの最大数。
+	);
+	//エフェクトマネージャを初期化。
+	g_effect.m_effekseerManager = Effekseer::Manager::Create(10000);
+
+	// 描画用インスタンスから描画機能を設定
+	g_effect.m_effekseerManager->SetSpriteRenderer(g_effect.m_effekseerRenderer->CreateSpriteRenderer());
+	g_effect.m_effekseerManager->SetRibbonRenderer(g_effect.m_effekseerRenderer->CreateRibbonRenderer());
+	g_effect.m_effekseerManager->SetRingRenderer(g_effect.m_effekseerRenderer->CreateRingRenderer());
+	g_effect.m_effekseerManager->SetTrackRenderer(g_effect.m_effekseerRenderer->CreateTrackRenderer());
+	g_effect.m_effekseerManager->SetModelRenderer(g_effect.m_effekseerRenderer->CreateModelRenderer());
+
+	// 描画用インスタンスからテクスチャの読込機能を設定
+	// 独自拡張可能、現在はファイルから読み込んでいる。
+	g_effect.m_effekseerManager->SetTextureLoader(g_effect.m_effekseerRenderer->CreateTextureLoader());
+	g_effect.m_effekseerManager->SetModelLoader(g_effect.m_effekseerRenderer->CreateModelLoader());
+
+
+
 }

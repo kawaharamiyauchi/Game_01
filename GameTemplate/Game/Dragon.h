@@ -4,6 +4,7 @@
 #include "GhostObject.h"
 #include "SkinModelRender.h"
 #include"character/CharacterController.h"
+#include"Player.h"
 class Dragon :public IGameObject
 {
 public:
@@ -30,8 +31,8 @@ public:
 	{
 		bool isFind =false;
 		bool isDead = false;
-		float HP = 300.0f;
-		
+		float HP = 1000.0f;
+		bool isEnd = false;
 	};
 	/// <summary>
 	/// ƒhƒ‰ƒSƒ“‚ÌˆÊ’u‚ğæ“¾
@@ -45,8 +46,14 @@ public:
 	{
 		return m_front;
 	}
-
-	
+	bool GetHitFlag()const
+	{
+		return m_damageflag;
+	}
+	DragonInfo GetDragonInfo()const
+	{
+		return d_info;
+	}
 	/// <summary>
 	/// ƒhƒ‰ƒSƒ“‚Ìó‘Ô‚ğİ’è
 	/// </summary>
@@ -93,7 +100,7 @@ public:
 	/// ƒhƒ‰ƒSƒ“‚Ì•`‰æˆ—
 	/// </summary>
 	void Render();
-
+	void ColliderInit(int type, float radius, float height, CVector3& position);
 private:
 	enum Dragon_anim{
 		enAnimationClip_idle,
@@ -117,11 +124,13 @@ private:
 	{
 		Head,
 		UpBody,
-		DownBody,
+		Body,
 		Tail,
 		CharaConTypeSize,
 	};
 	CharacterController m_charaCon[CharaConTypeSize];
+	CapsuleCollider m_collider[3] ;
+	RigidBody m_rigidBody;
 	Dragon_anim d_anim;
 	DragonInfo d_info;
 	DragonState d_state;
@@ -129,7 +138,7 @@ private:
 	
 	Animation m_animation;
 	//CAnimationEvent m_canimation;
-	AnimationEventListener m_listener;
+	//AnimationEventListener m_listener;
 	Bone *m_bone[CharaConTypeSize];
 	CVector3 m_position = CVector3::Zero();
 	CVector3 m_charaConPos[CharaConTypeSize] ={CVector3::Zero()};
@@ -142,11 +151,12 @@ private:
 
 	float angle = 0.0f;
 	CVector3 diff = CVector3::Zero();
-	
+	CVector3 move = CVector3::Zero();
 	Skeleton* m_skeleton;
 	
 	int m_timer = 0;
 	int rand_damage = 0;
+	
 	bool m_damageflag = false;
 	bool h_attackflag = false;
 	const wchar_t * bonename[41];

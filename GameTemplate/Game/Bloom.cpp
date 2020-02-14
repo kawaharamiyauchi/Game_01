@@ -2,7 +2,7 @@
 #include "Bloom.h"
 #include "Game.h"
 #include "PostEffect.h"
-
+#include"GameObjectManager.h"
 Bloom::Bloom()
 {
 	//各種レンダリングターゲットの初期化。

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SkinModelRender.h"
-
+#include "ShadowMap.h"
 
 SkinModelRender::SkinModelRender()
 {
@@ -30,4 +30,10 @@ void SkinModelRender::Render()
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()
 	);
+}
+void SkinModelRender::SetShadowCasterUpdate()
+{
+	//ShadowMap::instance().RegistShadowCaster(&m_skinModel);
+	auto shadowMap = &ShadowMap::instance();
+	shadowMap->RegistShadowCaster(&m_skinModel);
 }
