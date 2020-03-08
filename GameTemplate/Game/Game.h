@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #include"IGameObject.h"
 #include"GameObjectManager.h"
 #include"Sprite.h"
@@ -8,7 +8,7 @@
 #include"C3DModelDraw.h"
 #include "level/Level.h"
 #include "GhostObject.h"
-
+#include "FontRender.h"
 
 class Player;
 class BackGround;
@@ -17,6 +17,8 @@ class Dragon;
 class Fade;
 class QuestManager;
 class LittleEnemy;
+class FontRender;
+class Item;
 class Game:public IGameObject
 {
 
@@ -26,9 +28,9 @@ public:
 	~Game();
 
 	/// <summary>
-	/// ÉVÉìÉOÉãÉgÉìÉpÉ^Å[Éì
+	/// „Ç∑„É≥„Ç∞„É´„Éà„É≥„Éë„Çø„Éº„É≥
 	/// </summary>
-	/// <returns>GameÉNÉâÉX</returns>
+	/// <returns>Game„ÇØ„É©„Çπ</returns>
 	static Game* instance()
 	{	
 		static Game *gam = GameObjectManager::instance().NewGO<Game>();
@@ -55,7 +57,7 @@ public:
 	}
 
 
-	Player*m_player = nullptr;		//ÉvÉåÉCÉÑÅ[
+	Player*m_player = nullptr;		//„Éó„É¨„Ç§„É§„Éº
 	BackGround*m_background = nullptr;		
 	GameCamera *m_gamecamera = nullptr;
 	Dragon *m_dragon =  nullptr ;
@@ -63,10 +65,34 @@ public:
 	Fade *m_fade = nullptr;
 	ShadowMap m_shadowMap;
 	QuestManager *m_quest =nullptr;
-	LittleEnemy *m_little;
-
-	
+	LittleEnemy *m_little[5] = { nullptr };
+	FontRender *m_font = nullptr;
+	Item *m_Item = nullptr;
 private:
+	enum GhostType
+	{	
+		quest_board,
+		//   Stage Information
+		//
+		//A(stage1)->B(stage2)----------->D(stage4)
+		//				‚Ü≥C(stage3)------‚áó
+		AtoB,
+		BtoC,
+		CtoB,
+		BtoD,
+		CtoD,
+		GhostTypeNum
+
+	};
+	enum BGMType
+	{
+		camp,
+		wind,
+		Boss,
+		GameClear,
+		GameOver,
+		BGMTypeNum
+	};
 	wchar_t*LoadGameText;
 	int StageNum =0;
 	Level m_level;
@@ -76,6 +102,7 @@ private:
 	bool GameOverFlag = false;
 	bool GameLoadFlag = false;
 	bool isNonGame = false;
-	GhostObject m_ghost[2];
-	
+
+	GhostObject m_ghost[GhostTypeNum];
+	CSoundSource m_BGM[BGMTypeNum];
 };

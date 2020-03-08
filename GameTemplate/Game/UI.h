@@ -1,6 +1,61 @@
 #pragma once
 #include "IGameObject.h"
 #include "SpriteRender.h"
+
+class Item:public IGameObject
+{
+public:
+	Item();
+	~Item() {}
+	void Update();
+	void Render();
+	enum ItemType
+	{
+		kaihukuyaku,
+		b,
+		c,
+		d,
+		e,
+		TypeNum
+	};
+	enum IsUse
+	{
+		User_Item,
+		Drop_Item
+	};
+	struct ItemData
+	{
+		IsUse isUse;
+		int num;
+		int max;
+		
+	};
+	void InitItem(ItemData *Item, IsUse isUse, int num, int max)
+	{
+		if (Item != nullptr) {
+			Item->isUse = isUse;
+			Item->num = num;
+			Item->max = max;
+		}
+	}
+	bool GetItem(ItemType type,int num)
+	{
+		if (m_Item[type].max > m_Item[type].num + num)
+		{
+			m_Item[type].num += num;
+			return true;
+		}
+		else return false;
+	}
+	bool UseItem(ItemType type);
+	ItemData GetData(ItemType type)
+	{
+		return m_Item[type];
+	}
+private:
+	ItemData m_Item[TypeNum];
+	//std::vector<ItemData> m_useItemList;
+};
 class UI:public IGameObject
 {
 public:
@@ -12,6 +67,8 @@ public:
 		actionLine,
 		Clear,
 		GameOver,
+		kaihukuyaku,
+		QuestPaper,
 		UITypeNum
 	};
 	UI();
@@ -27,6 +84,7 @@ public:
 	{
 
 	}
+	
 	void ClearDraw();
 	void GameOverDraw();
 private:
@@ -36,6 +94,8 @@ private:
 	CVector3 m_spriteSca [UITypeNum] = { CVector3::One() };					//2D‰æ‘œ‚ÌŠg‘å—¦
 	CQuaternion m_spriteRot[UITypeNum] = { CQuaternion::Identity() };		//2D‰æ‘œ‚Ì‰ñ“]
 	float m_alpha = 0.0f;
+	float hp = 0.0f;
 	bool AttackEvent = false;
+	
 };
 

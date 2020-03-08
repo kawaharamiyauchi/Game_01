@@ -4,6 +4,8 @@
 #include "GhostObject.h"
 #include "SkinModelRender.h"
 #include"character/CharacterController.h"
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
 #include"Player.h"
 class Dragon :public IGameObject
 {
@@ -31,7 +33,7 @@ public:
 	{
 		bool isFind =false;
 		bool isDead = false;
-		float HP = 1000.0f;
+		float HP = 1500.0f;
 		bool isEnd = false;
 	};
 	/// <summary>
@@ -86,7 +88,6 @@ public:
 		m_rotation = rot;
 	}
 	void AnimationPlay();
-
 	void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 	
 	void SetState();
@@ -101,6 +102,7 @@ public:
 	/// </summary>
 	void Render();
 	void ColliderInit(int type, float radius, float height, CVector3& position);
+
 private:
 	enum Dragon_anim{
 		enAnimationClip_idle,
@@ -127,6 +129,12 @@ private:
 		Body,
 		Tail,
 		CharaConTypeSize,
+	};
+	enum SoundType
+	{
+		screamvoice,
+		gethit,
+		SoundTypeNum
 	};
 	CharacterController m_charaCon[CharaConTypeSize];
 	CapsuleCollider m_collider[3] ;
@@ -164,4 +172,6 @@ private:
 	//SkinModel m_test;
 	SkinModelRender * m_skinModelRender = nullptr;
 	GhostObject m_ghost[EventSize];
+
+	CSoundSource m_sound[SoundTypeNum];
 };

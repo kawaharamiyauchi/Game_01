@@ -8,7 +8,7 @@ namespace tkEngine{
 	/*!
 	 * @brief	サンプラステート。
 	 */
-	class CSamplerState : Noncopyable{
+	class CSamplerState /*: Noncopyable*/{
 	public:
 		CSamplerState()
 		{

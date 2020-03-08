@@ -2,8 +2,7 @@
 
 #pragma once
 #include "sound/WaveFileBank.h"
-#include "IGameObject.h"
-#include "GameObjectmanager.h"
+
 #define INPUTCHANNELS 2  // number of source channels
 #define OUTPUTCHANNELS 8	//最大出力チャンネル数。
 class CWaveFile;
@@ -12,14 +11,9 @@ class CSoundSource;
 /// <summary>
 /// サウンドエンジン。
 /// </summary>
-class CSoundEngine:public IGameObject{
+class CSoundEngine{
 public:
 
-	static CSoundEngine* instance()
-	{
-		static CSoundEngine *cse = GameObjectManager::instance().NewGO<CSoundEngine>();
-		return cse;
-	}
 	/// <summary>
 	/// コンストラクタ。
 	/// </summary>

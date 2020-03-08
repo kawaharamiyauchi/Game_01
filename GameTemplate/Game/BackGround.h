@@ -19,6 +19,10 @@ public:
 	{
 		m_position = pos;
 	}
+	void SetRotation(CQuaternion rot)
+	{
+		m_rotation = rot;
+	}
 	void SetStageType(int type)
 	{
 		m_stageType = type;

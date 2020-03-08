@@ -202,6 +202,8 @@
     <ClCompile Include="LittleEnemy.cpp">
       <Filter>enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="FontRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -287,7 +289,6 @@
     </ClInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="BackGround.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="IGameObject.h">
       <Filter>gameobject</Filter>
     </ClInclude>
@@ -361,6 +362,9 @@
     <ClInclude Include="LittleEnemy.h">
       <Filter>enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="FontRender.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\sky_01.FBX">
@@ -411,6 +415,9 @@
     <MeshContentTask Include="Assets\modelData\Limit.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\MH_Stage1-2.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\ago_free_03.png">
@@ -455,13 +462,18 @@
     <ImageContentTask Include="Assets\sprite\MH_QUESTFAILED.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\MH_QUESTCLEAR .png" />
+    <ImageContentTask Include="Assets\sprite\HealingBottle.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\HealingBottle02.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\QuestPaper.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\sprite\MH_QUESTCLEAR .png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
   </ItemGroup>
 </Project>

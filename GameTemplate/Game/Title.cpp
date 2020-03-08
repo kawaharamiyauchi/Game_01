@@ -2,7 +2,7 @@
 #include "Title.h"
 #include"Game.h"
 #include "SpriteRender.h"
-
+#include"GameObjectManager.h"
 Title::Title()
 {
 	
@@ -32,6 +32,11 @@ Title::Title()
 	m_position[Exit_Yellow].y -= 200.0f;
 	m_position[Triangle].x -= 200.0f;
 
+	m_sound[0].Init(L"Assets/sound/DH_title.wav");
+	m_sound[0].Play(true);
+	m_sound[1].Init(L"Assets/sound/cursor2.wav");
+	
+	m_sound[2].Init(L"Assets/sound/GameStart.wav");
 	/*m_spriteRender[1] = GameObjectManager::instance().NewGO<SpriteRender>();
 	m_spriteRender[1]->SetAlpha(0.5f);
 	m_spriteRender[1]->Init(L"Assets/sprite/MH_Red.dds", 1280.0f, 720.0f);*/
@@ -50,14 +55,16 @@ void Title::Update()
 {
 	if (g_pad[0].IsTrigger(enButtonDown) && !ExitFlag)
 	{
+		m_sound[1].Play(false);
 		StartFlag = false;
 		ExitFlag = true;
-
+		
 		m_position[Triangle].y -= 200.0f;
 
 	}
 	else if (g_pad[0].IsTrigger(enButtonUp) && !StartFlag)
 	{
+		m_sound[1].Play(false);
 		StartFlag = true;
 		
 		ExitFlag = false;
@@ -88,11 +95,12 @@ void Title::Update()
 		{
 			Fade::instance().FadeIn();
 			FadeFlag = true;
-				
+			m_sound[2].Play(false);
 			//}
 		}
 		else if (ExitFlag)
 		{
+			m_sound[2].Play(false);
 			exit(0);
 		}
 

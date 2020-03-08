@@ -29,9 +29,12 @@ void BackGround::LoadStage(int stagetype)
 
 		break;
 	case(1):
-		m_loadname = L"Assets/modelData/MH_Stage1-4.cmo";
-		
+		m_loadname = L"Assets/modelData/MH_Stage1-2.cmo";
+
 		break;
+	case(3):
+		m_loadname = L"Assets/modelData/MH_Stage1-4.cmo";
+
 	default:
 		break;
 	}
@@ -55,6 +58,11 @@ void BackGround::LoadStage(int stagetype)
 	//m_scale[MH_Limit].Set(1.0f, 1.0f, 1.0f);
 	m_physicsStaticObject.CreateMeshObject(*m_skinModelRender[MH_Ground]->GetSkinModel(), m_position, m_rotation, staticscale);
 	//m_limit.CreateMeshObject(*m_skinModelRender[MH_Limit]->GetSkinModel(), m_position, CQuaternion::Identity(), CVector3::Zero());
+
+
+
+	/*m_skinModelRender[0]->SetActiveFlag(false);
+	m_skinModelRender[1]->SetActiveFlag(false);*/
 
 }
 

@@ -39,13 +39,15 @@ bool QuestManager::Load(const wchar_t*filePath)
 }
 void QuestManager::Update()
 {
+	m_state = normal;
 	auto &m_UI = Game::instance()->m_UI;
 	auto &m_dragon = Game::instance()->m_dragon;
 	auto &m_player = Game::instance()->m_player;
-	if (Game::instance()->GetStageNum() == 1) {
+	if (Game::instance()->GetStageNum() == 3) {
 		if (m_dragon->GetDragonInfo().isEnd == true)
 		{
 			m_UI->ClearDraw();
+			m_state = clear;
 		}
 	}
 	if (m_player != nullptr)
@@ -53,7 +55,8 @@ void QuestManager::Update()
 		if (m_player->GetPlayerInformation().isEnd == true)
 		{
 			m_UI->GameOverDraw();
+			m_state = over;
 		}
-	}
+	}	
 
 }

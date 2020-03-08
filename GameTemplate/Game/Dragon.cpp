@@ -89,7 +89,8 @@ Dragon::Dragon()
 	}
 	//auto m_bone[0] = m_skeleton->GetBone(22);
 	//m_charaCon->Init(15.0f,20.0f, m_bone->GetWorldMatrix().v[3]);
-
+	m_sound[screamvoice].Init(L"Assets/sound/DragonScream.wav");
+	m_sound[gethit].Init(L"Assets/sound/sword-slash5.wav");
 }
 
 
@@ -203,12 +204,13 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 				{
 					//MessageBox(NULL, "attack", "attack", MB_OK);
 					m_game->m_player->SetDamageFlag(true);
+					m_game->m_player->SetDamage(20.0f);
 				}
 			});
 		}
 	else if (d_state == tailattack)
 	{
-		m_collisionScale.Set(700.0f, 50.0f, 700.0f);
+		m_collisionScale.Set(650.0f, 50.0f, 650.0f);
 		auto bone = m_skeleton->GetBone(25);
 		m_collisionPosition.x = bone->GetWorldMatrix().m[3][0];
 		m_collisionPosition.y = bone->GetWorldMatrix().m[3][1];
@@ -216,8 +218,6 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 		//m_collisionPosition = bone->GetWorldMatrix().v[3];
 		CVector3 attackpoint;
 		attackpoint.Set(m_position);
-		move.x *= 50.0f;
-		move.z *= 50.0f;
 		(void)clipName;
 		m_ghost[D_attack00].CreateBox(attackpoint, m_rotation, m_collisionScale);
 
@@ -227,6 +227,7 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 				{
 					//MessageBox(NULL, "attack", "attack", MB_OK);
 					m_game->m_player->SetDamageFlag(true);
+					m_game->m_player->SetDamage(20.0f);
 				}
 			});
 	}
@@ -243,13 +244,16 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 
 		(void)clipName;
 		m_ghost[D_attack00].CreateBox(attackpoint, m_rotation, m_collisionScale);
-
+		
+		m_sound[screamvoice].SetVolume(5.0f);
+		m_sound[screamvoice].Play(false);
 		g_physics.ContactTest(m_game->m_player->GetcharaCon(), [&](const btCollisionObject & contactObject)
 			{
 				if (m_ghost[D_attack00].IsSelf(contactObject))
 				{
 					//MessageBox(NULL, "attack", "attack", MB_OK);
 					m_game->m_player->SetDamageFlag(true);
+					m_game->m_player->SetDamage(10.0f);
 				}
 			});
 	}
@@ -302,6 +306,8 @@ void Dragon::Move()
 		case attack:
 			break;
 		case damage:
+
+			
 			break;
 		case escape:
 			
@@ -323,9 +329,9 @@ void Dragon::Move()
 		case tailattack:
 
 			move.Normalize();
-			if (diff.Length() > 300.0f) {
+			if (diff.Length() > 400.0f) {
 			
-				moveSpeed = move * 10.0f;
+				moveSpeed = move * 20.0f;
 			}
 			
 			angle = atan2(move.x, move.z);
@@ -336,6 +342,7 @@ void Dragon::Move()
 			angle = atan2(move.x, move.z);
 			m_rotation.SetRotation(CVector3::AxisY(), angle);
 			break;
+
 		}
 		
 	
@@ -581,7 +588,7 @@ void Dragon::DamageEvent()
 				if (m_game->m_player->Getattack() > 0&&m_game->m_player->Getattack()<15)
 				{
 
-					auto plbone = m_game->m_player->GetPlayerBone(22);
+					auto plbone = m_game->m_player->GetPlayerBone(23);
 					auto plpower = m_game->m_player->GetPlayerInformation().AttackPower;
 					CVector3 forward;
 					forward.x = plbone->GetWorldMatrix().m[2][0];
@@ -614,12 +621,12 @@ void Dragon::DamageEvent()
 										bonePos.y,
 										bonePos.z
 									);
+									m_sound[gethit].Play(false);
 
 									if (rand_damage == 0) {
 										d_info.HP -= plpower;
 										if (d_state != tailattack) {
 											m_damageflag = true;
-											GameObjectManager::instance().SetExecuteSpeed(93);
 											m_ghost[P_attack00].Release();
 
 										}
@@ -638,7 +645,6 @@ void Dragon::DamageEvent()
 }
 void Dragon::Update()
 {
-	GameObjectManager::instance().SetExecuteSpeed(100);
 	//ゴーストオブジェクトを１フレーム削除
 	if (&m_ghost[D_attack00] != nullptr)
 	{
@@ -658,7 +664,6 @@ void Dragon::Update()
 	AnimationPlay();
 	DamageEvent();
 	
-
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetRotation(m_rotation);
 	m_skinModelRender->SetScale(m_scale);
@@ -684,3 +689,5 @@ void Dragon::ColliderInit(int type,float radius,float height,CVector3& position)
 	g_physics.AddRigidBody(m_rigidBody);
 
 }
+
+

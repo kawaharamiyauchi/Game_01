@@ -40,6 +40,17 @@ UI::UI()
 	m_spriteRender[actionLine]->SetAlpha(0.1f);
 	m_spriteRender[actionLine]->SetIsActive(false);
 
+	m_spriteRender[kaihukuyaku]->Init(L"Assets/sprite/HealingBottle02.dds", 80.0f, 80.0f);
+	m_spriteRender[kaihukuyaku]->SetPivot({ 0.5f,0.5f });
+	m_spriteRender[kaihukuyaku]->SetIsActive(true);
+	m_spriteSca[kaihukuyaku].Set(2.0f,2.0f,0.1f);
+	m_spritePos[kaihukuyaku].Set(400.0f, -200.0f, 1.0f);
+
+	m_spriteRender[QuestPaper]->Init(L"Assets/sprite/QuestPaper.dds", 40.0f, 60.0f);
+	m_spriteRender[QuestPaper]->SetPivot({ 0.5f,0.5f });
+	m_spriteSca[QuestPaper].Set(10.0f, 10.0f, 1.0f);
+	m_spriteRender[QuestPaper]->SetIsActive(false);
+	
 	AttackEvent = false;
 
 }
@@ -55,7 +66,7 @@ void UI::Update()
 {
 	
 	auto m_game = Game::instance();
-	if (m_game->m_dragon != nullptr&&m_game->GetStageNum()==1) {
+	if (m_game->m_dragon != nullptr&&m_game->GetStageNum()==3) {
 		if (m_game->m_dragon->GetHitFlag())
 		{
 			AttackEvent = true;
@@ -71,7 +82,7 @@ void UI::Update()
 		m_spriteRender[actionLine]->SetIsActive(false);
 		AttackEvent = false;
 	}
-	float hp = 0.0f;
+	
 	if (m_game->m_player != nullptr) {
 		hp = m_game->m_player->GetPlayerInformation().HP;
 		float stamina = m_game->m_player->GetPlayerInformation().Stamina;
@@ -113,4 +124,27 @@ void UI::GameOverDraw()
 	}
 	m_spriteRender[GameOver]->SetIsActive(true);
 	m_spriteRender[GameOver]->SetAlpha(m_alpha);
+}
+
+Item::Item()
+{
+	InitItem(&m_Item[kaihukuyaku], User_Item, 2, 10);
+}
+
+bool Item::UseItem(ItemType type)
+{
+	if (m_Item[type].num > 0)
+	{
+		m_Item[type].num--;
+		return true;
+	}
+	else return false;
+}
+void Item::Update()
+{
+
+}
+void Item::Render()
+{
+
 }

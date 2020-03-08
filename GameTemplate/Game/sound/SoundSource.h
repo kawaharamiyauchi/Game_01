@@ -128,6 +128,7 @@ public:
 	{
 		return m_isLoop;
 	}
+	
 	/// <summary>
 	/// ƒ{ƒCƒX‚Ìü”g”’²®”ä
 	/// </summary>

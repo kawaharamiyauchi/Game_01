@@ -2,6 +2,7 @@
 #include "GameObjectManager.h"
 #include "Player.h"
 #include"ShadowMap.h"
+
 GameObjectManager::EffekseerTool g_effect;
 //GameObjectManagerクラスのインスタンス作成
 
@@ -20,7 +21,7 @@ GameObjectManager::GameObjectManager()
 	//Effekseerを初期化。
 	InitEffekseer();
 
-	
+	m_soundEngine.Init();
 	//エフェクトを再生する。
 	//m_playEffectHandle = m_effekseerManager->Play(m_sampleEffect, 0.0f, 0.0f, 0.0f);
 	m_deleteObject.reserve(32);
@@ -76,7 +77,7 @@ void GameObjectManager::Update()
 	//Effekseerを更新。
 	g_effect.m_effekseerManager->Update();
 
-	
+	m_soundEngine.Update();
 	SpeedCount++;
 	auto m_shadowMap = &ShadowMap::instance();
 	//シャドウマップを更新。
@@ -161,7 +162,7 @@ void GameObjectManager::ForwordRender()
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget, &m_frameBufferViewports);
 	//メインレンダリングターゲットをクリアする。
-	float clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float clearColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
 	//Render関数を呼ぶ。
 	for (auto go : m_goList)

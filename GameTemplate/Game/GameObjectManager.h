@@ -8,7 +8,8 @@
 #include "Sprite.h"
 #include "Fade.h"
 #include "PostEffect.h"
-
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
 using namespace std;
 class GameObjectManager
 {
@@ -148,7 +149,7 @@ private:
 	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
 	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
 
-
+	CSoundEngine m_soundEngine;
 
 	
 

@@ -14,7 +14,7 @@
     <ProjectGuid>{9CB90C92-58AF-482A-B34C-AC02496110F6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Lesson_00</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -116,6 +116,8 @@
     </ClCompile>
     <ClCompile Include="Dragon.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -186,6 +188,8 @@
     </ClInclude>
     <ClInclude Include="Dragon.h" />
     <ClInclude Include="Fade.h" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="FontRender.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -252,6 +256,7 @@
     <MeshContentTask Include="Assets\modelData\Limit.fbx" />
     <MeshContentTask Include="Assets\modelData\LittleDragon_Blue.fbx" />
     <MeshContentTask Include="Assets\modelData\MH_0-0.fbx" />
+    <MeshContentTask Include="Assets\modelData\MH_Stage1-2.fbx" />
     <MeshContentTask Include="Assets\modelData\MH_Stage1-4.fbx" />
     <MeshContentTask Include="Assets\modelData\sky_01.FBX" />
     <MeshContentTask Include="Assets\modelData\testbox.FBX" />
@@ -293,6 +298,15 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\MH_QUESTCLEAR .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\HealingBottle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\HealingBottle02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\QuestPaper.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

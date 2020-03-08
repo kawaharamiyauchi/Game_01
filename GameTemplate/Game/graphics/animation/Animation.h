@@ -13,7 +13,6 @@ class Skeleton;
 class SkinModel;
 
 using AnimationEventListener = std::function<void(const wchar_t* clipName, const wchar_t* eventName)>;
-
 /*!
 * @brief	アニメーションクラス。
 */
@@ -47,12 +46,7 @@ public:
 		int lastIndex = GetLastAnimationControllerIndex();
 		return m_animationPlayController[lastIndex].IsPlaying();
 	}
-
-	int Getm_currentKeyFrameNo()
-	{
-		return m_animationPlayController[32].GetKeyFrame();
-	}
-
+	
 	/*!
 	* @brief	アニメーションを進める。
 	*@details
@@ -60,28 +54,26 @@ public:
 	* ユーザーは使用しないでください。
 	*@param[in]	deltaTime		アニメーションを進める時間(単位：秒)。
 	*/
-	void Update(float deltaTime);
+	CVector3 Update(float deltaTime);
 	
 	/// <summary>
 	/// アニメーションイベントリスナーを登録
 	/// </summary>
-	/// <param name="eventListener">登録するリスナー</param>
+	/// <param name="eventlistener"></param>
 	void AddAnimationEventListener(AnimationEventListener eventListener)
 	{
 		m_animationEventListeners.push_back(eventListener);
 	}
-
 	/// <summary>
-	/// アニメーションイベントをリスナーに通知
+	/// アニメーションイベントをリスナーに通知。
 	/// </summary>
-	/// <param name="clipName">アニメーションクリップ名</param>
-	/// <param name="eventName">イベント名</param>
 	void NotifyAnimationEventToListener(const wchar_t* clipName, const wchar_t* eventName)
 	{
 		for (auto& listener : m_animationEventListeners) {
 			listener(clipName, eventName);
 		}
 	}
+
 private:
 	void PlayCommon(AnimationClip* nextClip, float interpolateTime)
 	{
@@ -110,7 +102,7 @@ private:
 	/*!
 		* @brief	グローバルポーズの更新。
 		*/
-	void UpdateGlobalPose();
+	CVector3 UpdateGlobalPose();
 		
 private:
 		
@@ -130,8 +122,6 @@ private:
 	{
 		return (startIndex + localIndex) % ANIMATION_PLAY_CONTROLLER_NUM;
 	}
-
-	
 private:
 	static const int ANIMATION_PLAY_CONTROLLER_NUM = 32;			//!<アニメーションコントローラの数。
 	std::vector<AnimationClip*>	m_animationClips;					//!<アニメーションクリップの配列。
@@ -142,7 +132,6 @@ private:
 	float m_interpolateTime = 0.0f;
 	float m_interpolateTimeEnd = 0.0f;
 	bool m_isInterpolate = false;				//!<補間中？
-
-	std::vector<AnimationEventListener>	m_animationEventListeners;	//!<アニメーションイベントリスナーのリスト。
-
+	int m_footStepBoneNo = -1;				//footstepの骨番号。
+	std::vector<AnimationEventListener> m_animationEventListeners; //アニメーションイベントリスナーのリスト
 };

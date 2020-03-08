@@ -39,6 +39,6 @@ private:
 	bool ExitFlag = false;
 	bool FadeFlag = false;
 	float m_alpha =1.0f;
-
+	CSoundSource m_sound[3];
 };
 

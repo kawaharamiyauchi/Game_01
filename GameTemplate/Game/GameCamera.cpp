@@ -43,7 +43,7 @@ void GameCamera::ChangeCameraState()
 
 	}
 
-	if (m_game->GetStageNum()==1)
+	if (m_game->GetStageNum()==3)
 	{
 		if (m_game->m_quest->GetGameState()==QuestManager::clear)
 		{

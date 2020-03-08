@@ -348,6 +348,14 @@ public:
 	{
 		return DirectX::XMLoadFloat4(&vec);
 	}
+	template<class TVector4>
+	void CopyTo(TVector4& dst) const
+	{
+		dst.x = x;
+		dst.y = y;
+		dst.z = z;
+		dst.w = w;
+	}
 	CVector4(){}
 	/*!
 	*@brief	‘ã“ü‰‰ZqB
@@ -485,6 +493,11 @@ public:
 		static const CVector4 white = { 1.0f, 1.0f, 1.0f, 1.0f };
 		return white;
 
+	}
+	static CVector4 Black()
+	{
+		static const CVector4 black = { 0.0f,0.0f,0.0f,1.0f };
+		return black;
 	}
 };
 

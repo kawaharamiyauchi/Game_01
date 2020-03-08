@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GraphicsEngine.h"
+#include"GameObjectManager.h"
 
 
 GraphicsEngine::GraphicsEngine()
@@ -57,6 +58,7 @@ void GraphicsEngine::Release()
 		m_pd3dDevice = NULL;
 	}
 }
+
 void GraphicsEngine::Init(HWND hWnd)
 {
 	//スワップチェインを作成するための情報を設定する。
@@ -156,4 +158,16 @@ void GraphicsEngine::Init(HWND hWnd)
 	viewport.MaxDepth = 1.0f;
 	m_pd3dDeviceContext->RSSetViewports(1, &viewport);
 	m_pd3dDeviceContext->RSSetState(m_rasterizerState);
+
+	m_frameBufferWidth = FRAME_BUFFER_W;
+	m_frameBufferHeight = FRAME_BUFFER_H;
+}
+void GraphicsEngine::SaveBackUpState()
+{
+	m_pd3dDeviceContext->PSGetSamplers(0, 4, m_backup.m_samplers);
+	m_pd3dDeviceContext->OMGetBlendState(&m_backup.m_BS, m_backup.m_blendFactor, &m_backup.m_blendSampleMask);
+	m_pd3dDeviceContext->OMGetDepthStencilState(&m_backup.m_DS, &m_backup.m_depthStencilStateRef);
+	m_pd3dDeviceContext->RSGetState(&m_backup.m_RS);
+	//m_rendertarget = GameObjectManager::instance().GetMainRenderTarget();
+	
 }

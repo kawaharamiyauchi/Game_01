@@ -1,11 +1,14 @@
 #pragma once
 #include"SkinModelRender.h"
-
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
 class Player:public IGameObject
 {
 public:
 	Player();
 	~Player();
+
+	void OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventName);
 
 	struct plinfo {
 		float HP = 100.0f;
@@ -68,6 +71,10 @@ public:
 	void SetDamageFlag(bool flag)
 	{
 		m_damageFlag = flag;
+	}
+	void SetDamage(float damage)
+	{
+		m_plinfo.HP -= damage;
 	}
 	void AnimationPlay();
 	/// <summary>
@@ -144,6 +151,12 @@ private:
 		Weapon,
 		ModelType_num
 	};
+	enum SoundType
+	{
+		GetHit,
+		move,
+		SoundTypeNum
+	};
 	float move_x = 0.0f;
 	float move_z = 0.0f;
 	Animation m_animation;
@@ -163,9 +176,10 @@ private:
 	bool m_dashflag = true;
 	int m_damageTimer = 0;
 	int m_attackTimer = 0;
-
+	bool stopflag = false;
 	Effekseer::Effect* m_sampleEffect = nullptr;
 	Effekseer::Manager*				m_effekseerManager = nullptr;
 	Effekseer::Handle m_playEffectHandle = -1;
+	CSoundSource m_sound[SoundTypeNum];
 };
 

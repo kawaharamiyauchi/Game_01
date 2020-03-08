@@ -9,6 +9,7 @@
 #include"GameCamera.h"
 #include"Game.h"
 #include "Title.h"
+
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -19,6 +20,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	
 	Title*m_title = GameObjectManager::instance().NewGO<Title>();
+	//FontRender *m_font = GameObjectManager::instance().NewGO<FontRender>();
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
@@ -29,14 +31,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//ゲームパッドの更新。	
 		for (auto& pad : g_pad) {
 			pad.Update();
-		}
-		if (g_pad[0].IsPress(enButtonLB1))
-		{
-			Fade::instance().FadeIn();
-		}
-		if (g_pad[0].IsPress(enButtonLB2))
-		{
-			Fade::instance().FadeOut();
 		}
 		//物理エンジンの更新。
 		g_physics.Update();
