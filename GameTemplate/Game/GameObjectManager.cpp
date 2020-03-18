@@ -82,9 +82,9 @@ void GameObjectManager::Update()
 	auto m_shadowMap = &ShadowMap::instance();
 	//シャドウマップを更新。
 	m_shadowMap->UpdateFromLightTarget(
-		{ LightCameraPos.x+1000.0f ,
-		  LightCameraPos.y +1000.0f,
-		  LightCameraPos.z +1000.0f},
+		{ LightCameraPos.x+3000.0f ,
+		  LightCameraPos.y +3000.0f,
+		  LightCameraPos.z +3000.0f},
 		{ LightCameraPos }
 	);
 	
