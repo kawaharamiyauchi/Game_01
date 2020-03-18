@@ -245,7 +245,6 @@
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="..\..\..\..\..\Documents\3dsMax\export\MH_sky.FBX" />
     <MeshContentTask Include="Assets\modelData\bg.fbx" />
     <MeshContentTask Include="Assets\modelData\Desert stage.FBX" />
     <MeshContentTask Include="Assets\modelData\DragonBoar.fbx" />
@@ -256,6 +255,7 @@
     <MeshContentTask Include="Assets\modelData\Limit.fbx" />
     <MeshContentTask Include="Assets\modelData\LittleDragon_Blue.fbx" />
     <MeshContentTask Include="Assets\modelData\MH_0-0.fbx" />
+    <MeshContentTask Include="Assets\modelData\MH_sky.FBX" />
     <MeshContentTask Include="Assets\modelData\MH_Stage1-2.fbx" />
     <MeshContentTask Include="Assets\modelData\MH_Stage1-3.fbx" />
     <MeshContentTask Include="Assets\modelData\MH_Stage1-4.fbx" />
