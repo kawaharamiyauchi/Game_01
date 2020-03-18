@@ -368,21 +368,22 @@ void Player::StateChange()
 }
 void Player::AnimationPlay()
 {
+	const float interpolateTime = 0.2f;
 	if (p_state == idle)
 	{
-		m_animation.Play(enAnimationClip_idle);
+		m_animation.Play(enAnimationClip_idle, interpolateTime);
 		auto a =m_animation.Update(0.05f);
 		m_speed = a;
 		
 	}
 	if (p_state ==walk)
 	{
-		m_animation.Play(enAnimationClip_walk);
+		m_animation.Play(enAnimationClip_walk, interpolateTime);
 		m_animation.Update(0.07f);
 	}
 	if (p_state  ==jump)
 	{
-		m_animation.Play(enAnimationClip_jump);
+		m_animation.Play(enAnimationClip_jump, interpolateTime);
 		m_animation.Update(0.04f);
 		if (m_charaCon.IsOnGround()) {
 			m_jumpflag = false;
@@ -391,7 +392,7 @@ void Player::AnimationPlay()
 
 	if (p_state == run)
 	{
-		m_animation.Play(enAnimationClip_run);
+		m_animation.Play(enAnimationClip_run, interpolateTime);
 		m_animation.Update(0.11f);
 	}
 	if (p_state == attack)
@@ -400,7 +401,7 @@ void Player::AnimationPlay()
 		auto change = m_footStep.y;
 		m_footStep.y = m_footStep.z;
 		m_footStep.z = change;
-		m_animation.Play(enAnimationClip_attack);
+		m_animation.Play(enAnimationClip_attack, interpolateTime);
 		CMatrix rotMatrix;
 		CMatrix mBias = CMatrix::Identity();
 		//âÒì]çsóÒÇçÏê¨Ç∑ÇÈÅB
@@ -412,19 +413,19 @@ void Player::AnimationPlay()
 	}
 	if (p_state == damage)
 	{
-		m_animation.Play(enAnimationClip_damage);
+		m_animation.Play(enAnimationClip_damage, interpolateTime);
 		/*auto a =*/m_animation.Update(0.06f);
 		//m_speed = a;
 
 	}
 	if (p_state == die)
 	{
-		m_animation.Play(enAnimationClip_die);
+		m_animation.Play(enAnimationClip_die, interpolateTime);
 		m_animation.Update(0.04f);
 	}
 	if (p_state == useitem)
 	{
-		m_animation.Play(enAnimationClip_drink);
+		m_animation.Play(enAnimationClip_drink, interpolateTime);
 		m_animation.Update(0.04f);
 	}
 }
