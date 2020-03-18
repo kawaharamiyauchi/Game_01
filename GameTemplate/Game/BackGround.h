@@ -53,7 +53,7 @@ private:
 	enum ModelType {
 		MH_Ground,
 		MH_Sky,
-		//MH_Limit,
+		MH_Limit,
 		ModelTypenum
 	};
 	CVector3 m_position = CVector3::Zero();

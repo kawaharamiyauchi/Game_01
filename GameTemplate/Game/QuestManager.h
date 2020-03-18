@@ -15,6 +15,8 @@ private:
 class QuestManager
 {
 public:
+
+
 	enum GameState
 	{
 		normal,
@@ -61,4 +63,3 @@ private:
 	Player::plinfo m_backUp;
 
 };
-

@@ -112,7 +112,7 @@ void Title::Update()
 		auto m_game = Game::instance();
 		GameObjectManager::instance().CountPlus();
 		if (GameObjectManager::instance().GetGameCount() > 1) {
-			m_game->LoadGame(0);
+			m_game->LoadGame(0,false);
 		}
 		GameObjectManager::instance().DeleteGO(this);
 	}

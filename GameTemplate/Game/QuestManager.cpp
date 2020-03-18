@@ -3,6 +3,47 @@
 #include"UI.h"
 #include "Game.h"
 #include"Dragon.h"
+//#include<iostream>
+//#include<string>
+//using namespace std;
+
+string INPUT_FOLDER_NAME = "Assets/QuestData/";
+
+
+/// <summary>
+/// 拡張子が.queであるファイルの名前を抽出
+/// </summary>
+/// <param name="dir_name"></param>
+/// <returns></returns>
+vector<string>GetQuestFileName(string dir_name)
+{
+	HANDLE Find;
+
+	WIN32_FIND_DATA win32fd;
+	std::vector<std::string> file_names;
+
+	//.que拡張子のファイルを読み込む。
+	std::string extension = "que";
+	string search_name = dir_name + "*." + extension;
+	Find = FindFirstFile(search_name.c_str(), &win32fd);
+
+	do {
+
+		if (win32fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+		}
+		else {
+			file_names.push_back(win32fd.cFileName);
+			OutputDebugStringA(win32fd.cFileName);
+			
+		}
+
+	} while (FindNextFile(Find, &win32fd));
+
+	FindClose(Find);
+	return file_names;
+
+}
+
 QuestManager::QuestManager()
 {
 }
@@ -45,8 +86,7 @@ void QuestManager::Update()
 	auto &m_player = Game::instance()->m_player;
 	if (Game::instance()->GetStageNum() == 3) {
 		if (m_dragon->GetDragonInfo().isEnd == true)
-		{
-			m_UI->ClearDraw();
+		{			
 			m_state = clear;
 		}
 	}
@@ -54,9 +94,14 @@ void QuestManager::Update()
 	{
 		if (m_player->GetPlayerInformation().isEnd == true)
 		{
-			m_UI->GameOverDraw();
 			m_state = over;
 		}
 	}	
+	vector<string> file_names = GetQuestFileName(INPUT_FOLDER_NAME);
+	for (auto f : file_names)
+	{
+		/*LPCSTR a = f[];
+		OutputDebugString(f);*/
+	}
 
 }

@@ -54,23 +54,25 @@ LittleEnemy::~LittleEnemy()
 void LittleEnemy::Update()
 {
 	auto m_game = Game::instance();
-	if (m_game->m_player !=nullptr) {
-		ChangeState();
-		Move();
-		AnimationPlay();
-		DamageEvent();
+	if (!m_game->GetPauseFlag()) {
+		if (m_game->m_player != nullptr) {
+			ChangeState();
+			Move();
+			AnimationPlay();
+			DamageEvent();
+		}
+		if (&m_ghost[P_attack00] != nullptr)
+		{
+			m_ghost[P_attack00].Release();
+		}
+		if (d_state == die)
+		{
+			m_charaCon.RemoveRigidBoby();
+		}
+		m_skinModelRender->SetPosition(m_position);
+		m_skinModelRender->SetRotation(m_rotation);
+		m_skinModelRender->SetScale(m_scale);
 	}
-	if (&m_ghost[P_attack00] != nullptr)
-	{
-		m_ghost[P_attack00].Release();
-	}
-	if (d_state == die)
-	{
-		m_charaCon.RemoveRigidBoby();
-	}
-	m_skinModelRender->SetPosition(m_position);
-	m_skinModelRender->SetRotation(m_rotation);
-	m_skinModelRender->SetScale(m_scale);
 }
 
 void LittleEnemy::Render()

@@ -5,7 +5,7 @@
 #include"QuestManager.h"
 #include "BackGround.h"
 
-#define pai 3.14159265
+#define pai 3.14159265f
 const CVector3 ATTACK_SCALE = { 100.0f, 200.0f, 300.0f };
 
 Dragon::Dragon()
@@ -400,7 +400,7 @@ void Dragon::SetState()
 	);
 	diff_2= m_game->m_player->GetPosition() - bonePos;
 	diff_3 = m_game->m_player->GetPosition() - m_position;
-	//diff.y = 0.0f;
+	
 	auto nor_diff = diff_2;
 	nor_diff.y = 0.0f;
 	nor_diff.Normalize();
@@ -419,7 +419,7 @@ void Dragon::SetState()
 	
 	if (d_state == die)
 	{
-		m_game->m_quest->SetGameState(QuestManager::GameState::clear);
+		
 		if (!m_animation.IsPlaying())
 		{
 			d_info.isEnd = true;
@@ -513,10 +513,13 @@ void Dragon::SetState()
 				}
 				break;
 			case Dragon::escape:
-				if (diff_3.Length() > 1500.0f)
+
+				escapetimer++;
+				if (diff_3.Length() > 1500.0f||escapetimer >50)
 				{
 					SetDragonState(hornattack);
 					h_attackflag = false;
+					escapetimer = 0;
 				}
 				break;
 			case Dragon::hornattack:
@@ -645,29 +648,31 @@ void Dragon::DamageEvent()
 }
 void Dragon::Update()
 {
-	//ゴーストオブジェクトを１フレーム削除
-	if (&m_ghost[D_attack00] != nullptr)
-	{
-		m_ghost[D_attack00].Release();
-	}
+	auto ispouse = Game::instance()->GetPauseFlag();
+	if (!ispouse) {
+		//ゴーストオブジェクトを１フレーム削除
+		if (&m_ghost[D_attack00] != nullptr)
+		{
+			m_ghost[D_attack00].Release();
+		}
 
-	if (&m_ghost[P_attack00] != nullptr)
-	{
-		m_ghost[P_attack00].Release();
-	}
+		if (&m_ghost[P_attack00] != nullptr)
+		{
+			m_ghost[P_attack00].Release();
+		}
 
-	Move();
-	CharaConMove();
-	//m_position = CVector3::Zero();
-	
-	SetState();
-	AnimationPlay();
-	DamageEvent();
-	
-	m_skinModelRender->SetPosition(m_position);
-	m_skinModelRender->SetRotation(m_rotation);
-	m_skinModelRender->SetScale(m_scale);
-	
+		Move();
+		CharaConMove();
+		//m_position = CVector3::Zero();
+
+		SetState();
+		AnimationPlay();
+		DamageEvent();
+
+		m_skinModelRender->SetPosition(m_position);
+		m_skinModelRender->SetRotation(m_rotation);
+		m_skinModelRender->SetScale(m_scale);
+	}
 }
 
 void Dragon::Render()

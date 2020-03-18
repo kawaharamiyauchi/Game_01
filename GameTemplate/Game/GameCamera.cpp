@@ -15,7 +15,7 @@ GameCamera::GameCamera()
 	g_camera3D.SetPosition({ 0.0f,250.0f,-300.0f });
 	//g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
 	g_camera3D.SetNear(1.0f);
-	g_camera3D.SetFar(1000000.0f);
+	g_camera3D.SetFar(100000.0f);
 }
 
 
@@ -45,7 +45,7 @@ void GameCamera::ChangeCameraState()
 
 	if (m_game->GetStageNum()==3)
 	{
-		if (m_game->m_quest->GetGameState()==QuestManager::clear)
+		if (m_game->m_dragon->GetDragonInfo().HP<=0)
 		{
 			m_CS = GameClear;
 		}
@@ -56,7 +56,18 @@ void GameCamera::ChangeCameraState()
 	}
 	
 }
-
+void GameCamera::Reset()
+{
+	m_toCameraPos.Set(0.0f, 70.0f, -250.0f);
+	//m_position = {m_player->GetPosition().x,m_player->GetPosition().y + 10.0f, m_player->GetPosition().z-50.0f };
+	//m_position = { 0.0f,10.0f,-100.0f };
+	//g_camera3D.SetViewAngle(60.0f);
+	g_camera3D.SetPosition({ 0.0f,250.0f,-300.0f });
+	//g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
+	g_camera3D.SetNear(1.0f);
+	g_camera3D.SetFar(100000.0f);
+	
+}
 void GameCamera::Update()
 {
 

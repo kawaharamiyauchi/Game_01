@@ -8,7 +8,7 @@
 #include"level/Level.h"
 #include"LittleEnemy.h"
 #include "Player.h"
-
+#include"SkinModelRender.h"
 Game::Game()
 {
 	
@@ -19,47 +19,47 @@ Game::Game()
 	InitQuest(L"Assets/ModelData/MH01.que");
 	m_Item = m_manager->NewGO<Item>();
 
-	m_level.Init(L"Assets/level/MH_Stage0-0.tkl",[&](const LevelObjectData& objData)
-		{
-			if (wcscmp(objData.name, L"MH_0-0")==0)
-			{
-				
-				m_background = m_manager->NewGO<BackGround>();
-				m_background->LoadStage(0);
-				m_background->SetPosition(objData.position);
-				return true;
-			}
-			if (wcscmp(objData.name, L"hunter03")==0)
-			{
-				m_player = m_manager->NewGO<Player>();
-				m_player->SetPosition(objData.position);
-				m_player->SetRotation(objData.rotation);
-				return true;
-			}
-			if (wcscmp(objData.name, L"bord_ghorst") == 0)
-			{
-				
-				return true;
-			}
-			if (wcscmp(objData.name, L"Quest_bord") == 0)
-			{
-				/*m_little = m_manager->NewGO<LittleEnemy>();
-				m_little->SetCharaConPos(objData.position);*/
-				return true;
-			}
-			if (wcscmp(objData.name, L"unityChan") == 0)
-			{
-				return true;
-			}
-			if (wcscmp(objData.name, L"nextstage") == 0)
-			{
-				m_ghost[1].CreateBox(objData.position, objData.rotation, {2600.0f,200.0f,1600.0f});
-				return true;
-			}
-			
-			return false;
-		});
-
+	//m_level.Init(L"Assets/level/MH_Stage0-0.tkl",[&](const LevelObjectData& objData)
+	//	{
+	//		if (wcscmp(objData.name, L"MH_0-0")==0)
+	//		{
+	//			
+	//			m_background = m_manager->NewGO<BackGround>();
+	//			m_background->LoadStage(0);
+	//			m_background->SetPosition(objData.position);
+	//			return true;
+	//		}
+	//		if (wcscmp(objData.name, L"hunter03")==0)
+	//		{
+	//			m_player = m_manager->NewGO<Player>();
+	//			m_player->SetPosition(objData.position);
+	//			m_player->SetRotation(objData.rotation);
+	//			return true;
+	//		}
+	//		if (wcscmp(objData.name, L"bord_ghorst") == 0)
+	//		{
+	//			
+	//			return true;
+	//		}
+	//		if (wcscmp(objData.name, L"Quest_bord") == 0)
+	//		{
+	//			/*m_little = m_manager->NewGO<LittleEnemy>();
+	//			m_little->SetCharaConPos(objData.position);*/
+	//			return true;
+	//		}
+	//		if (wcscmp(objData.name, L"unityChan") == 0)
+	//		{
+	//			return true;
+	//		}
+	//		if (wcscmp(objData.name, L"nextstage") == 0)
+	//		{
+	//			m_ghost[1].CreateBox(objData.position, objData.rotation, {2600.0f,200.0f,1600.0f});
+	//			return true;
+	//		}
+	//		
+	//		return false;
+	//	});
+	
 	/*m_BGM[camp].Init(L"Assets/sound/camp.wav");
 	m_BGM[camp].Play(true);*/
 	m_BGM[wind].Init(L"Assets/sound/wind1.wav");
@@ -69,7 +69,7 @@ Game::Game()
 	m_BGM[Boss].Init(L"Assets/sound/Boss01.wav");
 	m_gamecamera = m_manager->NewGO<GameCamera>();
 	m_UI = m_manager->NewGO<UI>();
-		
+	LoadGame(0, false);
 }
 
 Game::~Game()
@@ -91,10 +91,10 @@ void Game::DeleteGame()
 	if (m_player != nullptr) {
 		GameObjectManager::instance().DeleteGO(m_player);
 	}
-	if (m_gamecamera != nullptr) {
+	/*if (m_gamecamera != nullptr) {
 
 		GameObjectManager::instance().DeleteGO(m_gamecamera);
-	}
+	}*/
 
 	if (m_UI != nullptr) {
 		GameObjectManager::instance().DeleteGO(m_UI);
@@ -118,7 +118,7 @@ void Game::Update()
 {
 	//EventChange();
 	
-	if (g_pad[0].IsTrigger(enButtonSelect)&&!isNonGame)
+	/*if (g_pad[0].IsTrigger(enButtonSelect)&&!isNonGame)
 	{
 		
 		DeleteGame();
@@ -126,6 +126,14 @@ void Game::Update()
 	
 		isNonGame = true;
 		StageNum = 0;
+	}*/
+	if (g_pad[0].IsTrigger(enButtonStart) && !isNonGame)
+	{
+		if (!pauseFlag) {
+			pauseFlag = true;
+			return;
+		}
+		else pauseFlag = false;
 	}
 	if (m_quest->GetGameState() == QuestManager::clear)
 	{
@@ -151,7 +159,7 @@ void Game::Update()
 						
 						DeleteGame();
 						m_quest->instance().PlayerBackUp(m_player->GetPlayerInformation());
-						LoadGame(1);
+						LoadGame(1,false);
 						m_ghost[AtoB].Release();
 					}
 				}
@@ -164,9 +172,39 @@ void Game::Update()
 
 						DeleteGame();
 						m_quest->instance().PlayerBackUp(m_player->GetPlayerInformation());
-						LoadGame(3);
+						LoadGame(3,false);
 						m_ghost[BtoD].Release();
 						m_ghost[BtoC].Release();
+
+					}
+				}
+				if (m_ghost[BtoC].IsSelf(contactObject))
+				{
+					Fade::instance().FadeIn();
+
+					if (Fade::instance().IsFade() == false)
+					{
+
+						DeleteGame();
+						m_quest->instance().PlayerBackUp(m_player->GetPlayerInformation());
+						LoadGame(2,false);
+						m_ghost[BtoD].Release();
+						m_ghost[BtoC].Release();
+
+					}
+				}
+				if (m_ghost[CtoD].IsSelf(contactObject))
+				{
+					Fade::instance().FadeIn();
+
+					if (Fade::instance().IsFade() == false)
+					{
+
+						DeleteGame();
+						m_quest->instance().PlayerBackUp(m_player->GetPlayerInformation());
+						LoadGame(3,false);
+						m_ghost[CtoD].Release();
+						m_ghost[CtoB].Release();
 
 					}
 				}
@@ -182,10 +220,15 @@ void Game::Render()
 	
 
 }
-
-void Game::LoadGame(int LoadNum)
+/// <summary>
+	/// ゲームステージのロード。
+	/// </summary>
+	/// <param name="LoadNum">ステージナンバー</param>
+	/// <param name="flag">ステージバックフラグ</param>
+void Game::LoadGame(int LoadNum,bool flag)
 {
 	Fade::instance().FadeOut();
+	
 	if (!m_BGM[wind].IsPlaying())
 	{
 		m_BGM[wind].Play(true);
@@ -193,14 +236,19 @@ void Game::LoadGame(int LoadNum)
 	if (LoadNum == 3)
 	{
 		m_BGM[Boss].Play(true);
+		m_BGM[wind].SetVolume(0.1f);
 	}
-	InitQuest(L"Assets/ModelData/MH01.que");
+	InitQuest(L"Assets/QuestData/MH01.que");
 	StageNum = LoadNum;
 	isNonGame = false;
 	auto m_manager = &GameObjectManager::instance();
+
+	
 	switch (LoadNum)
 	{
 	case(0):
+
+		
 		m_level.Init(L"Assets/level/MH_Stage0-0.tkl", [&](const LevelObjectData& objData)
 			{
 				if (wcscmp(objData.name, L"MH_0-0") == 0)
@@ -220,14 +268,14 @@ void Game::LoadGame(int LoadNum)
 					m_player->SetRotation(objData.rotation);
 					return true;
 				}
-				if (wcscmp(objData.name, L"bord_ghorst") == 0)
+				if (wcscmp(objData.name, L"board_ghorst") == 0)
 				{
-					m_ghost[0].CreateBox(objData.position, objData.rotation, objData.scale);
+					m_ghost[quest_board].CreateBox(objData.position, objData.rotation, { 150.0f,200.0f,400.0f });
 					return true;
 				}
-				if (wcscmp(objData.name, L"Quest_bord") == 0)
+				if (wcscmp(objData.name, L"QuestBoard") == 0)
 				{
-					//m_ghost[1].CreateBox(objData.position, objData.rotation, objData.scale);
+					
 					return true;
 				}
 				if (wcscmp(objData.name, L"nextstage") == 0)
@@ -315,6 +363,48 @@ void Game::LoadGame(int LoadNum)
 			});
 		break;
 	case(2):
+		m_level.Init(L"Assets/level/MH_Stage0-3.tkl", [&](const LevelObjectData& objData)
+			{
+				if (wcscmp(objData.name, L"MH_Stage1-3") == 0)
+				{
+
+					m_background = m_manager->NewGO<BackGround>();
+					m_background->SetRotation(objData.rotation);
+					m_background->SetPosition(objData.position);
+					m_background->LoadStage(2);
+					
+					
+					return true;
+				}
+				if (wcscmp(objData.name, L"hunter03") == 0)
+				{
+					m_player = m_manager->NewGO<Player>();
+					m_player->SetPlInfo(m_quest->instance().GetBackUp());
+					m_player->SetCharaConPos(objData.position);
+					m_player->SetPosition(objData.position);
+					m_player->SetRotation(objData.rotation);
+					return true;
+				}
+				if (wcscmp(objData.name, L"CtoD") == 0)
+				{
+					m_ghost[CtoD].CreateBox(objData.position, objData.rotation, { 2000.0f, 200.0f, 2000.0f });
+					return true;
+				}
+				if (wcscmp(objData.name, L"CtoB") == 0)
+				{
+					m_ghost[CtoB].CreateBox(objData.position, objData.rotation, { 2000.0f, 200.0f, 2000.0f });
+					return true;
+				}
+				if (wcscmp(objData.name, L"LittleDragon_Blue") == 0)
+				{
+					m_little[0] = m_manager->NewGO<LittleEnemy>();
+					m_little[0]->SetCharaConPos(objData.position);
+					m_little[0]->SetRotation(objData.rotation);
+					return true;
+				}
+				return false;
+			});
+			
 		break;
 	case(3):
 		m_level.Init(L"Assets/level/MH_Stage0-4.tkl", [&](const LevelObjectData& objData)
@@ -325,6 +415,8 @@ void Game::LoadGame(int LoadNum)
 					m_background = m_manager->NewGO<BackGround>();
 					m_background->LoadStage(3);
 					m_background->SetPosition(objData.position);
+					
+					
 					return true;
 				}
 				if (wcscmp(objData.name, L"hunter03") == 0)
@@ -355,12 +447,26 @@ void Game::LoadGame(int LoadNum)
 		break;
 	}
 	
-	m_gamecamera = m_manager->NewGO<GameCamera>();
+	m_gamecamera->Reset();
 	
 	m_UI = m_manager->NewGO<UI>();
 	
 }
+void Game::ColliderInit(float radius, float height, CVector3& position)
+{
+	m_collider.Create(radius, height);
+	RigidBodyInfo rbInfo;
+	rbInfo.collider = &m_collider;
+	m_rigidBody.Create(rbInfo);
+	btTransform& trans = m_rigidBody.GetBody()->getWorldTransform();
+	//剛体の位置を更新。
+	trans.setOrigin(btVector3(position.x, position.y + height * 0.5f + radius, position.z));
+	//@todo 未対応。trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 
+	m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
+	g_physics.AddRigidBody(m_rigidBody);
+
+}
 
 
 

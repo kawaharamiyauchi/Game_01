@@ -36,6 +36,9 @@ public:
 	{
 		m_target = t;
 	}
+
+	void Reset();
+	
 	void ChangeCameraState();
 	void Update();		//XVˆ—
 	void Render();		//•`‰æˆ—

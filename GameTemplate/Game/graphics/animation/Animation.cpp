@@ -183,4 +183,9 @@ CVector3 Animation::Update(float deltaTime)
 		
 	//グローバルポーズを計算していく。
 	return UpdateGlobalPose();
+	/*auto StepMove = UpdateGlobalPose();
+	auto change = StepMove.y;
+	StepMove.y = StepMove.z;
+	StepMove.z = change;*/
+	//return StepMove;
 }

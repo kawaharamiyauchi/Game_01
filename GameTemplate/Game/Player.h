@@ -142,6 +142,7 @@ private:
 		enAnimationClip_attack,
 		enAnimationClip_damage,
 		enAnimationClip_die,
+		enAnimationClip_drink,
 		enAnimationClip_num
 	};
 	enum Modeltype {
@@ -176,6 +177,9 @@ private:
 	bool m_dashflag = true;
 	int m_damageTimer = 0;
 	int m_attackTimer = 0;
+	float footStop = 1.0f;
+	int runTimer = 0;
+	CVector3 m_footStep = CVector3::Zero();
 	bool stopflag = false;
 	Effekseer::Effect* m_sampleEffect = nullptr;
 	Effekseer::Manager*				m_effekseerManager = nullptr;

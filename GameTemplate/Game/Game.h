@@ -10,6 +10,7 @@
 #include "GhostObject.h"
 #include "FontRender.h"
 
+
 class Player;
 class BackGround;
 class GameCamera;
@@ -45,7 +46,10 @@ public:
 	void InitQuest(const wchar_t*filePath);
 	void Update();
 	void Render();
-	void LoadGame(int LoadNum);
+	
+	void LoadGame(int LoadNum,bool flag);
+
+	void ColliderInit(float radius, float height, CVector3 & position);
 
 	bool GetIsNonGame()const
 	{
@@ -55,7 +59,12 @@ public:
 	{
 		return StageNum;
 	}
-
+	bool GetPauseFlag()
+	{
+		return pauseFlag;
+	}
+	CapsuleCollider m_collider;
+	RigidBody m_rigidBody;
 
 	Player*m_player = nullptr;		//プレイヤー
 	BackGround*m_background = nullptr;		
@@ -78,8 +87,8 @@ private:
 		//				↳C(stage3)------⇗
 		AtoB,
 		BtoC,
-		CtoB,
 		BtoD,
+		CtoB,
 		CtoD,
 		GhostTypeNum
 
@@ -102,7 +111,9 @@ private:
 	bool GameOverFlag = false;
 	bool GameLoadFlag = false;
 	bool isNonGame = false;
-
+	bool pauseFlag = false;
 	GhostObject m_ghost[GhostTypeNum];
 	CSoundSource m_BGM[BGMTypeNum];
+
+
 };
