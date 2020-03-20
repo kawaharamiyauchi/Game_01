@@ -3,9 +3,9 @@
 #include"Game.h"
 #include "SpriteRender.h"
 #include"GameObjectManager.h"
+#include "FontRender.h"
 Title::Title()
 {
-	
 	
 	StartFlag = true;
 	ExitFlag = false;
@@ -53,6 +53,8 @@ Title::~Title()
 
 void Title::Update()
 {
+
+	
 	if (g_pad[0].IsTrigger(enButtonDown) && !ExitFlag)
 	{
 		m_sound[1].Play(false);

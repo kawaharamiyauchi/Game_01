@@ -4,9 +4,51 @@
 #include"Player.h"
 #include "QuestManager.h"
 #include"Dragon.h"
+#include"FontRender.h"
+
+
+Item::Item()
+{
+	InitItem(&m_Item[noneItem], User_Item, 255, 255);
+	InitItem(&m_Item[kaihukuyaku], User_Item, 5, 10);
+	InitItem(&m_Item[ItemDummy00], User_Item, 2, 10);
+	InitItem(&m_Item[ItemDummy01], User_Item, 6, 10);
+
+}
+
+int Item::UseItem()
+{
+	auto m_selectItem = Game::instance()->m_UI->GetTargetItem();
+	if (m_Item[m_selectItem].num > 0 && m_selectItem > 0)
+	{
+		m_Item[m_selectItem].num--;
+		return m_selectItem;
+	}
+
+	else return -1;
+}
+void Item::Update()
+{
+
+}
+void Item::Render()
+{
+
+}
+
+
+
+
 
 UI::UI()
 {
+
+	for (int i = 0; i < FontType::FontTypeNum; i++)
+	{
+		m_font[i] = GameObjectManager::instance().NewGO<FontRender>();
+	}
+	
+
 	for (int i = 0; i < UITypeNum; i++) {
 		m_spriteRender[i] = GameObjectManager::instance().NewGO<SpriteRender>();
 		m_spriteSca[i].Set(100.0f, 2.0f, 1.0f);
@@ -97,72 +139,12 @@ UI::~UI()
 	{
 		GameObjectManager::instance().DeleteGO(m_ItemRender[i]);
 	}
+	for (int i = 0; i < FontTypeNum; i++)
+	{
+		GameObjectManager::instance().DeleteGO(m_font[i]);
+	}
 }
-void UI::Update()
-{
-	
-	auto m_game = Game::instance();
-	auto m_Item = m_game->m_Item;
 
-	if (m_game->m_quest->instance().GetGameState() ==QuestManager::GameState::clear)
-	{
-		ClearDraw();
-	}
-	if (m_game->m_quest->instance().GetGameState() == QuestManager::GameState::over)
-	{
-		GameOverDraw();
-	}
-	if (m_game->GetPauseFlag())
-	{
-		m_spriteRender[Pause]->SetIsActive(true);
-	}
-	else m_spriteRender[Pause]->SetIsActive(false);
-	if (m_game->m_dragon != nullptr&&m_game->GetStageNum()==3) {
-		if (m_game->m_dragon->GetHitFlag())
-		{
-			AttackEvent = true;
-		}
-		if (AttackEvent) {
-			m_spriteRender[actionLine]->SetIsActive(true);
-			m_spriteSca[actionLine] *= 1.6f;
-		}
-	}
-	if (m_spriteSca[actionLine].x >1280.0f)
-	{
-		m_spriteSca[actionLine].Set(CVector3::One());
-		m_spriteRender[actionLine]->SetIsActive(false);
-		AttackEvent = false;
-	}
-	
-	if (m_game->m_player != nullptr) {
-		hp = m_game->m_player->GetPlayerInformation().HP;
-		float stamina = m_game->m_player->GetPlayerInformation().Stamina;
-		if (hp < 30.0f)
-		{
-			m_spriteRender[HP]->SetIsActive(false);
-			m_spriteRender[Red]->SetIsActive(true);
-		}
-		if (hp >= 30.0f) {
-			m_spriteRender[HP]->SetIsActive(true);
-			m_spriteRender[Red]->SetIsActive(false);
-		}
-
-		m_spriteSca[HP].x = hp;
-		m_spriteSca[Stamina].x = stamina;
-		m_spriteSca[Red].x = hp;
-	}
-	for (int i = 0; i < UITypeNum; i++)
-	{
-		m_spriteRender[i]->SetPosition(m_spritePos[i]);
-		m_spriteRender[i]->SetScale(m_spriteSca[i]);
-	}
-	for (int i = 0; i < ItemSpriteTypeNum; i++)
-	{
-		m_ItemRender[i]->SetIsActive(false);
-	}
-	m_sideRender->SetIsActive(false);
-	ChangeItem();
-}
 int UI::CheckItem()
 {
 
@@ -302,12 +284,50 @@ void UI::ChangeItem()
 	}
 	else if (ItemNum == 1)
 	{
-		targetItem = m_ItemList[mainItem];
+		targetItem = m_ItemList[nonItem];
 		m_ItemRender[nonItem]->SetIsActive(true);
 		m_ItemRender[nonItem]->SetPosition(m_mainItemPos);
 		m_ItemRender[nonItem]->SetScale(m_mainItemSca);
 	}
 	m_ItemList.clear();
+}
+void UI::SetFont(int ft, wchar_t text[15],bool frameflag, float frame, CVector4 & color, CVector2 & pos, float size, CVector2 & pivot)
+{
+		m_font[ft]->SetText(text);
+		m_font[ft]->SetPivot(pivot);
+		m_font[ft]->SetShadowParam(frameflag, frame, CVector4::Black());
+		m_font[ft]->SetColor(color);
+		m_font[ft]->SetPosition(pos);
+		m_font[ft]->SetScale(size);
+	
+}
+void UI::SetFontPalam()
+{
+	auto m_Item = Game::instance()->m_Item;
+		int itemnum = m_Item->GetData(targetItem).num;
+		_itow_s(itemnum, m_fontPalam[ItemNumber].m_text, 10);
+		m_fontPalam[ItemNumber].m_frameWidth = 3.0f;
+		m_fontPalam[ItemNumber].pos = { 350.0f,-230.0f };
+		m_fontPalam[ItemNumber].size = 0.7f;
+		m_fontPalam[ItemNumber].m_textColor = CVector4::White();
+		for (int i = 0; i < FontTypeNum; i++)
+		{
+			if (m_fontPalam[i].m_frameWidth > 0.0f)
+			{
+				m_fontPalam[i].frameFlag = true;
+			}
+			SetFont(i, m_fontPalam[i].m_text,
+				m_fontPalam[i].frameFlag,
+				m_fontPalam[i].m_frameWidth,
+				m_fontPalam[i].m_textColor,
+				m_fontPalam[i].pos,
+				m_fontPalam[i].size,
+				m_fontPalam[i].pivot
+			);
+
+		}
+
+	
 }
 void UI::ClearDraw()
 {
@@ -327,31 +347,71 @@ void UI::GameOverDraw()
 	m_spriteRender[GameOver]->SetAlpha(m_alpha);
 }
 
-Item::Item()
+void UI::Update()
 {
-	InitItem(&m_Item[noneItem], User_Item, 255, 255);
-	InitItem(&m_Item[kaihukuyaku], User_Item, 5, 10);
-	InitItem(&m_Item[ItemDummy00], User_Item, 2, 10);
-	InitItem(&m_Item[ItemDummy01], User_Item, 6, 10);
 
-}
+	
+	auto m_game = Game::instance();
+	auto m_Item = m_game->m_Item;
 
-int Item::UseItem()
-{
-	auto m_selectItem = Game::instance()->m_UI->GetTargetItem();
-	if (m_Item[m_selectItem].num > 0&&m_selectItem >0)
+	if (m_game->m_quest->instance().GetGameState() == QuestManager::GameState::clear)
 	{
-		m_Item[m_selectItem].num--;
-		return m_selectItem;
+		ClearDraw();
+	}
+	if (m_game->m_quest->instance().GetGameState() == QuestManager::GameState::over)
+	{
+		GameOverDraw();
+	}
+	if (m_game->GetPauseFlag())
+	{
+		m_spriteRender[Pause]->SetIsActive(true);
+	}
+	else m_spriteRender[Pause]->SetIsActive(false);
+	if (m_game->m_dragon != nullptr&&m_game->GetStageNum() == 3) {
+		if (m_game->m_dragon->GetHitFlag())
+		{
+			AttackEvent = true;
+		}
+		if (AttackEvent) {
+			m_spriteRender[actionLine]->SetIsActive(true);
+			m_spriteSca[actionLine] *= 1.6f;
+		}
+	}
+	if (m_spriteSca[actionLine].x > 1280.0f)
+	{
+		m_spriteSca[actionLine].Set(CVector3::One());
+		m_spriteRender[actionLine]->SetIsActive(false);
+		AttackEvent = false;
 	}
 
-	else return -1;
-}
-void Item::Update()
-{
+	if (m_game->m_player != nullptr) {
+		hp = m_game->m_player->GetPlayerInformation().HP;
+		float stamina = m_game->m_player->GetPlayerInformation().Stamina;
+		if (hp < 30.0f)
+		{
+			m_spriteRender[HP]->SetIsActive(false);
+			m_spriteRender[Red]->SetIsActive(true);
+		}
+		if (hp >= 30.0f) {
+			m_spriteRender[HP]->SetIsActive(true);
+			m_spriteRender[Red]->SetIsActive(false);
+		}
 
+		m_spriteSca[HP].x = hp;
+		m_spriteSca[Stamina].x = stamina;
+		m_spriteSca[Red].x = hp;
+	}
+	for (int i = 0; i < UITypeNum; i++)
+	{
+		m_spriteRender[i]->SetPosition(m_spritePos[i]);
+		m_spriteRender[i]->SetScale(m_spriteSca[i]);
+	}
+	for (int i = 0; i < ItemSpriteTypeNum; i++)
+	{
+		m_ItemRender[i]->SetIsActive(false);
+	}
+	m_sideRender->SetIsActive(false);
+	ChangeItem();
+	SetFontPalam();
 }
-void Item::Render()
-{
 
-}

@@ -68,7 +68,7 @@ Game::Game()
 	m_BGM[GameOver].Init(L"Assets/sound/GameOver.wav");
 	m_BGM[Boss].Init(L"Assets/sound/Boss01.wav");
 	m_gamecamera = m_manager->NewGO<GameCamera>();
-	m_UI = m_manager->NewGO<UI>();
+	//m_UI = m_manager->NewGO<UI>();
 	LoadGame(0, false);
 }
 

@@ -21,10 +21,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	
 	Title*m_title = GameObjectManager::instance().NewGO<Title>();
 	//FontRender *m_font = GameObjectManager::instance().NewGO<FontRender>();
+	
+
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
-
+		
 		//描画開始。
 		g_graphicsEngine->BegineRender();
 		GameObjectManager::instance().BackUp();

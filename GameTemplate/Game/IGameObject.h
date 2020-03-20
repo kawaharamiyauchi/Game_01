@@ -39,6 +39,8 @@ public:
 		}
 	}
 	virtual void PostRender() {}
+
+	virtual void PostFontRender(){}
 	/// <summary>
 	/// 削除リクエストを受けているか調べる。
 	/// </summary>

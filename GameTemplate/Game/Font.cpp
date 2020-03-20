@@ -10,11 +10,11 @@
 #include "GameObjectManager.h"
 	Font::Font()
 	{
-		m_spriteBatch = GraphicsEngine().GetSpriteBatch();
-		m_spriteFont = GraphicsEngine().GetSpriteFont();
-		auto& ge = GraphicsEngine();
-		auto a = ge.GetFrameBufferWidth() /*/ static_cast<float>(ge.Get2DSpaceScreenWidth())*/;
-		auto b = ge.GetFrameBufferHeight() /*/ static_cast<float>(ge.Get2DSpaceScreenHeight())*/;
+		m_spriteBatch = g_graphicsEngine->GetSpriteBatch();
+		m_spriteFont = g_graphicsEngine->GetSpriteFont();
+		auto& ge = g_graphicsEngine;
+		auto a = g_graphicsEngine->GetFrameBufferWidth() /*/ static_cast<float>(ge.Get2DSpaceScreenWidth())*/;
+		auto b = g_graphicsEngine->GetFrameBufferHeight() /*/ static_cast<float>(ge.Get2DSpaceScreenHeight())*/;
 
 		m_scaleMat.MakeScaling(
 			{
@@ -83,8 +83,8 @@
 		DirectX::XMFLOAT2 tkFloat2Zero(0, 0);
 		//座標系をスプライトと合わせる。
 		CVector2 pos = position;
-		float frameBufferHalfWidth = GraphicsEngine().Get2DSpaceScreenWidth() * 0.5f;
-		float frameBufferHalfHeight = GraphicsEngine().Get2DSpaceScreenHeight() * 0.5f;
+		float frameBufferHalfWidth = g_graphicsEngine->Get2DSpaceScreenWidth() * 0.5f;
+		float frameBufferHalfHeight = g_graphicsEngine->Get2DSpaceScreenHeight() * 0.5f;
 		pos.x += frameBufferHalfWidth;
 		pos.y = -pos.y + frameBufferHalfHeight;
 

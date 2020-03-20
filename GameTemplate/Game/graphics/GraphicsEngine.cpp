@@ -161,6 +161,10 @@ void GraphicsEngine::Init(HWND hWnd)
 
 	m_frameBufferWidth = FRAME_BUFFER_W;
 	m_frameBufferHeight = FRAME_BUFFER_H;
+
+	//フォント用のデータの初期化。
+	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pd3dDeviceContext);
+	m_spriteFont = std::make_unique<DirectX::SpriteFont>(m_pd3dDevice, L"Assets/font/myfile.spritefont");
 }
 void GraphicsEngine::SaveBackUpState()
 {

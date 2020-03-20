@@ -47,9 +47,7 @@ void BackGround::LoadStage(int stagetype)
 	{
 		m_skinModelRender[i] = GameObjectManager::instance().NewGO<SkinModelRender>();
 	}
-	/*m_skinModelRender[MH_Ground] = GameObjectManager::instance().NewGO<SkinModelRender>();
-	m_skinModelRender[MH_Sky] = GameObjectManager::instance().NewGO<SkinModelRender>();
-	m_skinModelRender[MH_Limit] = GameObjectManager::instance().NewGO<SkinModelRender>();*/
+	m_skinModelRender[MH_Sky]->SetShadowCasterFlag(false);
 	add.SetRotationDeg(CVector3::AxisX(), 90.0f);
 
 	m_scale[MH_Sky].Set(2.0f,2.0f,1.0f);

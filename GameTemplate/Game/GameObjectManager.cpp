@@ -182,6 +182,10 @@ void GameObjectManager::PostRender()
 	{
 		go->PostRender();
 	}
+	for (auto go : m_goList)
+	{
+		go->PostFontRender();
+	}
 	Fade::instance().PostRender();
 	//ポストエフェクトの描画処理。
 	m_postEffect.Draw();

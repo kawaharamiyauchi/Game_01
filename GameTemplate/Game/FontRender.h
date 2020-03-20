@@ -130,10 +130,11 @@ public:
 	{
 		m_pivot = pivot;
 	}
+	void PostFontRender()override;
 	void Update();
 	void Render();
 
-	void PostRender()override;
+	//void PostRender()override;
 	private:
 		Font m_font;
 		std::wstring m_text;					//!<テキスト。

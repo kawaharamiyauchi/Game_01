@@ -1,7 +1,7 @@
 #pragma once
 #include "IGameObject.h"
 #include "SpriteRender.h"
-
+class FontRender;
 class Item:public IGameObject
 {
 public:
@@ -17,6 +17,8 @@ public:
 		ItemDummy01,
 		TypeNum
 	};
+
+	
 	enum IsUse
 	{
 		User_Item,
@@ -61,8 +63,6 @@ class UI:public IGameObject
 public:
 
 	enum UIType {
-
-		
 		HP,
 		Stamina,
 		Red,
@@ -81,6 +81,32 @@ public:
 		ItemDummy01,
 		ItemSpriteTypeNum
 	};
+
+	enum FontType
+	{
+		QuestName,
+		QuestSummary,
+		PrizeMoney,
+		RequesterName,
+
+		HaveMoney,
+		ItemNumber,
+
+		Resulttime,
+		ResultMoney,
+		FontTypeNum
+
+	};
+	struct FontPalam {
+		wchar_t m_text[15] =L"NonText";
+		bool frameFlag = false;
+		float m_frameWidth = 0.0f;
+		CVector4 m_textColor = {0.0f,0.0f,0.0f,0.0f};
+		CVector2 pos = CVector2::Zero();
+		float size = 1.0f;
+		CVector2 pivot = { 0.5f,0.5f };
+
+	};
 	UI();
 	~UI();
 	/// <summary>
@@ -95,12 +121,17 @@ public:
 
 	}
 	int CheckItem();
+
 	void ChangeItem();
 
 	int GetTargetItem()const
 	{
 		return targetItem;
 	}
+	void SetFont(int ft, wchar_t text[15],bool frameflag, float frame, CVector4& color, CVector2& pos, float size, CVector2& pivot);
+
+	void SetFontPalam();
+	
 	void ClearDraw();
 	void GameOverDraw();
 private:
@@ -132,5 +163,7 @@ private:
 	int mainItem = 0;
 	bool AttackEvent = false;
 	std::vector<int> m_ItemList;
+	FontRender *m_font[FontTypeNum] = { nullptr };
+	FontPalam m_fontPalam[FontTypeNum];
 };
 

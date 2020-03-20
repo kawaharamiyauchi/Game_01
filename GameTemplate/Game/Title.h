@@ -4,6 +4,7 @@
 #include"SpriteRender.h"
 #include "Fade.h"
 class Game;
+class FontRender;
 class Title:public IGameObject
 {
 public:
@@ -40,5 +41,6 @@ private:
 	bool FadeFlag = false;
 	float m_alpha =1.0f;
 	CSoundSource m_sound[3];
+	
 };
 
