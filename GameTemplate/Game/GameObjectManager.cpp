@@ -57,6 +57,12 @@ void GameObjectManager::Update()
 
 	if (SpeedCount == 101 - ExecuteSpeed) {
 		//登録済みのゲームオブジェクトの
+		//Start()を呼ぶ。
+		for (auto go : m_goList)
+		{
+			go->StartWrapper();		}
+
+
 		//Update関数を呼ぶ。
 		for (auto go : m_goList)
 		{
@@ -82,9 +88,9 @@ void GameObjectManager::Update()
 	auto m_shadowMap = &ShadowMap::instance();
 	//シャドウマップを更新。
 	m_shadowMap->UpdateFromLightTarget(
-		{ LightCameraPos.x+3000.0f ,
-		  LightCameraPos.y +3000.0f,
-		  LightCameraPos.z +3000.0f},
+		{ LightCameraPos.x,
+		 3000.0f,
+		  LightCameraPos.z-1000.0f},
 		{ LightCameraPos }
 	);
 	

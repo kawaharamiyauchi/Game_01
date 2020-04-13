@@ -81,6 +81,23 @@ public:
 	void Update();
 	void Render();
 	
+	/// <summary>
+	/// 自己発光カラーを設定
+	/// </summary>
+	/// <param name="color">カラー</param>
+	void SetGlowColor(CVector3 color)
+	{
+
+		m_skinModel.SetGlowColor(color);
+	}
+	/// <summary>
+	/// 鏡面反射光を設定。
+	/// </summary>
+	/// <param name="spec">スペキュラの絞り</param>
+	void SetSpecPow(float spec)
+	{
+		m_skinModel.SetSpecPow(spec);
+	}
 private:
 	SkinModel m_skinModel;
 	EnRenderMode m_renderMode = enRenderMode_Normal;
@@ -90,10 +107,6 @@ private:
 	EnFbxUpAxis					m_enFbxUpAxis = enFbxUpAxisZ;		// FBXの上方向。
 	bool m_isRecieverFlag = false;
 	bool m_isCasterFlag = false;
-	//AnimationClip animationClip[enAnimationClip_num];
-
-	/*Animation m_animation;
-	CAnimationEvent m_canimation;
-	AnimationEventListener m_listener;*/
+	
 };
 

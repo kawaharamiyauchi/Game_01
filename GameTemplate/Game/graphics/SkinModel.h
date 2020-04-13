@@ -4,7 +4,7 @@
 #include "C3DModelEffect.h"
 #include"SkinModelEffect.h"
 
-
+using namespace std;
 /*!
 *@brief	FBXの上方向。
 */
@@ -98,6 +98,21 @@ public:
 	{
 		colorFlag = flag;
 	}
+	/// <summary>
+	/// 自己発光
+	/// </summary>
+	void SetGlowColor(CVector3 color)
+	{
+		m_glowColor = color;
+	}
+	/// <summary>
+	/// スペキュラ(鏡面反射)光
+	/// </summary>
+	/// <param name="spec"></param>
+	void SetSpecPow(float spec)
+	{
+		m_light.specPow = spec;
+	}
 	/*!
 	*@brief	モデルを描画。
 	*@param[in]	viewMatrix		カメラ行列。
@@ -188,21 +203,27 @@ private:
 	
 	void InitDirectionLight()
 	{
-		m_light.directionLight.direction[0] = { 0.0f,-0.8f,0.0f,0.0f };
-		m_light.directionLight.color[0] = { 1.0f,1.0f,1.0f,1.0f };
-		m_light.specPow[0] = 10.0f;
 		
-		m_light.directionLight.direction[1] = { 0.0f,0.8f,0.0f,0.0f };
-		m_light.directionLight.color[1] = { 1.0f,1.0f,1.0f,1.0f };
-		m_light.specPow[1] = 10.0f;
+		m_light.specPow = 10.0f;
+		m_light.ambientLight.Set( 0.3f,0.3f,0.3f);
+		m_light.Dlig.direction = { 0.0f,-0.8f,0.2f,1.0f };
+		m_light.Dlig.color = { 1.0f,1.0f,1.0f,1.0f };
+		
+		/// <summary>
+		/// 4本
+		/// </summary>
+		/*m_light.direction[0] = { 0.0f,-0.8f,0.0f,0.0f };
+		m_light.color[0] = { 1.0f,1.0f,1.0f,1.0f };
+		
+		
+		m_light.direction[1] = { 0.0f,0.8f,0.0f,0.0f };
+		m_light.color[1] = { 1.0f,1.0f,1.0f,1.0f };
 
-		m_light.directionLight.direction[2] = { 1.0f,0.0f,1.0f,0.0f };
-		m_light.directionLight.color[2] = { 1.0f,1.0f,1.0f,0.5f };
-		m_light.specPow[2] = 10.0f;
+		m_light.direction[2] = { 1.0f,0.0f,1.0f,0.0f };
+		m_light.color[2] = { 1.0f,1.0f,1.0f,0.5f };
 
-		m_light.directionLight.direction[3] = { -1.0f,0.0f,-1.0f,0.0f };
-		m_light.directionLight.color[3] = { 1.0f,1.0f,1.0f,0.5f };
-		m_light.specPow[3] = 10.0f;
+		m_light.direction[3] = { -1.0f,0.0f,-1.0f,0.0f };
+		m_light.color[3] = { 1.0f,1.0f,1.0f,0.5f };*/
 
 		//m_light.directionLight.direction[0]
 	}
@@ -214,16 +235,23 @@ private:
 	/// <summary>
 	/// ディレクションライト
 	/// </summary>
-	struct DirectionLight {
-		CVector4 direction[4];
-		CVector4 color[4];
+	struct SDirectionLight {
+		CVector4 direction;
+		CVector4 color;
 		
 	};
 
 	struct Light {
-		DirectionLight		directionLight;		//ディレクションライト
+		/// <summary>
+		/// 4本
+		/// </summary>
+		/*CVector4 direction[4];
+		CVector4 color[4];*/
+
+		SDirectionLight Dlig;
 		CVector3			eyePos;				//視点の座標
-		float				specPow[4];			//鏡面反射の絞り。
+		float				specPow;			//鏡面反射の絞り。
+		CVector3 ambientLight;					//環境光
 	
 	};
 private:
@@ -252,5 +280,7 @@ private:
 	bool IsActiveflag = true;							//!<アクティブフラグ
 	bool lightFlag = true;
 	bool colorFlag = false;
+
+	CVector3 m_glowColor = CVector3::Zero();
 };
 

@@ -54,6 +54,13 @@ public:
 
 	void BackUp();
 	
+	CVector3 GetLightCameraPos()const
+	{
+		CVector3 ligpos;
+		ligpos.Set(0.0f, -2500.0f,  + 1000.0f);
+		ligpos.Normalize();
+		return ligpos;
+	}
 	/// <summary>
 	/// ゲームオブジェクトを追加
 	/// </summary>

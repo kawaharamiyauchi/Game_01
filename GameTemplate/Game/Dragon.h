@@ -33,7 +33,7 @@ public:
 	{
 		bool isFind =false;
 		bool isDead = false;
-		float HP = 1500.0f;
+		float HP = 500.0f;
 		bool isEnd = false;
 	};
 	/// <summary>
@@ -93,6 +93,7 @@ public:
 	void SetState();
 	void Move();
 	void CharaConMove();
+	bool Start();
 	/// <summary>
 	/// ƒhƒ‰ƒSƒ“‚ÌXVˆ—
 	/// </summary>

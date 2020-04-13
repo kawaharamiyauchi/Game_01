@@ -204,6 +204,8 @@
     </ClCompile>
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FontRender.cpp" />
+    <ClCompile Include="ItemBase.cpp" />
+    <ClCompile Include="Shop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -365,6 +367,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontRender.h" />
+    <ClInclude Include="ItemBase.h" />
+    <ClInclude Include="Shop.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\sky_01.FBX">
@@ -424,6 +428,9 @@
     <MeshContentTask Include="Assets\modelData\MH_sky.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Herbs.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\ago_free_03.png">
@@ -468,7 +475,6 @@
     <ImageContentTask Include="Assets\sprite\MH_QUESTFAILED.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\MH_QUESTCLEAR .png" />
     <ImageContentTask Include="Assets\sprite\HealingBottle.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
@@ -478,8 +484,23 @@
     <ImageContentTask Include="Assets\sprite\QuestPaper.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\PauseMenu.png" />
-    <ImageContentTask Include="Assets\sprite\NonItem.png" />
+    <ImageContentTask Include="Assets\sprite\MH_QUESTCLEAR .png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Result.png" />
+    <ImageContentTask Include="Assets\sprite\PauseMenu.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\NonItem.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Return toCamp.png" />
+    <ImageContentTask Include="Assets\sprite\icon.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\moneyPouch.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />

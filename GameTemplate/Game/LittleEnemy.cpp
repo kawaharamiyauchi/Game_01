@@ -9,6 +9,8 @@ LittleEnemy::LittleEnemy()
 	g_effect.m_sampleEffect = Effekseer::Effect::Create(g_effect.m_effekseerManager, (const EFK_CHAR*)L"Assets/effect/tm_damage.efk");
 	m_skinModelRender =GameObjectManager::instance().NewGO<SkinModelRender>();
 	m_skinModelRender->Init(L"Assets/ModelData/LittleDragon_Blue.cmo");
+	m_skinModelRender->SetShadowCasterFlag(true);
+	m_skinModelRender->SetShadowRecieverFlag(true);
 	animationClip[enAnimationClip_idle].Load(L"Assets/animData/LBD_idle.tka", L"");
 	animationClip[enAnimationClip_move].Load(L"Assets/animData/LBD_move.tka", L"");
 	animationClip[enAnimationClip_damage].Load(L"Assets/animData/LBD_damage.tka", L"");
@@ -43,12 +45,23 @@ LittleEnemy::LittleEnemy()
 	}
 	m_sound[0].Init(L"Assets/sound/punch-middle2.wav");
 	m_sound[1].Init(L"Assets/sound/sword-slash5.wav");
+
+
 }
 
 
 LittleEnemy::~LittleEnemy()
 {
 	GameObjectManager::instance().DeleteGO(m_skinModelRender);
+}
+
+bool LittleEnemy::Start()
+{
+
+	//m_skinModelRender->SetGlowColor({ 1.0f,0.0f,-0.01f });
+	//m_skinModelRender->SetGlowColor({ 1.0f,0.0f,-0.01f });
+
+	return true;
 }
 
 void LittleEnemy::Update()
@@ -82,11 +95,18 @@ void LittleEnemy::Render()
 void LittleEnemy::Move()
 {
 	auto  m_game = Game::instance();
+
+
+	auto bone = m_skeleton->GetBone(22);
+	CVector3 headPos;
+	headPos.x = bone->GetWorldMatrix().m[3][0];
+	headPos.y = bone->GetWorldMatrix().m[3][1];
+	headPos.z = bone->GetWorldMatrix().m[3][2];
 	if (!attackflag||d_state!=attack) {
 		moveSpeed.x = 0.0f;
 		moveSpeed.z = 0.0f;
 		if (m_game->m_player != nullptr) {
-			diff.Set(m_game->m_player->GetPosition() - m_position);
+			diff.Set(m_game->m_player->GetPosition() - headPos);
 		}
 	}
 	
@@ -112,7 +132,8 @@ void LittleEnemy::Move()
 		angle = atan2(move.x, move.z);
 		break;
 	case attack:
-		moveSpeed = move*10.0f;
+		//moveSpeed = move*10.0f;
+		moveSpeed *= 0.0f;
 		angle = atan2(move.x, move.z);
 		break;
 	case die:

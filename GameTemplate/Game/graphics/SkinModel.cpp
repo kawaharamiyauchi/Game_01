@@ -6,7 +6,15 @@
 #include "system/system.h"
 #include "Game.h"
 
-
+/*!解説②　16の倍数に切り上げる処理を関数化。
+*@brief	引数で渡された整数値を16の倍数に切り上げます。
+*@param[in]		n		整数の値。
+*@return		nを16の倍数に切り上げた値。
+*/
+int Raundup16(int n)
+{
+	return (((n - 1) / 16) + 1) * 16;
+}
 SkinModel::~SkinModel()
 {
 	if (m_cb != nullptr) {
@@ -82,7 +90,10 @@ void SkinModel::InitConstantBuffer()
 
 	//ライト用の定数バッファを作成。
 	//作成するバッファのサイズを変更する。
-	bufferDesc.ByteWidth = sizeof(DirectionLight);				
+	//bufferDesc.ByteWidth = sizeof(SDirectionLight);	
+
+	bufferDesc.ByteWidth = Raundup16(sizeof(Light));
+
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_lightCb);
 }
 
@@ -126,7 +137,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 {
 
 	auto shadowMap = &ShadowMap::instance();
-
+	auto ligpos = GameObjectManager::instance().GetLightCameraPos();
 	
 
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
@@ -140,6 +151,9 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	vsCb.mView = viewMatrix;
 	vsCb.mLightProj = shadowMap->GetLightProjMatrix();
 	vsCb.mLightView = shadowMap->GetLighViewMatrix();
+	//m_glowColor.Normalize();
+	m_light.ambientLight += m_glowColor;
+	m_glowColor = CVector3::Zero();
 	if (m_isShadowReciever == true) {
 		vsCb.isShadowReciever = 1;
 		ID3D11ShaderResourceView* srvArray[] = {
@@ -155,9 +169,11 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		vsCb.mView = shadowMap->GetLighViewMatrix();
 	}
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
-	
+	m_light.eyePos = g_camera3D.GetPosition();
+	//m_light.Dlig.direction.Set( ligpos.x,ligpos.y,ligpos.z,0.0f );
 	if (lightFlag == true) {
 		
+		//d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 		d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 		//todo ライトカメラのビュー、プロジェクション行列を送る。
 		//modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();

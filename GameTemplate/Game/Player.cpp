@@ -28,7 +28,7 @@ Player::Player()
 	m_skinModelRender[Weapon]->Init(L"Assets/modelData/testbox_small.cmo");
 
 	m_skinModelRender[Hunter]->SetShadowCasterFlag(true);
-	m_skinModelRender[Hunter]->SetShadowRecieverFlag(false);
+	m_skinModelRender[Hunter]->SetShadowRecieverFlag(true);
 	m_skinModelRender[RightHand]->SetShadowCasterFlag(true);
 	m_skinModelRender[LeftHand]->SetShadowCasterFlag(true);
 	m_skinModelRender[Weapon]->SetShadowCasterFlag(true);
@@ -247,15 +247,20 @@ void Player::Move()
 }
 void Player::Turn()
 {
+
 	float angle = 0.0f;
 	if (fabsf(m_speed.x) < 0.001f
 		&& fabsf(m_speed.z) < 0.001f) {
-		
+
 		return;
 	}
+	
+	
 	if (p_state != damage)
 	{
+		
 		angle = atan2(m_speed.x, m_speed.z);
+		
 	}
 	else angle = atan2(-m_speed.x, -m_speed.z);
 	//atanが返してくる角度はラジアン単位なので
@@ -372,8 +377,8 @@ void Player::AnimationPlay()
 	if (p_state == idle)
 	{
 		m_animation.Play(enAnimationClip_idle, interpolateTime);
-		auto a =m_animation.Update(0.05f);
-		m_speed = a;
+		m_animation.Update(0.05f);
+		
 		
 	}
 	if (p_state ==walk)
@@ -428,6 +433,13 @@ void Player::AnimationPlay()
 		m_animation.Play(enAnimationClip_drink, interpolateTime);
 		m_animation.Update(0.04f);
 	}
+}
+
+bool Player::Start()
+{
+	m_skinModelRender[Hunter]->SetGlowColor({ -0.3f, -0.3f, -0.3f });
+	m_skinModelRender[Hunter]->SetSpecPow(2.0f);
+	return true;
 }
 
 

@@ -4,6 +4,8 @@
 #include "SpriteRender.h"
 #include"GameObjectManager.h"
 #include "FontRender.h"
+
+
 Title::Title()
 {
 	
@@ -114,7 +116,7 @@ void Title::Update()
 		auto m_game = Game::instance();
 		GameObjectManager::instance().CountPlus();
 		if (GameObjectManager::instance().GetGameCount() > 1) {
-			m_game->LoadGame(0,false);
+			m_game->LoadGame(0,Game::NA);
 		}
 		GameObjectManager::instance().DeleteGO(this);
 	}

@@ -3,6 +3,7 @@
 #include "graphics/SkinModel.h"
 class SkinModel;
 
+const int SHADOWMAP_NUM = 3;
 /// <summary>
 /// シャドウマップクラス。
 /// </summary>

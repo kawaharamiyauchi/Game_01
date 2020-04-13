@@ -178,7 +178,6 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 			{
 				if (m_ghost[D_attack00].IsSelf(contactObject))
 				{
-					//MessageBox(NULL, "attack", "attack", MB_OK);
 					m_game->m_player->SetDamageFlag(true);
 				}
 		});
@@ -210,7 +209,7 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 		}
 	else if (d_state == tailattack)
 	{
-		m_collisionScale.Set(650.0f, 50.0f, 650.0f);
+		m_collisionScale.Set(500.0f, 50.0f, 650.0f);
 		auto bone = m_skeleton->GetBone(25);
 		m_collisionPosition.x = bone->GetWorldMatrix().m[3][0];
 		m_collisionPosition.y = bone->GetWorldMatrix().m[3][1];
@@ -220,16 +219,17 @@ void Dragon::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 		attackpoint.Set(m_position);
 		(void)clipName;
 		m_ghost[D_attack00].CreateBox(attackpoint, m_rotation, m_collisionScale);
-
+		
 		g_physics.ContactTest(m_game->m_player->GetcharaCon(), [&](const btCollisionObject & contactObject)
 			{
 				if (m_ghost[D_attack00].IsSelf(contactObject))
 				{
-					//MessageBox(NULL, "attack", "attack", MB_OK);
+					
 					m_game->m_player->SetDamageFlag(true);
 					m_game->m_player->SetDamage(20.0f);
 				}
 			});
+		
 	}
 	else if (d_state == scream)
 	{
@@ -329,13 +329,14 @@ void Dragon::Move()
 		case tailattack:
 
 			move.Normalize();
-			if (diff.Length() > 400.0f) {
+			moveSpeed += m_front*20.0f;
+			/*if (diff.Length() > 400.0f) {
 			
 				moveSpeed = move * 20.0f;
-			}
+			}*/
 			
-			angle = atan2(move.x, move.z);
-			m_rotation.SetRotation(CVector3::AxisY(), angle);
+			/*angle = atan2(move.x, move.z);
+			m_rotation.SetRotation(CVector3::AxisY(), angle);*/
 			break;
 		case scream:
 			move.Normalize();
@@ -376,6 +377,12 @@ void Dragon::CharaConMove()
 	auto diff = m_charaConPos[Head]-m_position;
 	m_position = m_charaCon[Head].GetPosition() -diff;
 	//m_position = m_charaCon[UpBody].GetPosition();
+}
+
+bool Dragon::Start()
+{
+	//m_skinModelRender->SetGlowColor({0.01f,-0.01f,-0.01f});
+	return true;
 }
 
 void Dragon::SetState()

@@ -87,6 +87,7 @@ public:
 	{
 		return m_height;
 	}
+
 private:
 	float m_width =0.0f;
 	float m_height = 0.0f;

@@ -28,6 +28,21 @@ public:
 	Game();
 	~Game();
 
+	enum StageType
+	{
+		//normal
+		NA,
+		NB,
+		NC,
+		ND,
+
+		//return
+		RBtoA,
+		RCtoB,
+
+
+
+	};
 	/// <summary>
 	/// シングルトンパターン
 	/// </summary>
@@ -47,7 +62,7 @@ public:
 	void Update();
 	void Render();
 	
-	void LoadGame(int LoadNum,bool flag);
+	void LoadGame(int LoadNum,StageType type);
 
 	void ColliderInit(float radius, float height, CVector3 & position);
 
@@ -62,6 +77,10 @@ public:
 	bool GetPauseFlag()
 	{
 		return pauseFlag;
+	}
+	bool IsLookBoard()
+	{
+		return islookBoard;
 	}
 	CapsuleCollider m_collider;
 	RigidBody m_rigidBody;
@@ -88,11 +107,14 @@ private:
 		AtoB,
 		BtoC,
 		BtoD,
+		BtoA,
 		CtoB,
 		CtoD,
 		GhostTypeNum
 
 	};
+	
+
 	enum BGMType
 	{
 		camp,
@@ -103,6 +125,7 @@ private:
 		BGMTypeNum
 	};
 	wchar_t*LoadGameText;
+	CVector3 m_ghostsca =CVector3::Zero();
 	int StageNum =0;
 	Level m_level;
 	Sprite m_sprite;
@@ -112,6 +135,8 @@ private:
 	bool GameLoadFlag = false;
 	bool isNonGame = false;
 	bool pauseFlag = false;
+	bool m_backCampFlag = false;				 //ポーズ画面からキャンプに戻るかどうか
+	bool islookBoard = false;
 	GhostObject m_ghost[GhostTypeNum];
 	CSoundSource m_BGM[BGMTypeNum];
 

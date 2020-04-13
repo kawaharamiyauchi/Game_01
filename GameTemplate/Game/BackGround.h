@@ -64,6 +64,7 @@ private:
 	//SkinModel m_skinModel[2];
 	SkinModelRender *m_skinModelRender[ModelTypenum] = { nullptr };
 	PhysicsStaticObject m_physicsStaticObject;
+	PhysicsStaticObject *m_limit;
 	//PhysicsStaticObject m_limit;
 	wchar_t*m_loadname =L".cmo";
 	bool isLoad = false;

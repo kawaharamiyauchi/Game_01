@@ -44,7 +44,6 @@ private:
 		idle
 	};
 	FadeState m_state = idle;
-	//SpriteRender *m_spriteRender[2] = { nullptr };
 	Sprite m_sprite;
 	float m_alpha = 0.5f;
 	bool isFade = true;

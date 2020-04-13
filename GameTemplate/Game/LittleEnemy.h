@@ -50,6 +50,11 @@ public:
 	{
 		m_rotation = rot;
 	}
+	littleEnemyInformation GetEnemyInfo()
+	{
+		return m_enemyInfo;
+	}
+	bool Start();
 	void Update();
 	void Render();
 	void Move();

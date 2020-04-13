@@ -10,6 +10,9 @@
 #include"Game.h"
 #include "Title.h"
 
+
+
+
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -17,8 +20,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 {
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
-
 	
+	bool DebugDrawFlag = false;
 	Title*m_title = GameObjectManager::instance().NewGO<Title>();
 	//FontRender *m_font = GameObjectManager::instance().NewGO<FontRender>();
 	
@@ -34,12 +37,18 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		for (auto& pad : g_pad) {
 			pad.Update();
 		}
+		if (g_pad[0].IsPress(enButtonLB1) && g_pad[0].IsTrigger(enButtonRB1))
+		{
+			DebugDrawFlag = true;
+		}
+
 		//物理エンジンの更新。
 		g_physics.Update();
 		//GameObjectManager::instance().Start();		
 		GameObjectManager::instance().Update();  //ゲームオブジェクトマネージャーの更新。
-	
-		//g_physics.DebugDraw();
+		if (DebugDrawFlag) {
+			g_physics.DebugDraw();
+		}
 		//描画終了。
 		g_graphicsEngine->EndRender();
 	}

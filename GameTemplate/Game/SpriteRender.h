@@ -34,6 +34,15 @@ public:
 	{
 		m_sprite.SetAlpha(alpha);
 	}
+	CVector3 GetPosition()const
+	{
+		return m_position;
+	}
+	CVector2 Get2DPosition()const
+	{
+		CVector2 pos = { m_position.x,m_position.y };
+		return pos;
+	}
 	void Update();
 	
 	void Render();

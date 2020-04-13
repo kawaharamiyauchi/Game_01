@@ -77,6 +77,7 @@ public:
 		m_plinfo.HP -= damage;
 	}
 	void AnimationPlay();
+	bool Start();
 	/// <summary>
 	/// プレイヤーの更新処理
 	/// </summary>
@@ -179,11 +180,11 @@ private:
 	int m_attackTimer = 0;
 	float footStop = 1.0f;
 	int runTimer = 0;
+
+	
 	CVector3 m_footStep = CVector3::Zero();
 	bool stopflag = false;
-	Effekseer::Effect* m_sampleEffect = nullptr;
-	Effekseer::Manager*				m_effekseerManager = nullptr;
-	Effekseer::Handle m_playEffectHandle = -1;
+
 	CSoundSource m_sound[SoundTypeNum];
 };
 
