@@ -6,15 +6,16 @@
 #include"Dragon.h"
 #include"FontRender.h"
 
+const float LIMIT_Y = 250.0f;
 
-Item::Item()
+ItemBase::ItemBase()
 {
 	InitItem(&m_Item[noneItem], User_Item, 255, 255,0);
 	InitItem(&m_Item[kaihukuyaku], User_Item, 5, 10,100);
 	InitItem(&m_Item[ItemDummy00], User_Item, 2, 10,100);
 	InitItem(&m_Item[ItemDummy01], User_Item, 6, 10,100);
 
-	InitItem(&m_Item[Herbs], Drop_Item, 5, 99,20);
+	/*InitItem(&m_Item[Herbs], Drop_Item, 5, 99,20);
 	InitItem(&m_Item[PoisonouMushroom], Drop_Item, 6, 99,20);
 	InitItem(&m_Item[mushroom],Drop_Item, 10, 99,20);
 	InitItem(&m_Item[Treenut], Drop_Item, 11, 99,1);
@@ -22,11 +23,22 @@ Item::Item()
 	InitItem(&m_Item[B_L_LizardTail], Drop_Item, 3, 99,5000);
 	InitItem(&m_Item[B_L_LizardClaw], Drop_Item, 1, 99,2500);
 	InitItem(&m_Item[B_L_LizardScales], Drop_Item, 3, 99,100);
-	InitItem(&m_Item[B_L_LizardFang], Drop_Item, 3, 99,2500);
+	InitItem(&m_Item[B_L_LizardFang], Drop_Item, 3, 99,2500);*/
+
+
+	InitItem(&m_Item[Herbs], Drop_Item, 0, 99, 20);
+	InitItem(&m_Item[PoisonouMushroom], Drop_Item, 0, 99, 20);
+	InitItem(&m_Item[mushroom], Drop_Item,0, 99, 20);
+	InitItem(&m_Item[Treenut], Drop_Item, 0, 99, 1);
+	InitItem(&m_Item[smallstone], Drop_Item, 0, 99, 1);
+	InitItem(&m_Item[B_L_LizardTail], Drop_Item, 0, 99, 5000);
+	InitItem(&m_Item[B_L_LizardClaw], Drop_Item, 0, 99, 2500);
+	InitItem(&m_Item[B_L_LizardScales], Drop_Item, 0, 99, 100);
+	InitItem(&m_Item[B_L_LizardFang], Drop_Item, 0 ,99, 2500);
 
 }
 
-int Item::UseItem()
+int ItemBase::UseItem()
 {
 	auto m_selectItem = Game::instance()->m_UI->GetTargetItem();
 	if (m_Item[m_selectItem].num > 0 && m_selectItem > 0)
@@ -37,16 +49,149 @@ int Item::UseItem()
 
 	else return -1;
 }
+void ItemBase::Update()
+{
+
+}
+void ItemBase::Render()
+{
+
+}
+
+
+
+
+Item::~Item()
+{
+	m_ghostObject.Release();
+	GameObjectManager::instance().DeleteGO(m_fontRender);
+}
+void Item::InitFontPalam(wchar_t text[255])
+{
+	wcscpy(m_fontPalam.m_text, text);
+	m_fontPalam.frameFlag = true;
+	m_fontPalam.m_frameWidth = 5.0f;
+	m_fontPalam.pos =m_fontpos;
+	m_fontPalam.size = 0.6f;
+	m_fontPalam.m_textColor = {0.0f,0.0f,0.0f,0.0f};
+	m_fontRender->SetShadowParam(false, 0.0f, CVector4::Black());
+
+
+}
+void Item::MonoTypeItemCreate(CVector3 &pos,CQuaternion rot,float size, ItemBase::ItemType type,int DropMax)
+{
+	m_position = pos;
+	m_rotation = rot;
+	m_size = size;
+	m_max = DropMax;
+	m_type = type;
+	m_ghostObject.CreateSphere(m_position, m_rotation, m_size);
+
+
+}
+void Item::RandTypeItemCreate(CVector3 & pos, CQuaternion rot, float size, DropType type, int DropMax)
+{
+	m_position = pos;
+	m_rotation = rot;
+	m_size = size;
+	m_max = DropMax;
+	m_ghostObject.CreateSphere(m_position, m_rotation, m_size);
+
+
+	
+
+
+	switch (type)
+	{
+	case Item::PickMushroom:
+		break;
+	case Item::LBD_Die:
+		int m_itemtype;
+		m_itemtype = rand() % 4 +9;
+		
+		m_type = (ItemBase::ItemType)m_itemtype;
+		switch (m_type)
+		{
+		case ItemBase::B_L_LizardTail:
+			m_max = 1;
+			wcscpy(m_fontPalam.m_text, L"青紋小竜の尻尾");
+			break;
+		case ItemBase::B_L_LizardClaw:
+			m_max = DropMax;
+			wcscpy(m_fontPalam.m_text, L"青紋小竜の爪");
+
+			break;
+		case ItemBase::B_L_LizardScales:
+			wcscpy(m_fontPalam.m_text, L"青紋小竜の鱗");
+
+			m_max = DropMax;
+			break;
+		case ItemBase::B_L_LizardFang:
+			m_max = DropMax;
+			wcscpy(m_fontPalam.m_text, L"青紋小竜の牙");
+
+			break;
+		
+		default:
+			break;
+		}
+		break;
+	case Item::BD_Die:
+		break;
+	default:
+		break;
+	}
+	
+}
 void Item::Update()
 {
+	
+	auto m_player = Game::instance()->m_player;
+	auto m_ItemBase = Game::instance()->m_Item;
+	int m_Itemsize;
+	wchar_t mark[5] = L"*";
+	wchar_t itemNum[3];
+	
+	if (&m_ghostObject != nullptr) {
+		g_physics.ContactTest(m_player->GetcharaCon(), [&](const btCollisionObject & contactObject)
+			{
+				if (m_ghostObject.IsSelf(contactObject)&&m_player->GetPickFlag())
+				{
+					m_ItemNum = rand() % m_max + 1;
+					_itow_s(m_ItemNum, itemNum, 10);
+					wcscat(mark, itemNum);
+					wcscat(m_fontPalam.m_text, mark);
+					wcscat(m_fontPalam.m_text, m_picktext);
+					
+					
+					m_pickFlag = true;
 
+					//Game::instance()->m_UI->PushPickText(m_fontRender);
+					m_ItemBase->GetItem(m_type, m_ItemNum);
+					m_ghostObject.Release();
+				}
+			}
+		);
+	}
+	if (m_pickFlag == true)
+	{
+		m_fontPalam.pos.y += 4.0f;
+		m_fontPalam.m_textColor.Set(CVector4::White());
+		m_fontPalam.pivot ={ 0.0f, 0.5f };
+		m_fontRender->SetShadowParam(true, 2.0f, CVector4::Black());
+		
+	}
+
+	if (m_fontPalam.pos.y > LIMIT_Y)
+	{
+		GameObjectManager::instance().DeleteGO(this);
+	}
+	m_fontRender->SetColor(m_fontPalam.m_textColor);
+	m_fontRender->SetPivot(m_fontPalam.pivot);
+	m_fontRender->SetText(m_fontPalam.m_text);	
+	m_fontRender->SetScale(m_fontPalam.size);
+	m_fontRender->SetPosition(m_fontPalam.pos);
 }
-void Item::Render()
-{
-
-}
-
-
 
 
 
@@ -69,6 +214,7 @@ UI::UI()
 		m_spriteRender[i]->SetPivot({ 0.0f,0.5f });
 	}
 	m_spriteSca[HP].y = 2.0f;
+	m_spriteSca[Red].y = 2.0f;
 	m_spriteSca[Stamina].y = 2.0f;
 	m_spriteSca[Clear].Set(100.0f, 2.0f, 1.0f);
 	m_spriteSca[GameOver].Set(100.0f, 2.0f, 1.0f);
@@ -115,7 +261,7 @@ UI::UI()
 	m_ItemRender[ItemDummy00]->SetIsActive(false);
 	m_ItemRender[ItemDummy00]->SetAlpha(1.0f);
 
-	m_ItemRender[ItemDummy01]->Init(L"Assets/sprite/ago_free_03.dds", 80.0f, 80.0f);
+	m_ItemRender[ItemDummy01]->Init(L"Assets/sprite/icon.dds", 80.0f, 80.0f);
 	m_ItemRender[ItemDummy01]->SetPivot({ 0.5f,0.5f });
 	m_ItemRender[ItemDummy01]->SetIsActive(false);
 	m_ItemRender[ItemDummy01]->SetAlpha(1.0f);
@@ -141,6 +287,12 @@ UI::UI()
 	m_spritePos[Result].Set(0.0f, 0.0f, 0.0f);
 	m_spriteRender[Result]->SetPivot({ 0.5f, 0.5f });
 
+	m_spriteRender[ItemNext]->Init(L"Assets/sprite/ItemNextIcon.dds", 150.0f, 100.0f);
+	m_spriteRender[ItemNext]->SetIsActive(false);
+	m_spritePos[ItemNext].Set(0.0f, 0.0f, 0.0f);
+	m_spriteRender[ItemNext]->SetPivot({ 0.5f, 0.5f });
+
+
 	for (int i = FrameIcon00; i <= FrameIcon08; i++) {
 		auto m_iconNum = i - 10;
 
@@ -162,8 +314,8 @@ UI::UI()
 	m_spritePos[TargetMark].Set(-660.0f, 0.0f, 0.0f);
 	m_spriteRender[TargetMark]->SetIsActive(false);
 
-	m_spriteRender[ManeyPouch]->Init(L"Assets/sprite/moneyPouch.dds", 100.0f, 80.0f);
-	m_spritePos[ManeyPouch].Set( -600.0f, -300.0f,-0.0f );
+	m_spriteRender[ManeyPouch]->Init(L"Assets/sprite/moneyPouch.dds", 300.0f, 100.0f);
+	m_spritePos[ManeyPouch].Set( -640.0f, -300.0f,-0.0f );
 	m_spriteRender[ManeyPouch]->SetIsActive(false);
 	/*m_spriteRender[FrameIcon01]->Init(L"Assets/sprite/icon.dds", 600.0f, 300.0f);
 	m_spriteRender[FrameIcon02]->Init(L"Assets/sprite/icon.dds", 600.0f, 300.0f);
@@ -204,9 +356,9 @@ int UI::CheckItem()
 	nonhaveItem = 0;
 	haveItemNum = 0;
 	
-	for (int i = 0; i < Item::ItemType::TypeNum; i++)
+	for (int i = 0; i < ItemBase::ItemType::TypeNum; i++)
 	{
-		if (m_Item->GetData(i).isUse == Item::IsUse::User_Item) {
+		if (m_Item->GetData(i).isUse == ItemBase::IsUse::User_Item) {
 			if (m_Item->GetData(i).num > 0)
 			{
 			
@@ -218,7 +370,7 @@ int UI::CheckItem()
 				nonhaveItem++;
 			}
 		}
-		else if (m_Item->GetData(i).isUse == Item::IsUse::Drop_Item)
+		else if (m_Item->GetData(i).isUse == ItemBase::IsUse::Drop_Item)
 		{
 			if (m_Item->GetData(i).num > 0)
 			{
@@ -233,150 +385,266 @@ int UI::CheckItem()
 void UI::ChangeItem()
 {
 	auto ItemNum =CheckItem();
-	
-	if (ItemNum >= 3) {
-		
-		if (g_pad[0].IsPress(enButtonLB1))
-		{
-			if (g_pad[0].IsTrigger(enButtonX))
-			{
-				if (mainItem - 1 >= 0)
-				{
-					mainItem--;
-
-				}
-				else mainItem = lastItem;
-			}
-			else if (g_pad[0].IsTrigger(enButtonB))
-			{
-				if (mainItem + 1 < m_ItemList.size())
-				{
-					mainItem++;
-				}
-				else mainItem = 0;
-			}
-		}
-		if (lastItem < mainItem)
-		{
-			mainItem = nonItem;
-		}
-		targetItem = m_ItemList[mainItem];
-		m_ItemRender[targetItem]->SetIsActive(true);
-		m_ItemRender[targetItem]->SetPosition(m_mainItemPos);
-		m_ItemRender[targetItem]->SetScale(m_mainItemSca);
-		if (mainItem - 1 < 0)
-		{
-			m_ItemRender[m_ItemList[lastItem]]->SetIsActive(true);
-			m_ItemRender[m_ItemList[lastItem]]->SetPosition(m_backItemPos);
-			m_ItemRender[m_ItemList[lastItem]]->SetScale(m_sideItemSca);
-		}
-		else {
-			m_ItemRender[m_ItemList[mainItem - 1]]->SetIsActive(true);
-			m_ItemRender[m_ItemList[mainItem - 1]]->SetPosition(m_backItemPos);
-			m_ItemRender[m_ItemList[mainItem - 1]]->SetScale(m_sideItemSca);
-		}
-		if (mainItem + 1 >= m_ItemList.size())
-		{
-			m_ItemRender[nonItem]->SetIsActive(true);
-			m_ItemRender[nonItem]->SetPosition(m_nextItemPos);
-			m_ItemRender[nonItem]->SetScale(m_sideItemSca);
-		}
-		else {
-			m_ItemRender[m_ItemList[mainItem + 1]]->SetIsActive(true);
-			m_ItemRender[m_ItemList[mainItem + 1]]->SetPosition(m_nextItemPos);
-			m_ItemRender[m_ItemList[mainItem + 1]]->SetScale(m_sideItemSca);
-		}
-	}
-	else if (ItemNum == 2)
-	{
-
-		if (g_pad[0].IsPress(enButtonLB1))
-		{
-			if (g_pad[0].IsTrigger(enButtonX))
-			{
-				if (mainItem - 1 >= 0)
-				{
-					mainItem--;
-
-				}
-				else mainItem++;
-			}
-			else if (g_pad[0].IsTrigger(enButtonB))
-			{
-				if (mainItem + 1 < m_ItemList.size())
-				{
-					mainItem++;
-				}
-				else mainItem = 0;
-			}
-		}
-		if (lastItem < mainItem)
-		{
-			mainItem = nonItem;
-		}
-		targetItem = m_ItemList[mainItem];
-		m_ItemRender[targetItem]->SetIsActive(true);
-		m_ItemRender[targetItem]->SetPosition(m_mainItemPos);
-		m_ItemRender[targetItem]->SetScale(m_mainItemSca);
-
-		
-
-
-		if (mainItem - 1 < 0)
-		{
-			
-			m_ItemRender[m_ItemList[targetItem+1]]->SetIsActive(true);
-			m_ItemRender[m_ItemList[targetItem+1]]->SetPosition(m_nextItemPos);
-			m_ItemRender[m_ItemList[targetItem+1]]->SetScale(m_sideItemSca);
-
-			
-		}
-		else {
-			
-			m_ItemRender[m_ItemList[mainItem - 1]]->SetIsActive(true);
-			m_ItemRender[m_ItemList[mainItem - 1]]->SetPosition(m_nextItemPos);
-			m_ItemRender[m_ItemList[mainItem - 1]]->SetScale(m_sideItemSca);
-
-			
-		}
-		
-	}
-	else if (ItemNum == 1)
-	{
-		targetItem = m_ItemList[nonItem];
-		m_ItemRender[nonItem]->SetIsActive(true);
-		m_ItemRender[nonItem]->SetPosition(m_mainItemPos);
-		m_ItemRender[nonItem]->SetScale(m_mainItemSca);
-	}
 	auto m_game = Game::instance();
-	if (m_game->GetPauseFlag()&&MenuFlag[D_Pouch])
+	if (!m_game->GetPauseFlag())
+	{
+		if (ItemNum >= 3) {
+
+			if (g_pad[0].IsPress(enButtonLB1))
+			{
+				if (g_pad[0].IsTrigger(enButtonX))
+				{
+					if (mainItem - 1 >= 0)
+					{
+						mainItem--;
+
+					}
+					else mainItem = lastItem;
+				}
+				else if (g_pad[0].IsTrigger(enButtonB))
+				{
+					if (mainItem + 1 < m_ItemList.size())
+					{
+						mainItem++;
+					}
+					else mainItem = 0;
+				}
+			}
+			if (lastItem < mainItem)
+			{
+				mainItem = nonItem;
+			}
+			targetItem = m_ItemList[mainItem];
+			m_ItemRender[targetItem]->SetIsActive(true);
+			m_ItemRender[targetItem]->SetPosition(m_mainItemPos);
+			m_ItemRender[targetItem]->SetScale(m_mainItemSca);
+			if (mainItem - 1 < 0)
+			{
+				m_ItemRender[m_ItemList[lastItem]]->SetIsActive(true);
+				m_ItemRender[m_ItemList[lastItem]]->SetPosition(m_backItemPos);
+				m_ItemRender[m_ItemList[lastItem]]->SetScale(m_sideItemSca);
+			}
+			else {
+				m_ItemRender[m_ItemList[mainItem - 1]]->SetIsActive(true);
+				m_ItemRender[m_ItemList[mainItem - 1]]->SetPosition(m_backItemPos);
+				m_ItemRender[m_ItemList[mainItem - 1]]->SetScale(m_sideItemSca);
+			}
+			if (mainItem + 1 >= m_ItemList.size())
+			{
+				m_ItemRender[nonItem]->SetIsActive(true);
+				m_ItemRender[nonItem]->SetPosition(m_nextItemPos);
+				m_ItemRender[nonItem]->SetScale(m_sideItemSca);
+			}
+			else {
+				m_ItemRender[m_ItemList[mainItem + 1]]->SetIsActive(true);
+				m_ItemRender[m_ItemList[mainItem + 1]]->SetPosition(m_nextItemPos);
+				m_ItemRender[m_ItemList[mainItem + 1]]->SetScale(m_sideItemSca);
+			}
+		}
+		else if (ItemNum == 2)
+		{
+
+			if (g_pad[0].IsPress(enButtonLB1))
+			{
+				if (g_pad[0].IsTrigger(enButtonX))
+				{
+					if (mainItem - 1 >= 0)
+					{
+						mainItem--;
+
+					}
+					else mainItem++;
+				}
+				else if (g_pad[0].IsTrigger(enButtonB))
+				{
+					if (mainItem + 1 < m_ItemList.size())
+					{
+						mainItem++;
+					}
+					else mainItem = 0;
+				}
+			}
+			if (lastItem < mainItem)
+			{
+				mainItem = nonItem;
+			}
+			targetItem = m_ItemList[mainItem];
+			m_ItemRender[targetItem]->SetIsActive(true);
+			m_ItemRender[targetItem]->SetPosition(m_mainItemPos);
+			m_ItemRender[targetItem]->SetScale(m_mainItemSca);
+
+
+
+
+			if (mainItem - 1 < 0)
+			{
+
+				m_ItemRender[m_ItemList[targetItem + 1]]->SetIsActive(true);
+				m_ItemRender[m_ItemList[targetItem + 1]]->SetPosition(m_nextItemPos);
+				m_ItemRender[m_ItemList[targetItem + 1]]->SetScale(m_sideItemSca);
+
+
+			}
+			else {
+
+				m_ItemRender[m_ItemList[mainItem - 1]]->SetIsActive(true);
+				m_ItemRender[m_ItemList[mainItem - 1]]->SetPosition(m_nextItemPos);
+				m_ItemRender[m_ItemList[mainItem - 1]]->SetScale(m_sideItemSca);
+
+
+			}
+
+		}
+		else if (ItemNum == 1)
+		{
+			targetItem = m_ItemList[nonItem];
+			m_ItemRender[nonItem]->SetIsActive(true);
+			m_ItemRender[nonItem]->SetPosition(m_mainItemPos);
+			m_ItemRender[nonItem]->SetScale(m_mainItemSca);
+		}
+	}
+
+	
+	if (m_game->GetPauseFlag())
 	{
 		if (MenuStageNum == 1) {
+
 			if (g_pad[0].IsTrigger(enButtonDown))
 			{
-				if (DropTarget < m_DropItemList.size() - 1)
-				{
-					DropTarget++;
-				}
+				if (p_target == DropItemPouch) {
+					if (DropTarget < m_DropItemList.size() - 1)
+					{
+						DropTarget++;
+					}
 
+				}
+				if (p_target == UserItemPouch) {
+					if (UserTarget < m_ItemList.size() - 1)
+					{
+						UserTarget++;
+					}
+
+				}
 			}
 			if (g_pad[0].IsTrigger(enButtonUp))
 			{
-				if (DropTarget > 0)
-				{
-					DropTarget--;
+				if (p_target == DropItemPouch) {
+					if (DropTarget > 0)
+					{
+						DropTarget--;
+					}
 				}
-
+				if (p_target == UserItemPouch) {
+					if (UserTarget > 1)
+					{
+						UserTarget--;
+					}
+				}
 			}
-			d_target = m_DropItemList[DropTarget];
+
+			if (p_target == UserItemPouch)
+			{
+				if (m_ItemList.size() <= 5) {
+
+					for (int i = 0; i < m_ItemList.size(); i++) {
+						if (UserTarget + i < m_ItemList.size()) {
+							u_target[i] = m_ItemList[UserTarget + i];
+						}
+						else u_target[i] = m_ItemList[m_ItemList.size() - 1 - i];
+					}
+				}
+				else
+				{
+					u_target[0] = m_ItemList[UserTarget];
+
+					for (int i = 1; i < 5; i++) {
+
+
+						if (UserTarget + i < 5) {
+							u_target[i] = m_ItemList[UserTarget + i];
+
+						}
+						else
+						{
+							u_target[i] = m_ItemList[4 - i];
+							if (UserTarget > 4)
+							{
+								u_target[i] = m_ItemList[UserTarget - i];
+							}
+
+						}
+					}
+				}
+			}
+			if (p_target == DropItemPouch) {
+				if (m_DropItemList.size() <= 5) {
+
+					for (int i = 0; i < m_DropItemList.size(); i++) {
+						if (DropTarget + i < m_DropItemList.size()) {
+							d_target[i] = m_DropItemList[DropTarget + i];
+						}
+						else d_target[i] = m_DropItemList[m_DropItemList.size() - 1 - i];
+					}
+
+					
+				}
+				else
+				{
+
+					d_target[0] = m_DropItemList[DropTarget];
+
+					for (int i = 1; i < 5; i++) {
+
+
+						if (DropTarget + i < 5) {
+							d_target[i] = m_DropItemList[DropTarget + i];
+
+						}
+						else
+						{
+							d_target[i] = m_DropItemList[4 - i];
+							if (DropTarget > 4)
+							{
+								d_target[i] = m_DropItemList[DropTarget - i];
+							}
+							
+
+						}
+					}
+				}
+			}
+			
+
+
+		}
+		else if (MenuStageNum == 0)
+		{
+			DropTarget = 0;
 		}
 
 	}
-	m_ItemList.clear();
-	m_DropItemList.clear();
+	
+}
+void UI::PushPickText(FontRender* fontRender)
+{
+	
+	m_dropFontlist.push_back(fontRender);
+	/*typedef ItemBase::ItemType Type;
+	switch (m_pickTextParts.pickItemType)
+	{
+	case Type::Herbs:
+		break;
+	case Type::mushroom:
+		break;
+	default:
+		break;
+	}*/
+
+
 }
 void UI::SetFont(int ft, wchar_t text[15],bool frameflag, float frame, CVector4 & color, CVector2 & pos, float size, CVector2 & pivot)
 {
+	
 		m_font[ft]->SetText(text);
 		m_font[ft]->SetPivot(pivot);
 		m_font[ft]->SetShadowParam(frameflag, frame, CVector4::Black());
@@ -387,313 +655,402 @@ void UI::SetFont(int ft, wchar_t text[15],bool frameflag, float frame, CVector4 
 }
 void UI::SetFontPalam()
 {
-
+	
 	auto m_game = Game::instance();
 	auto m_Item = Game::instance()->m_Item;
 	auto m_quest = Game::instance()->m_quest;
 	auto m_queboardInfo = m_quest->GetDispInfo();
 	auto m_queInfo = m_quest->GetQuestInfo();
-		int itemnum = m_Item->GetData(targetItem).num;
-		int d_itemnum = m_Item->GetData(d_target).num;
-		_itow_s(itemnum, m_fontPalam[ItemNumber].m_text, 10);
-		m_fontPalam[ItemNumber].m_frameWidth = 3.0f;
-		m_fontPalam[ItemNumber].pos = { 350.0f,-230.0f };
-		m_fontPalam[ItemNumber].size = 0.7f;
-		m_fontPalam[ItemNumber].pivot = { 0.5f,0.5f };
+	int itemnum = m_Item->GetData(targetItem).num;
+	int d_itemnum = m_Item->GetData(d_target[0]).num;
+	_itow_s(itemnum, m_fontPalam[ItemNumber].m_text, 10);
+	m_fontPalam[ItemNumber].m_frameWidth = 3.0f;
+	m_fontPalam[ItemNumber].pos = { 350.0f,-230.0f };
+	m_fontPalam[ItemNumber].size = 0.7f;
+	m_fontPalam[ItemNumber].pivot = { 0.5f,0.5f };
 
 
-		m_fontPalam[GoalNum].size = 0.6f;
-		m_fontPalam[QuestPoint].size = 0.6f;
-		m_fontPalam[QuestName].size = 0.6f;
-		m_fontPalam[QuestSummary].size = 0.6f;
-		m_fontPalam[PrizeMoney].size = 0.6f;
-		m_fontPalam[RequesterName].size = 0.6f;
-		m_fontPalam[DropItemNumber].size = 0.6f;
-		m_fontPalam[ItemName].size = 0.6f;
-		m_fontPalam[ItemSummry].size = 0.6f;
-		m_fontPalam[HaveMoney].size = 1.0f;
-		m_fontPalam[U_Pouch].size = 0.6f;
-		m_fontPalam[D_Pouch].size = 0.6f;
-		m_fontPalam[m_help].size = 0.6f;
-		m_fontPalam[m_exit].size = 0.6f;
+	m_fontPalam[GoalNum].size = 0.6f;
+	m_fontPalam[QuestPoint].size = 0.6f;
+	m_fontPalam[QuestName].size = 0.6f;
+	m_fontPalam[QuestSummary].size = 0.6f;
+	m_fontPalam[PrizeMoney].size = 0.6f;
+	m_fontPalam[RequesterName].size = 0.6f;
+	m_fontPalam[DropItemNumber].size = 0.6f;
+	for (int i = ItemName00; i <= ItemName04; i++)
+	{
+		m_fontPalam[i].size = 0.6f;
+	}
+	m_fontPalam[ItemSummry].size = 0.6f;
+	m_fontPalam[HaveMoney].size = 1.0f;
+	m_fontPalam[U_Pouch].size = 0.6f;
+	m_fontPalam[D_Pouch].size = 0.6f;
+	m_fontPalam[m_help].size = 0.6f;
+	m_fontPalam[m_exit].size = 0.6f;
 
-		if (targetItem != nonItem) {
-			m_fontPalam[ItemNumber].m_textColor = CVector4::White();
+	if (targetItem != nonItem) {
+		m_fontPalam[ItemNumber].m_textColor = CVector4::White();
+	}
+	else m_fontPalam[ItemNumber].m_textColor = { 0.0f,0.0f, 0.0f, 0.0f };
+
+
+
+	if (MenuFlag[DropItemPouch]) {
+		for (int i = 0; i <= m_DropItemList.size(); i++) {
+
+			switch (d_target[i])
+			{
+			case(ItemBase::Herbs):
+
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"薬草");
+				if (i == 0)
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"フィールド広域で採取できる草。\n");
+				break;
+			case(ItemBase::PoisonouMushroom):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"毒茸");
+				if (i == 0)
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"毒を含むキノコ。\n");
+
+				break;
+			case(ItemBase::mushroom):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"大茸");
+				if (i == 0)
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"大きな美味しいキノコ。\n");
+
+				break;
+			case(ItemBase::Treenut):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"木の実");
+				if (i == 0)
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"。\n");
+
+				break;
+			case(ItemBase::smallstone):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"小石");
+				if (i == 0)
+				{
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"ただの小石。\n");
+				}
+				break;
+			case(ItemBase::B_L_LizardTail):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"青紋小竜の尻尾");
+				if (i == 0)
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"砂漠地帯に生息する青紋小竜の尻尾。\n切れてもまた生えてくる。");
+
+				break;
+			case(ItemBase::B_L_LizardClaw):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"青紋小竜の爪");
+				if (i == 0)
+				{
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"砂漠地帯に生息する青紋小竜の爪。\n獲物の肉に食い込む強靭な爪。");
+				}
+				break;
+			case(ItemBase::B_L_LizardScales):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"青紋小竜の鱗");
+				if (i == 0)
+				{
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"砂漠地帯に生息する青紋小竜の鱗。\n薄く軽いわりに硬くて丈夫。");
+				}
+				break;
+			case(ItemBase::B_L_LizardFang):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"青紋小竜の牙");
+				if (i == 0)
+				{
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"砂漠地帯に生息する青紋小竜の牙。\n獲物をかみ切る強靭な牙。");
+				}
+				break;
+			default:
+				if (i == 0)
+				{
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"アイテム未所持");
+				}
+				break;
+			}
+
 		}
-		else m_fontPalam[ItemNumber].m_textColor = { 0.0f,0.0f, 0.0f, 0.0f };
-
-
-
-
-
-		switch (d_target)
+	}
+	if (p_target == UserItemPouch)
+	{
+		for(int i =0;i<m_ItemList.size();i++)
+		switch (u_target[i])
 		{
-		case(Item::Herbs):
-
-			wcscpy(m_fontPalam[ItemName].m_text, L"薬草");
-			wcscpy(m_fontPalam[ItemSummry].m_text, L"フィールド広域で採取できる草。\n");
+		case(kaihukuyaku):
+			wcscpy(m_fontPalam[ItemName00 + i].m_text, L"回復薬");
+			if (i == 0)
+			{
+				wcscpy(m_fontPalam[ItemSummry].m_text, L"回復薬");
+			}
 			break;
-		case(Item::PoisonouMushroom):
-			wcscpy(m_fontPalam[ItemName].m_text, L"毒茸");
-			wcscpy(m_fontPalam[ItemSummry].m_text, L"毒を含むキノコ。\n");
-
+		case(ItemDummy00):
+			wcscpy(m_fontPalam[ItemName00 + i].m_text, L"鬼神薬");
+			if (i == 0)
+			{
+				wcscpy(m_fontPalam[ItemSummry].m_text, L"鬼神薬");
+			}
 			break;
-		case(Item::mushroom):
-			wcscpy(m_fontPalam[ItemName].m_text, L"大茸");
-			wcscpy(m_fontPalam[ItemSummry].m_text, L"大きな美味しいキノコ。\n");
-
-			break;
-		case(Item::Treenut):
-			wcscpy(m_fontPalam[ItemName].m_text, L"木の実");
-			wcscpy(m_fontPalam[ItemSummry].m_text, L"小さい。\n");
-
-			break;
-		case(Item::smallstone):
-			wcscpy(m_fontPalam[ItemName].m_text, L"小石");
-			wcscpy(m_fontPalam[ItemSummry].m_text, L"何の変哲もないただの石。\n");
-
-			break;
-		case(Item::B_L_LizardTail):
-			wcscpy(m_fontPalam[ItemName].m_text, L"青紋小竜の尻尾");
-			wcscpy(m_fontPalam[ItemSummry].m_text, L"砂漠地帯に生息する青紋小竜の尻尾。\n切れてもまた生えてくる。");
-
-			break;
-		case(Item::B_L_LizardClaw):
-			wcscpy(m_fontPalam[ItemName].m_text, L"青紋小竜の爪");
-			wcscpy(m_fontPalam[ItemSummry].m_text, L"砂漠地帯に生息する青紋小竜の爪。\n獲物の肉に食い込む強靭な爪。");
-
-			break;
-		case(Item::B_L_LizardScales):
-			wcscpy(m_fontPalam[ItemName].m_text, L"青紋小竜の鱗");
-			wcscpy(m_fontPalam[ItemSummry].m_text, L"砂漠地帯に生息する青紋小竜の鱗。\n鮮やかな青色の鱗は価値が高く防具製作などに\nよく使われる。");
-
-			break;
-		case(Item::B_L_LizardFang):
-			wcscpy(m_fontPalam[ItemName].m_text, L"青紋小竜の牙");
-			wcscpy(m_fontPalam[ItemSummry].m_text, L"砂漠地帯に生息する青紋小竜の牙。\n獲物をかみ切る強靭な牙。");
-
+		case(ItemDummy01):
+			wcscpy(m_fontPalam[ItemName00 + i].m_text, L"風神薬");
+			if (i == 0)
+			{
+				wcscpy(m_fontPalam[ItemSummry].m_text, L"風神薬");
+			}
 			break;
 		default:
 			break;
 		}
+	}
+	
+	int m_prizemoney = m_queInfo.m_prizeMoney;
+	int goalnum = m_queInfo.m_targetNum;
+	int targetnum = m_quest->GetQuestPoint();
+
+	int m_havemoney = m_quest->GetMoney();
+	wchar_t m_moneytext[255];
+	wchar_t m_prizetext[255];
+	wchar_t m_itemnum[255];
+
+
+
+	wcscpy(m_fontPalam[QuestName].m_text, m_queInfo.m_questName);
+	wcscpy(m_fontPalam[QuestSummary].m_text, m_queInfo.m_questSummry);
+	//wcscpy(m_fontPalam[HaveMoney].m_text, L"所持金　");
+	wcscpy(m_fontPalam[PrizeMoney].m_text, L"報酬金\n");
+	wcscpy(m_fontPalam[U_Pouch].m_text, L"道具");
+	wcscpy(m_fontPalam[D_Pouch].m_text, L"素材");
+	wcscpy(m_fontPalam[DropItemNumber].m_text, L"所持数");
+	wcscpy(m_fontPalam[m_exit].m_text, L"ゲーム終了");
+	wcscpy(m_fontPalam[m_help].m_text, L"操作説明");
+
+	_itow_s(m_prizemoney, m_prizetext, 10);
+	_itow_s(d_itemnum, m_itemnum, 10);
+	_itow_s(goalnum, m_fontPalam[GoalNum].m_text, 10);
+	_itow_s(targetnum, m_fontPalam[QuestPoint].m_text, 10);
+	_itow_s(m_havemoney, m_fontPalam[HaveMoney].m_text, 10);
+	wcscat(m_fontPalam[QuestPoint].m_text, L"/");
+	//wcscat(m_fontPalam[HaveMoney].m_text, m_moneytext);
+	wcscat(m_fontPalam[PrizeMoney].m_text, m_prizetext);
+	wcscat(m_fontPalam[DropItemNumber].m_text, m_itemnum);
+	/// <summary>
+	/// 一時停止画面中
+	/// </summary>
+	if (m_game->GetPauseFlag())
+	{
+
+		
+		
+
+		
+
+		m_fontPalam[QuestName].pivot = { 0.0f,0.5f };
+		m_fontPalam[QuestSummary].pivot = { 0.0f,0.5f };
+		m_fontPalam[PrizeMoney].pivot = { 0.0f,0.5f };
+		m_fontPalam[RequesterName].pivot = { 0.0f,0.5f };
+		m_fontPalam[GoalNum].pivot = { 0.0f,0.5f };
+		m_fontPalam[QuestPoint].pivot = { 0.0f,0.5f }; 
+		m_fontPalam[HaveMoney].pivot = { 0.0f,0.5f };
+		m_fontPalam[DropItemNumber].pivot = { 0.5f,0.5f };
+		m_fontPalam[ItemSummry].pivot = { 0.0f,0.5f };
+
+
+		m_fontPalam[QuestName].pos = { -600.0f,220.0f };
+		m_fontPalam[QuestSummary].pos = { -600.0f,190.0f };
+		m_fontPalam[GoalNum].pos = { -560.0f,162.0f };
+		m_fontPalam[QuestPoint].pos = { -600.0f,160.0f };
+		m_fontPalam[PrizeMoney].pos = { -600.0f,130.0f };
+		m_fontPalam[HaveMoney].pos = { -470.0f,-300.0f };
+		m_fontPalam[DropItemNumber].pos = { 300.0f,-200.0f };
+		m_fontPalam[ItemSummry].pos = { 150.0f,50.0f };
+
+		//m_fontPalam[DropItemNumber].m_textColor = CVector4::White();
+		//m_fontPalam[ItemName00].m_textColor = CVector4::White();
+		m_fontPalam[QuestName].m_textColor = CVector4::White();
+		m_fontPalam[QuestSummary].m_textColor = CVector4::White();
+		m_fontPalam[PrizeMoney].m_textColor = CVector4::White();
+		m_fontPalam[GoalNum].m_textColor = CVector4::White();
+		m_fontPalam[QuestPoint].m_textColor = CVector4::White();
+		m_fontPalam[HaveMoney].m_textColor = CVector4::White();
+		m_fontPalam[U_Pouch].m_textColor = CVector4::White();
+		m_fontPalam[D_Pouch].m_textColor = CVector4::White();
+		m_fontPalam[m_help].m_textColor = CVector4::White();
+		m_fontPalam[m_exit].m_textColor = CVector4::White();
+
 		/// <summary>
-		/// 一時停止画面中
+		/// かつクエストを受けていない時
 		/// </summary>
-		if (m_game->GetPauseFlag())
+		if (!m_quest->IsOnQuest())
 		{
+			m_fontPalam[QuestPoint].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
+			m_fontPalam[GoalNum].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
+			wcscpy(m_fontPalam[QuestName].m_text, L"クエスト未受注");
+			m_fontPalam[QuestName].size = 1.0f;
+			m_fontPalam[QuestPoint].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
+			//m_fontPalam[QuestName].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
+			m_fontPalam[QuestSummary].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
+			m_fontPalam[PrizeMoney].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
 
-			
-			
+		}
 
-			int m_prizemoney = m_queInfo.m_prizeMoney;
-			int goalnum = m_queInfo.m_targetNum;
-			int targetnum = m_quest->GetQuestPoint();
-
-			int m_havemoney = m_quest->GetMoney();
-			wchar_t m_moneytext[255];
-			wchar_t m_prizetext[255];
-			wchar_t m_itemnum[255];
-
-			
-
-			wcscpy(m_fontPalam[QuestName].m_text, m_queInfo.m_questName);
-			wcscpy(m_fontPalam[QuestSummary].m_text, m_queInfo.m_questSummry);
-			//wcscpy(m_fontPalam[HaveMoney].m_text, L"所持金　");
-			wcscpy(m_fontPalam[PrizeMoney].m_text, L"報酬金\n");
-			wcscpy(m_fontPalam[U_Pouch].m_text, L"道具");
-			wcscpy(m_fontPalam[D_Pouch].m_text, L"素材");
-			wcscpy(m_fontPalam[DropItemNumber].m_text, L"所持数");
-			wcscpy(m_fontPalam[m_exit].m_text, L"ゲーム終了");
-			wcscpy(m_fontPalam[m_help].m_text, L"操作説明");
-
-			_itow_s(m_prizemoney, m_prizetext, 10);
-			_itow_s( d_itemnum,m_itemnum, 10);
-			_itow_s(goalnum, m_fontPalam[GoalNum].m_text, 10);
-			_itow_s(targetnum, m_fontPalam[QuestPoint].m_text, 10);
-			_itow_s(m_havemoney, m_fontPalam[HaveMoney].m_text,10);
-			wcscat(m_fontPalam[QuestPoint].m_text, L"/");
-			//wcscat(m_fontPalam[HaveMoney].m_text, m_moneytext);
-			wcscat( m_fontPalam[PrizeMoney].m_text,m_prizetext);
-			wcscat(m_fontPalam[DropItemNumber].m_text, m_itemnum);
-
-			m_fontPalam[QuestName].pivot = { 0.0f,0.5f };
-			m_fontPalam[QuestSummary].pivot = { 0.0f,0.5f };
-			m_fontPalam[PrizeMoney].pivot = { 0.0f,0.5f };
-			m_fontPalam[RequesterName].pivot = { 0.0f,0.5f };
-			m_fontPalam[GoalNum].pivot = { 0.0f,0.5f };
-			m_fontPalam[QuestPoint].pivot = { 0.0f,0.5f }; 
-			m_fontPalam[HaveMoney].pivot = { 0.0f,0.5f };
-			m_fontPalam[DropItemNumber].pivot = { 1.0f,0.5f };
-			m_fontPalam[ItemSummry].pivot = { 1.0f,0.5f };
-
-
-			m_fontPalam[QuestName].pos = { -600.0f,220.0f };
-			m_fontPalam[QuestSummary].pos = { -600.0f,190.0f };
-			m_fontPalam[GoalNum].pos = { -560.0f,162.0f };
-			m_fontPalam[QuestPoint].pos = { -600.0f,160.0f };
-			m_fontPalam[PrizeMoney].pos = { -600.0f,130.0f };
-			m_fontPalam[HaveMoney].pos = { -500.0f,-300.0f };
-			m_fontPalam[DropItemNumber].pos = { 500.0f,200.0f };
-			m_fontPalam[ItemSummry].pos = { 500.0f,300.0f };
-
-			//m_fontPalam[DropItemNumber].m_textColor = CVector4::White();
-			//m_fontPalam[ItemName].m_textColor = CVector4::White();
-			m_fontPalam[QuestName].m_textColor = CVector4::White();
-			m_fontPalam[QuestSummary].m_textColor = CVector4::White();
-			m_fontPalam[PrizeMoney].m_textColor = CVector4::White();
-			m_fontPalam[GoalNum].m_textColor = CVector4::White();
-			m_fontPalam[QuestPoint].m_textColor = CVector4::White();
-			m_fontPalam[HaveMoney].m_textColor = CVector4::White();
-			m_fontPalam[U_Pouch].m_textColor = CVector4::White();
-			m_fontPalam[D_Pouch].m_textColor = CVector4::White();
-			m_fontPalam[m_help].m_textColor = CVector4::White();
-			m_fontPalam[m_exit].m_textColor = CVector4::White();
-			
-
-			/// <summary>
-			/// かつクエストを受けていない時
-			/// </summary>
-			if (!m_quest->IsOnQuest())
+		/// <summary>
+		/// かつMenuの段階が０の時
+		/// </summary>
+		if (MenuStageNum == 0)
+		{
+			for (int i = ItemNumber; i <= ItemSummry; i++)
 			{
-				m_fontPalam[QuestPoint].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
-				m_fontPalam[GoalNum].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
-				wcscpy(m_fontPalam[QuestName].m_text, L"クエスト未受注");
-				m_fontPalam[QuestName].size = 1.0f;
-				m_fontPalam[QuestPoint].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
-				//m_fontPalam[QuestName].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
-				m_fontPalam[QuestSummary].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
-				m_fontPalam[PrizeMoney].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
-
+				m_fontPalam[i].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
 			}
+		}
+		/// /// <summary>
+		/// かつ素材ポーチを見ているまたはアイテムポーチを見ている時
+		/// </summary>
+		if (MenuFlag[DropItemPouch]|| MenuFlag[UserItemPouch])
+		{
+			if (MenuStageNum == 1) {
+				for (int i = ItemName00; i <= ItemName04; i++) {
+					auto IconNum = i - ItemName00;
 
-			/// <summary>
-			/// かつMenuの段階が０の時
-			/// </summary>
-			if (MenuStageNum == 0)
-			{
-				for (int i = ItemNumber; i <= ItemSummry; i++)
-				{
-					m_fontPalam[i].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
-				}
-			}
-			/// /// <summary>
-			/// かつ素材ポーチを見ている時
-			/// </summary>
-			if (MenuFlag[DropItemPouch])
-			{
-				if (MenuStageNum == 1) {
-					m_fontPalam[ItemName].pos = m_spriteRender[FrameIcon04]->Get2DPosition();
-					m_fontPalam[ItemName].m_textColor.Set(CVector4::White());
+					if (p_target == 0 && IconNum < m_ItemList.size() - 1)
+					{
+						m_fontPalam[i].m_textColor.Set(CVector4::White());
+					}
+					if (p_target ==1&&IconNum < m_DropItemList.size()) {
+						m_fontPalam[i].m_textColor.Set(CVector4::White());
+					}
 					
 				}
-				if (MenuStageNum >= 2)
+
+				
+			}
+			if (MenuStageNum >= 1)
+			{
+				m_fontPalam[ItemSummry].m_textColor.Set(CVector4::White());
+
+				if (p_target == 0 && m_ItemList.size() > 0)
 				{
-					m_fontPalam[ItemSummry].m_textColor.Set(CVector4::White());
+					m_fontPalam[ItemNumber].m_textColor.Set(CVector4::White());
+
+				}
+				if (p_target ==1 &&m_DropItemList.size() > 0) {
 					m_fontPalam[DropItemNumber].m_textColor.Set(CVector4::White());
 				}
-				else
-				{
-					m_fontPalam[ItemSummry].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
-					m_fontPalam[DropItemNumber].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
-				}
-
+				
 			}
-			
-
-		}
-		else
-		{
-			m_spriteRender[Pause]->SetIsActive(false);
-			m_spriteRender[ReturnCamp]->SetIsActive(false);
-			for (int i = FrameIcon00; i <= FrameIcon08; i++)
+			else
 			{
-
-				m_spriteRender[i]->SetIsActive(false);
+				m_fontPalam[ItemSummry].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
+				m_fontPalam[DropItemNumber].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
 			}
-			for (int i=0; i < FontType::FontTypeNum; i++)
-			{
-				if (i != ItemNumber) {
-					m_fontPalam[i].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
-				}
-			}
-			
-		}
-		/// <summary>
-		/// クエストボードを見ている
-		/// </summary>
-		if (m_game->IsLookBoard())
-		{
-			m_fontPalam[QuestName].m_textColor = CVector4::Black();
-			wcscpy(m_fontPalam[QuestName].m_text,m_queboardInfo.m_questName);
-			m_fontPalam[QuestName].pivot ={ 0.5f,0.5f };
-			m_fontPalam[QuestName].pos = { 0.0f,170.0f };
-			
-
-			m_fontPalam[QuestSummary].m_textColor = CVector4::Black();
-			wcscpy(m_fontPalam[QuestSummary].m_text,m_queboardInfo.m_questSummry);
-			m_fontPalam[QuestSummary].pivot = { 0.5f,0.5f };
-			m_fontPalam[QuestSummary].pos = { 0.0f,50.0f };
-
-			int money = m_queboardInfo.m_prizeMoney;
-			
-			m_fontPalam[PrizeMoney].m_textColor = CVector4::Black();
-			_itow_s(money, m_fontPalam[PrizeMoney].m_text, 10);
-			m_fontPalam[PrizeMoney].pivot = { 0.5f,0.5f };
-			m_fontPalam[PrizeMoney].pos = { 0.0f,-120.0f };
-
-			m_fontPalam[RequesterName].m_textColor = CVector4::Black();
-			wcscpy(m_fontPalam[RequesterName].m_text, m_queboardInfo.m_requesterName);
-			m_fontPalam[RequesterName].pivot = { 0.5f,0.5f };
-			m_fontPalam[RequesterName].pos = { 0.0f,-200.0f };
-		}
-		else {
-			m_fontPalam[QuestName].m_textColor.w = 0.0f;
-			m_fontPalam[QuestSummary].m_textColor.w = 0.0f;
-			m_fontPalam[PrizeMoney].m_textColor.w = 0.0f;
-			m_fontPalam[RequesterName].m_textColor.w = 0.0f;
-		}
-		/// <summary>
-		/// リザルト画面中
-		/// </summary>
-		if (ResultFlag)
-		{
-			
-			m_fontPalam[HaveMoney].m_textColor.Set(CVector4::White());
-			m_fontPalam[HaveMoney].size = 1.0f;
-			m_fontPalam[HaveMoney].pos = { -600.0f,0.0f };
-
-		}
-		else {
-
 
 		}
 		
+
+	}
+	else
+	{
 		
-		for (int i = 0; i < FontTypeNum; i++)
+		
+		for (int i=0; i < FontType::FontTypeNum; i++)
 		{
-			if (m_fontPalam[i].m_frameWidth > 0.0f)
-			{
-				m_fontPalam[i].frameFlag = true;
+			if (i != ItemNumber) {
+				m_fontPalam[i].m_textColor = { 0.0f,0.0f,0.0f,0.0f };
 			}
-			if (targetItem == nonItem)
-			{
-				m_fontPalam[i].frameFlag = false;
-			}
-			SetFont(i, m_fontPalam[i].m_text,
-				m_fontPalam[i].frameFlag,
-				m_fontPalam[i].m_frameWidth,
-				m_fontPalam[i].m_textColor,
-				m_fontPalam[i].pos,
-				m_fontPalam[i].size,
-				m_fontPalam[i].pivot
+		}
+		
+	}
+	/// <summary>
+	/// クエストボードを見ている
+	/// </summary>
+	if (m_game->IsLookBoard())
+	{
+		m_fontPalam[QuestName].m_textColor = CVector4::Black();
+		wcscpy(m_fontPalam[QuestName].m_text,m_queboardInfo.m_questName);
+		m_fontPalam[QuestName].pivot ={ 0.5f,0.5f };
+		m_fontPalam[QuestName].pos = { 0.0f,170.0f };
+		
+
+		m_fontPalam[QuestSummary].m_textColor = CVector4::Black();
+		wcscpy(m_fontPalam[QuestSummary].m_text,m_queboardInfo.m_questSummry);
+		m_fontPalam[QuestSummary].pivot = { 0.5f,0.5f };
+		m_fontPalam[QuestSummary].pos = { 0.0f,50.0f };
+
+		int money = m_queboardInfo.m_prizeMoney;
+		
+		m_fontPalam[PrizeMoney].m_textColor = CVector4::Black();
+		_itow_s(money, m_fontPalam[PrizeMoney].m_text, 10);
+		m_fontPalam[PrizeMoney].pivot = { 0.5f,0.5f };
+		m_fontPalam[PrizeMoney].pos = { 0.0f,-120.0f };
+
+		m_fontPalam[RequesterName].m_textColor = CVector4::Black();
+		wcscpy(m_fontPalam[RequesterName].m_text, m_queboardInfo.m_requesterName);
+		m_fontPalam[RequesterName].pivot = { 0.5f,0.5f };
+		m_fontPalam[RequesterName].pos = { 0.0f,-200.0f };
+	}
+	else {
+		m_fontPalam[QuestName].m_textColor.w = 0.0f;
+		m_fontPalam[QuestSummary].m_textColor.w = 0.0f;
+		m_fontPalam[PrizeMoney].m_textColor.w = 0.0f;
+		m_fontPalam[RequesterName].m_textColor.w = 0.0f;
+	}
+	/// <summary>
+	/// リザルト画面中
+	/// </summary>
+	if (ResultFlag)
+	{
+		if (m_alpha >= 1.0f)
+		{
+			m_spriteRender[ManeyPouch]->SetIsActive(true);
+			m_spriteRender[ManeyPouch]->SetPivot({ 1.0f, 0.5f });
+			m_spritePos[ManeyPouch].Set(
+				m_fontPalam->pos.x,
+				m_fontPalam->pos.y,
+				0.0f
 			);
-
+			m_spriteSca[ManeyPouch].Set( 2.0f,2.0f,1.0f) ;
+			m_quest->GetPrizeMoney();
+			m_fontPalam[HaveMoney].m_textColor.Set(CVector4::White());
+			m_fontPalam[HaveMoney].m_frameWidth = 5.0f;
+			m_fontPalam[HaveMoney].size = 2.0f;
+			m_fontPalam[HaveMoney].pos = { -200.0f,0.0f };
+			if (g_pad[0].IsPressAnyKey())
+			{
+				m_endqestFlag = true;
+			}
 		}
 
+	}
+	else {
+
+
+	}
+	
+	
+	for (int i = 0; i < FontTypeNum; i++)
+	{
+		if (m_fontPalam[i].m_frameWidth > 0.0f)
+		{
+			m_fontPalam[i].frameFlag = true;
+		}
+		if (targetItem == nonItem)
+		{
+			m_fontPalam[i].frameFlag = false;
+		}
+		SetFont(i, m_fontPalam[i].m_text,
+			m_fontPalam[i].frameFlag,
+			m_fontPalam[i].m_frameWidth,
+			m_fontPalam[i].m_textColor,
+			m_fontPalam[i].pos,
+			m_fontPalam[i].size,
+			m_fontPalam[i].pivot
+		);
+
+	}
+
+	
+	ResetList();
 	
 }
 void UI::ClearDraw()
 {
+
 	if (m_alpha < 1.0f) {
 		m_alpha += 0.02f;
 	}
@@ -725,25 +1082,70 @@ void UI::PauseMenu()
 {
 	auto m_game = Game::instance();
 	
-	
 	if (m_game->GetPauseFlag()) {
-
+		
 		for (int i = FrameIcon00; i <= FrameIcon03; i++)
 		{
+			auto FontNum = i - 10;
+			FontNum += U_Pouch;
 			m_spriteRender[i]->SetIsActive(true);
-			m_fontPalam[i+1].pos = m_spriteRender[i]->Get2DPosition();
+			m_fontPalam[FontNum].pos = m_spriteRender[i]->Get2DPosition();
 
 		}
+		if (MenuStageNum >= 1) {
+			for (int i = FrameIcon04; i <= FrameIcon08; i++)
+			{
+				auto framenum = i - 14;
+				if (p_target == 0) {
+					if (framenum < m_ItemList.size()-1)
+					{
+						m_spriteRender[i]->SetIsActive(true);
+					}
+				}
+				if (p_target == 1) {
+					if (framenum < m_DropItemList.size())
+					{
+						m_spriteRender[i]->SetIsActive(true);
+					}
+				}
 
-		for (int i = FrameIcon04; i <= FrameIcon08; i++)
+			}
+		}
+		else
 		{
-			m_spriteRender[i]->SetIsActive(true);
+			for (int i = FrameIcon04; i <= FrameIcon08; i++)
+			{
+				m_spriteRender[i]->SetIsActive(false);
+			}
 		}
 		m_spriteRender[Pause]->SetIsActive(true);
 		m_spriteRender[ReturnCamp]->SetIsActive(true);
 		m_spriteRender[TargetMark]->SetIsActive(true);
 		m_spriteRender[ManeyPouch]->SetIsActive(true);
-		if (MenuStageNum == 0) {
+
+		auto m_Dsize = m_DropItemList.size();
+		auto m_Usize = m_ItemList.size()-1;
+
+		if (p_target == UserItemPouch)
+		{
+			sizeTag = (int)m_Usize;
+		}
+		if (p_target == DropItemPouch) {
+			sizeTag = (int)m_Dsize;
+		}
+		if (sizeTag > 5)
+		{
+			sizeTag = 5;
+		}
+		switch (MenuStageNum)
+		{
+			/// <summary>
+			/// メニューが０段階目の時
+			/// </summary>
+		case 0:
+
+			m_spritePos[TargetMark].x = -660.0f;
+			m_spriteRender[ItemNext]->SetIsActive(false);
 
 			if (g_pad[0].IsTrigger(enButtonDown))
 			{
@@ -761,7 +1163,267 @@ void UI::PauseMenu()
 					p_target--;
 				}
 			}
-		}
+
+			switch (p_target)
+			{
+			case 0:
+				m_spritePos[TargetMark].y = m_spriteRender[FrameIcon00]->Get2DPosition().y;
+				m_fontPalam[U_Pouch].m_textColor.Set(0.0f, 0.5f, 0.5f, 1.0f);
+				if (m_spritePos[TargetMark].x + 250.0f < m_spriteRender[FrameIcon00]->Get2DPosition().x)
+				{
+					m_spritePos[FrameIcon00].x -= 50.0f;
+					m_spriteSca[FrameIcon00] *= 1.5f;
+				}
+
+				break;
+			case 1:
+				m_spritePos[TargetMark].y = m_spriteRender[FrameIcon01]->Get2DPosition().y;
+				m_fontPalam[D_Pouch].m_textColor.Set(0.0f, 0.5f, 0.5f, 1.0f);
+				if (m_spritePos[TargetMark].x + 250.0f < m_spriteRender[FrameIcon01]->Get2DPosition().x)
+				{
+					m_spritePos[FrameIcon01].x -= 50.0f;
+					m_spriteSca[FrameIcon01] *= 1.5f;
+
+				}
+
+				break;
+			case 2:
+				m_spritePos[TargetMark].y = m_spriteRender[FrameIcon02]->Get2DPosition().y;
+				if (m_spritePos[TargetMark].x + 250.0f < m_spriteRender[FrameIcon02]->Get2DPosition().x)
+				{
+					m_spritePos[FrameIcon02].x -= 50.0f;
+					m_spriteSca[FrameIcon02] *= 1.5f;
+
+				}
+				break;
+			case 3:
+				m_spritePos[TargetMark].y = m_spriteRender[FrameIcon03]->Get2DPosition().y;
+				if (m_spritePos[TargetMark].x + 250.0f < m_spriteRender[FrameIcon03]->Get2DPosition().x)
+				{
+					m_spritePos[FrameIcon03].x -= 50.0f;
+					m_spriteSca[FrameIcon03] *= 1.5f;
+
+				}
+				break;
+			default:
+				break;
+			}
+			break;
+			/// <summary>
+			/// メニューが１段階目の時
+			/// </summary>
+		case 1:
+			m_spritePos[ItemNext].x = m_spriteRender[FrameIcon08]->Get2DPosition().x;
+			m_spritePos[ItemNext].y = m_spriteRender[FrameIcon08]->Get2DPosition().y - 100.0f;
+
+			/// <summary>
+			/// アイテムポーチを選択中
+			/// </summary>
+			if (p_target == 0)
+			{
+				if(m_ItemList.size()-1>5&&UserTarget != m_ItemList.size() - 2)
+				{
+					m_spriteRender[ItemNext]->SetIsActive(true);
+				}
+				else m_spriteRender[ItemNext]->SetIsActive(false);
+
+
+				switch (UserTarget)
+				{
+
+
+				case 1:
+					m_spritePos[TargetMark].y = m_spriteRender[FrameIcon04]->Get2DPosition().y;
+					m_fontPalam[ItemName00].pos = m_spriteRender[FrameIcon04]->Get2DPosition();
+					for (int i = 1; i < 5; i++)
+					{
+						auto fontNum = i + ItemName00;
+						auto IconNum = i + FrameIcon04;
+						if (m_spriteRender[IconNum]->IsRender()) {
+							m_fontPalam[fontNum].pos = m_spriteRender[IconNum]->Get2DPosition();
+							//_itow_s(fontNum, m_fontPalam[fontNum].m_text, 10);
+							//m_fontPalam[fontNum].m_textColor.Set(CVector4::White());
+						}
+						else m_fontPalam[fontNum].m_textColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+					}
+					break;
+				case 2:
+					m_spritePos[TargetMark].y = m_spriteRender[FrameIcon05]->Get2DPosition().y;
+					m_fontPalam[ItemName00].pos = m_spriteRender[FrameIcon05]->Get2DPosition();
+					m_fontPalam[ItemName00 + sizeTag - 1].pos = m_spriteRender[FrameIcon04]->Get2DPosition();
+
+					for (int i = 1; i < 4; i++)
+					{
+						auto fontNum = i + ItemName00;
+						auto IconNum = i + FrameIcon05;
+						if (m_spriteRender[IconNum]->IsRender()) {
+
+							m_fontPalam[fontNum].pos = m_spriteRender[IconNum]->Get2DPosition();
+						}
+						else m_fontPalam[fontNum].m_textColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+					}
+					break;
+				case 3:
+					m_spritePos[TargetMark].y = m_spriteRender[FrameIcon06]->Get2DPosition().y;
+					m_fontPalam[ItemName00 + sizeTag - 1].pos = m_spriteRender[FrameIcon04]->Get2DPosition();
+					m_fontPalam[ItemName00 + sizeTag - 2].pos = m_spriteRender[FrameIcon05]->Get2DPosition();
+					m_fontPalam[ItemName00].pos = m_spriteRender[FrameIcon06]->Get2DPosition();
+
+					for (int i = 1; i < 3; i++)
+					{
+						auto fontNum = i + ItemName00;
+						auto IconNum = i + FrameIcon06;
+						if (m_spriteRender[IconNum]->IsRender()) {
+							m_fontPalam[fontNum].pos = m_spriteRender[IconNum]->Get2DPosition();
+
+						}
+						else m_fontPalam[fontNum].m_textColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+					}
+					break;
+				case 4:
+					m_spritePos[TargetMark].y = m_spriteRender[FrameIcon07]->Get2DPosition().y;
+					m_fontPalam[ItemName00 + sizeTag - 1].pos = m_spriteRender[FrameIcon04]->Get2DPosition();
+					m_fontPalam[ItemName00 + sizeTag - 2].pos = m_spriteRender[FrameIcon05]->Get2DPosition();
+					m_fontPalam[ItemName00 + sizeTag - 3].pos = m_spriteRender[FrameIcon06]->Get2DPosition();
+					m_fontPalam[ItemName00].pos = m_spriteRender[FrameIcon07]->Get2DPosition();
+					if (m_spriteRender[FrameIcon08]->IsRender())
+					{
+						m_fontPalam[ItemName01].pos = m_spriteRender[FrameIcon08]->Get2DPosition();
+
+
+
+					}
+					//else m_fontPalam[ItemName01].m_textColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+					break;
+				case 5:
+					m_spritePos[TargetMark].y = m_spriteRender[FrameIcon08]->Get2DPosition().y;
+					for (int i = 0; i < 5; i++) {
+						auto fontNum = i + ItemName00;
+						auto IconNum = FrameIcon08 - i;
+						m_fontPalam[fontNum].pos = m_spriteRender[IconNum]->Get2DPosition();
+					}
+
+					break;
+				default:
+					break;
+				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			}
+
+			/// <summary>
+			/// /素材ポーチを選択中
+			/// </summary>
+			if (p_target == DropItemPouch) {
+				if (m_DropItemList.size() > 5 && DropTarget != m_DropItemList.size() - 1)
+				{
+					m_spriteRender[ItemNext]->SetIsActive(true);
+				}
+				else m_spriteRender[ItemNext]->SetIsActive(false);
+				switch (DropTarget)
+				{
+
+
+				case 0:
+					m_spritePos[TargetMark].y = m_spriteRender[FrameIcon04]->Get2DPosition().y;
+					m_fontPalam[ItemName00].pos = m_spriteRender[FrameIcon04]->Get2DPosition();
+					for (int i = 1; i < 5; i++)
+					{
+						auto fontNum = i + ItemName00;
+						auto IconNum = i + FrameIcon04;
+						if (m_spriteRender[IconNum]->IsRender()) {
+							m_fontPalam[fontNum].pos = m_spriteRender[IconNum]->Get2DPosition();
+							//_itow_s(fontNum, m_fontPalam[fontNum].m_text, 10);
+							//m_fontPalam[fontNum].m_textColor.Set(CVector4::White());
+						}
+						else m_fontPalam[fontNum].m_textColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+					}
+					break;
+				case 1:
+					m_spritePos[TargetMark].y = m_spriteRender[FrameIcon05]->Get2DPosition().y;
+					m_fontPalam[ItemName00].pos = m_spriteRender[FrameIcon05]->Get2DPosition();
+					m_fontPalam[ItemName00 + sizeTag - 1].pos = m_spriteRender[FrameIcon04]->Get2DPosition();
+
+					for (int i = 1; i < 4; i++)
+					{
+						auto fontNum = i + ItemName00;
+						auto IconNum = i + FrameIcon05;
+						if (m_spriteRender[IconNum]->IsRender()) {
+
+							m_fontPalam[fontNum].pos = m_spriteRender[IconNum]->Get2DPosition();
+						}
+						else m_fontPalam[fontNum].m_textColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+					}
+					break;
+				case 2:
+					m_spritePos[TargetMark].y = m_spriteRender[FrameIcon06]->Get2DPosition().y;
+					m_fontPalam[ItemName00 + sizeTag - 1].pos = m_spriteRender[FrameIcon04]->Get2DPosition();
+					m_fontPalam[ItemName00 + sizeTag - 2].pos = m_spriteRender[FrameIcon05]->Get2DPosition();
+					m_fontPalam[ItemName00].pos = m_spriteRender[FrameIcon06]->Get2DPosition();
+
+					for (int i = 1; i < 3; i++)
+					{
+						auto fontNum = i + ItemName00;
+						auto IconNum = i + FrameIcon06;
+						if (m_spriteRender[IconNum]->IsRender()) {
+							m_fontPalam[fontNum].pos = m_spriteRender[IconNum]->Get2DPosition();
+
+						}
+						else m_fontPalam[fontNum].m_textColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+					}
+					break;
+				case 3:
+					m_spritePos[TargetMark].y = m_spriteRender[FrameIcon07]->Get2DPosition().y;
+					m_fontPalam[ItemName00 + sizeTag - 1].pos = m_spriteRender[FrameIcon04]->Get2DPosition();
+					m_fontPalam[ItemName00 + sizeTag - 2].pos = m_spriteRender[FrameIcon05]->Get2DPosition();
+					m_fontPalam[ItemName00 + sizeTag - 3].pos = m_spriteRender[FrameIcon06]->Get2DPosition();
+					m_fontPalam[ItemName00].pos = m_spriteRender[FrameIcon07]->Get2DPosition();
+					if (m_spriteRender[FrameIcon08]->IsRender())
+					{
+						m_fontPalam[ItemName01].pos = m_spriteRender[FrameIcon08]->Get2DPosition();
+
+
+
+					}
+					//else m_fontPalam[ItemName01].m_textColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+					break;
+				case 4:
+					m_spritePos[TargetMark].y = m_spriteRender[FrameIcon08]->Get2DPosition().y;
+					for (int i = 0; i < 5; i++) {
+						auto fontNum = i + ItemName00;
+						auto IconNum = FrameIcon08 - i;
+						m_fontPalam[fontNum].pos = m_spriteRender[IconNum]->Get2DPosition();
+					}
+
+					break;
+				default:
+					break;
+				}
+			}
+
+			
+			break;
+	
+		default:
+
+
+
+			break;
+			}
+		
+		
 		if (MenuStageNum > 0)
 		{
 			if (g_pad[0].IsTrigger(enButtonB))
@@ -776,6 +1438,7 @@ void UI::PauseMenu()
 				if (MenuStageNum != 3) {
 					MenuStageNum++;
 				}
+				m_spritePos[TargetMark].x = m_spritePos[FrameIcon04].x-210.0f;
 			}
 			else if (p_target == Help)
 			{
@@ -795,53 +1458,10 @@ void UI::PauseMenu()
 			}
 
 		}
-		switch (p_target)
-		{
-		case 0:
-			m_spritePos[TargetMark].y = m_spriteRender[FrameIcon00]->Get2DPosition().y;
-			m_fontPalam[U_Pouch].m_textColor.Set(0.0f, 0.5f, 0.5f,1.0f);
-			if (m_spritePos[TargetMark].x + 250.0f < m_spriteRender[FrameIcon00]->Get2DPosition().x)
-			{
-				m_spritePos[FrameIcon00].x -= 50.0f;
-				m_spriteSca[FrameIcon00] *= 1.5f;
-			}
-			
-			break;
-		case 1:
-			m_spritePos[TargetMark].y = m_spriteRender[FrameIcon01]->Get2DPosition().y;
-			m_fontPalam[D_Pouch].m_textColor.Set(0.0f, 0.5f, 0.5f, 1.0f);
-			if (m_spritePos[TargetMark].x + 250.0f < m_spriteRender[FrameIcon01]->Get2DPosition().x)
-			{
-				m_spritePos[FrameIcon01].x -= 50.0f;
-				m_spriteSca[FrameIcon01] *= 1.5f;
-
-			}
-			
-			break;
-		case 2:
-			m_spritePos[TargetMark].y = m_spriteRender[FrameIcon02]->Get2DPosition().y;
-			if (m_spritePos[TargetMark].x + 250.0f < m_spriteRender[FrameIcon02]->Get2DPosition().x)
-			{
-				m_spritePos[FrameIcon02].x -= 50.0f;
-				m_spriteSca[FrameIcon02] *= 1.5f;
-
-			}
-			break;
-		case 3:
-			m_spritePos[TargetMark].y = m_spriteRender[FrameIcon03]->Get2DPosition().y;
-			if (m_spritePos[TargetMark].x + 250.0f < m_spriteRender[FrameIcon03]->Get2DPosition().x)
-			{
-				m_spritePos[FrameIcon03].x -= 50.0f;
-				m_spriteSca[FrameIcon03] *= 1.5f;
-
-			}
-			break;
-		default:
-			break;
-		}
+		
 		for (int i = FrameIcon00; i <= FrameIcon03; i++)
 		{
-			if (p_target != i - 10&&m_spritePos[i].x<-400.0f)
+			if (p_target != i - FrameIcon00 &&m_spritePos[i].x<-400.0f)
 			{
 				m_spritePos[i].x += 50.0f;
 				m_spriteSca[i] /= 1.5f;
@@ -850,16 +1470,32 @@ void UI::PauseMenu()
 	}
 	else
 	{
+
+	for (int i = FrameIcon00; i <= FrameIcon08; i++)
+	{
+
+		m_spriteRender[i]->SetIsActive(false);
+	}
+		m_spriteRender[Pause]->SetIsActive(false);
+		m_spriteRender[ReturnCamp]->SetIsActive(false);
 		m_spriteRender[TargetMark]->SetIsActive(false);
+		m_spriteRender[ManeyPouch]->SetIsActive(false);
+		m_spriteRender[ItemNext]->SetIsActive(false);
+
 	}
 }
 void UI::Update()
 {
 
+	std::sort(m_DropItemList.begin(), m_DropItemList.end());
 	
 	auto m_game = Game::instance();
 	auto m_Item = m_game->m_Item;
 	m_spriteRender[QuestPaper]->SetIsActive(m_game->IsLookBoard());
+	if (!m_game->m_quest->IsOnQuest())
+	{
+		m_endqestFlag = false;
+	}
 	if (m_game->m_quest->instance().GetGameState() == QuestManager::GameState::clear)
 	{
 		ClearDraw();
@@ -903,18 +1539,23 @@ void UI::Update()
 		m_spriteSca[Stamina].x = stamina;
 		m_spriteSca[Red].x = hp;
 	}
-	for (int i = 0; i < UITypeNum; i++)
-	{
-		m_spriteRender[i]->SetPosition(m_spritePos[i]);
-		m_spriteRender[i]->SetScale(m_spriteSca[i]);
-	}
 	for (int i = 0; i < ItemSpriteTypeNum; i++)
 	{
 		m_ItemRender[i]->SetIsActive(false);
 	}
 	//m_Rendertest->SetIsActive(false);
-	PauseMenu();
 	ChangeItem();
+	PauseMenu();
+	
+	
+
+
+	for (int i = 0; i < UITypeNum; i++)
+	{
+		m_spriteRender[i]->SetPosition(m_spritePos[i]);
+		m_spriteRender[i]->SetScale(m_spriteSca[i]);
+	}
+	
 	SetFontPalam();
 }
 

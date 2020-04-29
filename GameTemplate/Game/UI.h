@@ -1,16 +1,21 @@
 #pragma once
 #include "IGameObject.h"
 #include "SpriteRender.h"
+#include "SkinModelRender.h"
+#include"GhostObject.h"
 class FontRender;
-class Item:public IGameObject
+
+class ItemBase:public IGameObject
 {
 public:
-	Item();
-	~Item() {}
+	ItemBase();
+	~ItemBase() {}
 	void Update();
 	void Render();
 	enum ItemType
 	{
+
+		//UserItem
 		noneItem,
 		kaihukuyaku,
 		ItemDummy00,
@@ -26,6 +31,10 @@ public:
 		B_L_LizardClaw,				//青紋小竜の爪
 		B_L_LizardScales,			//青紋小竜の鱗
 		B_L_LizardFang,				//青紋小竜の牙
+
+		B_LizardTail,			//青紋竜の尻尾
+		B_LizardHorn,			//青紋竜の角
+		B_LizardFang,
 
 		TypeNum,
 
@@ -85,6 +94,9 @@ private:
 	ItemType m_select = noneItem;
 	//std::vector<ItemType> m_useItemList;
 };
+
+
+
 class UI:public IGameObject
 {
 public:
@@ -115,6 +127,7 @@ public:
 		TargetMark,
 		ManeyPouch,
 
+		ItemNext,
 		UITypeNum
 	};
 	enum ItemUI
@@ -139,16 +152,26 @@ public:
 
 		ItemNumber,				//UserItem用　アイテム数
 		DropItemNumber,			//DropItem用　アイテム数
-		ItemName,				//Itemの名称
-		ItemSummry,				//Itemの説明文
+		
+		ItemName00,				//ItemBaseの名称
+		ItemName01,
+		ItemName02,
+		ItemName03,
+		ItemName04,
+
+
+		ItemSummry,				//ItemBaseの説明文
 
 		U_Pouch,				//道具ポーチ
 		D_Pouch,				//素材ポーチ
 		m_help,
 		m_exit,
 
+		
 		Resulttime,				//時間
 		ResultMoney,			//リザルトで渡される金
+
+		
 		FontTypeNum				
 
 	};
@@ -170,6 +193,12 @@ public:
 		CVector2 pos = CVector2::Zero();
 		float size = 1.0f;
 		CVector2 pivot = { 0.5f,0.5f };
+
+	};
+	struct PickTextParts
+	{
+		ItemBase::ItemType pickItemType = ItemBase::ItemType::Herbs;
+		int pickNum = 0;
 
 	};
 	UI();
@@ -199,11 +228,23 @@ public:
 	{
 		return ResultFlag;
 	}
+	bool IsResultEnd()const
+	{
+		return m_endqestFlag;
+	}
 	void ResetPauseMenuPalam()
 	{
 		MenuStageNum = 0;
 		p_target = 0;
 	}
+	void ResetList()
+	{
+		m_ItemList.clear();
+		m_DropItemList.clear();
+	}
+
+
+	void PushPickText(FontRender* fontRender);
 	void SetFont(int ft, wchar_t text[15],bool frameflag, float frame, CVector4& color, CVector2& pos, float size, CVector2& pivot);
 
 	void SetFontPalam();
@@ -240,21 +281,67 @@ private:
 	int targetItem = 0;				//選択中のアイテム
 	
 	int DropTarget = 0;				//DropItem登録されている配列の添え字
-	int d_target = 0;				//選択中のDropItem
+	int d_target[5] = { 0 };				//選択中のDropItem
+
+	int UserTarget = 1;
+	int u_target[5] = { 0 };
 
 	int p_target = 0;				//ポーズ画面で選択中のアイコン
 
 	int mainItem = 0;
+
+	int sizeTag = 0;
 	bool AttackEvent = false;
 	bool ResultFlag = false;
+	bool m_endqestFlag = false;
+
 	bool MenuFlag[MenuSize] = { false };
 	int MenuStageNum = 0;			//Menuの段階
 
 	std::vector<int> m_ItemList;
 	std::vector<int> m_DropItemList;
+	std::vector<wchar_t> m_picktext[255];
+	std::vector<FontRender*> m_dropFontlist = { nullptr };
 	FontRender *m_font[FontTypeNum] = { nullptr };
 	FontPalam m_fontPalam[FontTypeNum];
-	
+	PickTextParts m_pickTextParts;
 	PouseMenuButton m_state = UserItemPouch;
 };
 
+class Item :public IGameObject
+{
+public:
+	Item() {
+		m_fontRender = GameObjectManager::instance().NewGO<FontRender>();
+		InitFontPalam(L"Init");
+	}
+	~Item();
+	
+
+	enum DropType
+	{
+		PickMushroom,
+		LBD_Die,
+		BD_Die
+
+	};
+	void InitFontPalam(wchar_t text[255]);
+	void Update();
+	void Render() {}
+	void MonoTypeItemCreate(CVector3 &pos, CQuaternion rot, float size, ItemBase::ItemType type, int DropMax);
+	void RandTypeItemCreate(CVector3 &pos, CQuaternion rot, float size, DropType type, int DropMax);
+
+private:
+	wchar_t m_picktext[15] = L" 入手";
+	GhostObject m_ghostObject;
+	CVector3 m_position = CVector3::Zero();
+	float m_size = 0.0f;
+	CQuaternion m_rotation = CQuaternion::Identity();
+	ItemBase::ItemType m_type = ItemBase::ItemType::Herbs;
+	CVector2 m_fontpos = {-620.0f , -250.0f};
+	int m_ItemNum = 0;
+	int m_max = 0;
+	bool m_pickFlag = false;
+	UI::FontPalam m_fontPalam;
+	FontRender *m_fontRender = nullptr;
+};

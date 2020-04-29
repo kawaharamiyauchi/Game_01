@@ -119,7 +119,7 @@ void GameCamera::Update()
 		angle = atan2(toDiff.x,toDiff.z);
 		
 	
-			qRot.SetRotationDeg(CVector3::AxisY(), 2.0f * x);
+		qRot.SetRotationDeg(CVector3::AxisY(), 2.0f * x);
 		
 		qRot.Multiply(m_toCameraPos);
 		//XŽ²Žü‚è‚Ì‰ñ“]B
@@ -153,16 +153,22 @@ void GameCamera::Update()
 		
 		break;
 	case(GameOver):
+
+		plBone = m_game->m_player->GetPlayerBone(23);
+		pltarget.Set(
+			plBone->GetWorldMatrix().m[3][0],
+			plBone->GetWorldMatrix().m[3][1],
+			plBone->GetWorldMatrix().m[3][2]
+		);
 		
-		plPos.y += 100.0f;
-		d = m_position - plPos;
+		d = m_position - pltarget;
 		
 		if (d.Length() > 100.0f)
 		{
 			d.Normalize();
 			m_position -= d * 2.0f;
 		}
-		m_target = m_game->m_player->GetPosition();
+		m_target = pltarget;
 		break;
 
 	default:

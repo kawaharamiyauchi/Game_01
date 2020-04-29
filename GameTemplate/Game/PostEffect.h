@@ -1,6 +1,7 @@
 #pragma once
 #include "Bloom.h"
 
+
 /// <summary>
 /// ポストエフェクトクラス。
 /// </summary>

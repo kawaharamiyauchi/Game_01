@@ -17,7 +17,7 @@ Game::Game()
 	auto m_manager = &GameObjectManager::instance();
 	m_quest = &QuestManager::instance();
 	InitQuest(L"Assets/ModelData/MH01.que");
-	m_Item = m_manager->NewGO<Item>();
+	m_Item = m_manager->NewGO<ItemBase>();
 
 	m_BGM[wind].Init(L"Assets/sound/wind1.wav");
 	m_BGM[wind].Play(true);
@@ -55,7 +55,9 @@ void Game::DeleteGame()
 	if (m_UI != nullptr) {
 		GameObjectManager::instance().DeleteGO(m_UI);
 	}
-	m_ghost[1].Release();
+	for (int i = 1; i < GhostTypeNum; i++) {
+		m_ghost[i].Release();
+	}
 	m_ghost[quest_board].Release();
 }
 void Game::EventChange()
@@ -73,13 +75,12 @@ void Game::InitQuest(const wchar_t*filePath)
 }
 void Game::Update()
 {
-	//Ä¶B
-	/*g_effect.m_playEffectHandle = g_effect.m_effekseerManager->Play(
-		g_effect.m_sampleEffect,
-		-1000.0f,
-		0.0f,
-		0.0f
-	);*/
+	
+
+	if (!m_BGM[wind].IsPlaying())
+	{
+		m_BGM[wind].Play(true);
+	}
 	if (g_pad[0].IsTrigger(enButtonStart) && !isNonGame)
 	{
 		if (pauseFlag != true)
@@ -104,6 +105,17 @@ void Game::Update()
 	{
 		m_BGM[wind].Stop();
 		m_BGM[GameOver].Play(false);
+		if (g_pad[0].IsTrigger(enButtonA) || g_pad[0].IsTrigger(enButtonStart)) {
+			Fade::instance().FadeIn();
+		}
+
+		if (Fade::instance().IsFade() == false)
+		{
+			DeleteGame();
+			m_quest->instance().PlayerBackUp(m_player->GetPlayerInformation());
+			m_quest->ResetPalam();
+			LoadGame(0, NA);
+		}
 	}
 	if (pauseFlag)
 	{
@@ -122,7 +134,7 @@ void Game::Update()
 			}
 		}
 	}
-	if (m_UI->GetResultFlag())
+	if (m_UI->IsResultEnd())
 	{
 		Fade::instance().FadeIn();
 		if (Fade::instance().IsFade() == false)
@@ -267,10 +279,7 @@ void Game::LoadGame(int LoadNum, StageType type)
 	Fade::instance().FadeOut();
 	pauseFlag = false;
 	m_backCampFlag = false;
-	if (!m_BGM[wind].IsPlaying())
-	{
-		m_BGM[wind].Play(true);
-	}
+	
 	if (LoadNum == 3)
 	{
 		m_BGM[Boss].Play(true);

@@ -88,6 +88,7 @@ void Bloom::InitRenderTarget()
 }
 void Bloom::InitAlphaBlendState()
 {
+	
 	CD3D11_DEFAULT defaultSettings;
 	//デフォルトセッティングで初期化する。
 	CD3D11_BLEND_DESC blendDesc(defaultSettings);

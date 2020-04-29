@@ -19,7 +19,7 @@ class Fade;
 class QuestManager;
 class LittleEnemy;
 class FontRender;
-class Item;
+class ItemBase;
 class Game:public IGameObject
 {
 
@@ -95,7 +95,7 @@ public:
 	QuestManager *m_quest =nullptr;
 	LittleEnemy *m_little[5] = { nullptr };
 	FontRender *m_font = nullptr;
-	Item *m_Item = nullptr;
+	ItemBase *m_Item = nullptr;
 private:
 	enum GhostType
 	{	

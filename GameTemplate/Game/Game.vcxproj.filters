@@ -204,7 +204,6 @@
     </ClCompile>
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FontRender.cpp" />
-    <ClCompile Include="ItemBase.cpp" />
     <ClCompile Include="Shop.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -367,7 +366,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontRender.h" />
-    <ClInclude Include="ItemBase.h" />
     <ClInclude Include="Shop.h" />
   </ItemGroup>
   <ItemGroup>
@@ -487,20 +485,25 @@
     <ImageContentTask Include="Assets\sprite\MH_QUESTCLEAR .png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\Result.png" />
     <ImageContentTask Include="Assets\sprite\PauseMenu.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\NonItem.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\Return toCamp.png" />
     <ImageContentTask Include="Assets\sprite\icon.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\moneyPouch.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Return toCamp.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Result.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\ItemNextIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />

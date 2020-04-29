@@ -600,6 +600,18 @@ void Dragon::DamageEvent()
 
 					auto plbone = m_game->m_player->GetPlayerBone(23);
 					auto plpower = m_game->m_player->GetPlayerInformation().AttackPower;
+
+
+
+					/*if (plpower >= d_info.HP)
+					{
+
+						if (m_game->m_quest->GetQuestInfo().m_questType == QuestManager::Bossbattle)
+						{
+							m_game->m_quest->AddQuestPoint();
+							
+						}
+					}*/
 					CVector3 forward;
 					forward.x = plbone->GetWorldMatrix().m[2][0];
 					forward.y = plbone->GetWorldMatrix().m[2][1];
@@ -656,6 +668,7 @@ void Dragon::DamageEvent()
 void Dragon::Update()
 {
 	auto ispouse = Game::instance()->GetPauseFlag();
+	auto m_game = Game::instance();
 	if (!ispouse) {
 		//ゴーストオブジェクトを１フレーム削除
 		if (&m_ghost[D_attack00] != nullptr)
@@ -667,10 +680,16 @@ void Dragon::Update()
 		{
 			m_ghost[P_attack00].Release();
 		}
-
+		if (d_info.isEnd)
+		{
+			if (m_game->m_quest->GetQuestInfo().m_questType == QuestManager::Bossbattle)
+			{
+				m_game->m_quest->AddQuestPoint();
+				m_game->m_quest->SetTargetDieFlag(true);
+			}
+		}
 		Move();
 		CharaConMove();
-		//m_position = CVector3::Zero();
 
 		SetState();
 		AnimationPlay();

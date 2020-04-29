@@ -140,6 +140,10 @@ private:
 	CMatrix m_lightViewMatrix = CMatrix::Identity();	//ライトビュー行列。
 	CMatrix m_lightProjMatrix = CMatrix::Identity();	//ライトプロジェクション行列。
 	RenderTarget m_shadowMapRT;						//シャドウマップを描画するレンダリングターゲット。
+	float m_shadowAreaW[SHADOWMAP_NUM] = { 0 };
+	float m_shadowAreaH[SHADOWMAP_NUM] = { 0 };
+
+
 	std::vector<SkinModel*> m_shadowCasters;	//シャドウキャスターの配列。
 
 };

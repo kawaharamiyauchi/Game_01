@@ -56,6 +56,9 @@ Player::Player()
 	m_animationClip[enAnimationClip_die].SetLoopFlag(false);
 	m_animationClip[enAnimationClip_drink].Load(L"Assets/animData/hunter03_drink.tka", L"enAnimation(h)Drink");
 	m_animationClip[enAnimationClip_drink].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_pickup].Load(L"Assets/animData/hunter03_pickup.tka", L"enAnimation(h)PickUp");
+	m_animationClip[enAnimationClip_pickup].SetLoopFlag(false);
+
 	m_animation.Init(*m_skinModelRender[Hunter]->GetSkinModel(), m_animationClip, enAnimationClip_num);
 	m_skinModelRender[Hunter]->SetActiveFlag(true);
 	m_skinModelRender[RightHand]->SetActiveFlag(false);
@@ -100,6 +103,11 @@ void Player::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 		stopflag = true;
 		m_sound[move].Stop();
 		m_sound[move].Play(false);
+	}
+
+	if (wcscmp(eventName, L"Pick") == 0)
+	{
+		pickflag = true;
 	}
 }
 void Player::Move()
@@ -287,6 +295,7 @@ void Player::StateChange()
 			m_plinfo.isEnd = true;
 		}
 	}
+
 	if (p_state != die) {
 		if (m_plinfo.Stamina > 99)
 		{
@@ -325,7 +334,7 @@ void Player::StateChange()
 			}
 
 		}
-		if (p_state != damage && p_state != die&&p_state !=useitem)
+		if (p_state != damage && p_state != die&&p_state !=useitem&&p_state !=pickup)
 		{
 			if (m_charaCon.IsOnGround() && p_state != attack) {
 				if (fabsf(m_speed.x*m_speed.z) > 0.01f&&stopflag !=true)
@@ -355,7 +364,7 @@ void Player::StateChange()
 			if (!g_pad[0].IsPress(enButtonLB1)) {
 
 				p_state = useitem;
-				if (m_Item->UseItem() == Item::ItemType::kaihukuyaku)
+				if (m_Item->UseItem() == ItemBase::ItemType::kaihukuyaku)
 				{
 					m_plinfo.HP += 10.0f;
 				}
@@ -363,7 +372,12 @@ void Player::StateChange()
 		}
 		if (g_pad[0].IsTrigger(enButtonA))
 		{
-			m_Item->GetItem(Item::ItemType::kaihukuyaku, 2);
+			p_state = pickup;
+			m_Item->GetItem(ItemBase::ItemType::kaihukuyaku, 2);
+		}
+		if (p_state == pickup && !m_animation.IsPlaying())
+		{
+			p_state = idle;
 		}
 		if (p_state == useitem&&!m_animation.IsPlaying())
 		{
@@ -433,6 +447,11 @@ void Player::AnimationPlay()
 		m_animation.Play(enAnimationClip_drink, interpolateTime);
 		m_animation.Update(0.04f);
 	}
+	if (p_state == pickup)
+	{
+		m_animation.Play(enAnimationClip_pickup, interpolateTime);
+		m_animation.Update(0.08f);
+	}
 }
 
 bool Player::Start()
@@ -446,7 +465,7 @@ bool Player::Start()
 void Player::Update()
 {
 	auto ispouse = Game::instance()->GetPauseFlag();
-		
+	pickflag = false;
 	if (!ispouse) {
 		StateChange();
 		AnimationPlay();

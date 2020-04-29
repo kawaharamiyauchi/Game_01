@@ -43,6 +43,10 @@ public:
 		CVector2 pos = { m_position.x,m_position.y };
 		return pos;
 	}
+	bool IsRender()const
+	{
+		return IsActive;
+	}
 	void Update();
 	
 	void Render();

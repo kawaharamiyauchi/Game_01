@@ -142,7 +142,7 @@ void QuestManager::Update()
 		//QuestPoint++;
 	
 	}
-	if (Game::instance()->GetStageNum() == 3) {
+	/*if (Game::instance()->GetStageNum() == 3) {
 		
 		if (m_info.m_questType == QuestType::Bossbattle) {
 			if (m_dragon->GetDragonInfo().HP <= 0)
@@ -157,7 +157,7 @@ void QuestManager::Update()
 			
 		}
 		
-	}
+	}*/
 
 	
 	if (m_player != nullptr)
@@ -196,6 +196,7 @@ void QuestManager::Update()
 		{
 			m_info = m_infoDisp;
 			isOnQuest = true;
+			addmoney = m_infoDisp.m_prizeMoney / 100;
 		}
 		
 	}

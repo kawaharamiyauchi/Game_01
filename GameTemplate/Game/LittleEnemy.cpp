@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "LittleEnemy.h"
 #include"GameObjectManager.h"
+#include "QuestManager.h"
 #include"Game.h"
+#include "UI.h"
 #define pai 3.14159265
 
 LittleEnemy::LittleEnemy()
@@ -67,12 +69,23 @@ bool LittleEnemy::Start()
 void LittleEnemy::Update()
 {
 	auto m_game = Game::instance();
+
 	if (!m_game->GetPauseFlag()) {
 		if (m_game->m_player != nullptr) {
 			ChangeState();
 			Move();
 			AnimationPlay();
 			DamageEvent();
+			if (m_Item ==nullptr&&d_state == die&&!m_animation.IsPlaying()) {
+				m_Item = GameObjectManager::instance().NewGO<Item>();
+				m_Item->RandTypeItemCreate(
+					m_position,
+					m_rotation,
+					100.0f,
+					Item::LBD_Die,
+					2
+				);
+			}
 		}
 		if (&m_ghost[P_attack00] != nullptr)
 		{
@@ -271,6 +284,14 @@ void LittleEnemy::ChangeState()
 		{
 			SetEnemyState(die);
 		}
+	}
+	if (d_state == die && !m_animation.IsPlaying())
+	{
+		if (!isEnd&&m_game->m_quest->GetQuestInfo().m_questType ==QuestManager::Littlebattle)
+		{
+			m_game->m_quest->AddQuestPoint();
+		}
+		isEnd = true;
 	}
 	if (m_damageflag)
 	{

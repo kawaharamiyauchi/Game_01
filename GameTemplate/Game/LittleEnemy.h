@@ -4,6 +4,7 @@
 #include "GhostObject.h"
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
+class Item;
 class LittleEnemy:public IGameObject
 {
 public:
@@ -84,6 +85,9 @@ private:
 		P_attack00,
 		EventSize,
 	};
+
+
+	Item *m_Item = nullptr;
 	SkinModelRender *m_skinModelRender = nullptr;
 	CVector3 m_position = CVector3::Zero();
 	CQuaternion m_rotation = CQuaternion::Identity();
@@ -103,7 +107,7 @@ private:
 	const wchar_t * bonename[41];
 	bool attackflag = false;
 	bool m_damageflag = false;
-
+	bool isEnd = false;
 	CSoundSource m_sound[2];
 };
 

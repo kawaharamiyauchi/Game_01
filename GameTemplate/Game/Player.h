@@ -24,6 +24,7 @@ public:
 		damage,
 		die,
 		attack,
+		pickup,
 		useitem
 		
 	};
@@ -125,6 +126,10 @@ public:
 	{
 		return m_attackTimer;
 	}
+	bool GetPickFlag()
+	{
+		return pickflag;
+	}
 	CharacterController& GetcharaCon()
 	{
 		return m_charaCon;
@@ -144,6 +149,7 @@ private:
 		enAnimationClip_damage,
 		enAnimationClip_die,
 		enAnimationClip_drink,
+		enAnimationClip_pickup,
 		enAnimationClip_num
 	};
 	enum Modeltype {
@@ -176,6 +182,7 @@ private:
 	bool m_damageFlag =false;
 	bool m_jumpflag = false;
 	bool m_dashflag = true;
+	bool pickflag = false;
 	int m_damageTimer = 0;
 	int m_attackTimer = 0;
 	float footStop = 1.0f;

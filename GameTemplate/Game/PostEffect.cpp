@@ -89,6 +89,7 @@ void PostEffect::DrawFullScreenQuadPrimitive(ID3D11DeviceContext* deviceContext,
 	deviceContext->VSSetShader(
 		(ID3D11VertexShader*)vsShader.GetBody(), nullptr, 0
 	);
+
 	deviceContext->PSSetShader(
 		(ID3D11PixelShader*)psShader.GetBody(), nullptr, 0
 	);

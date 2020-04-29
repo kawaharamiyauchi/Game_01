@@ -67,9 +67,13 @@ public:
 	{
 		return m_info;
 	}
-	bool GetTargetDieFlag()
+	bool GetTargetDieFlag()const
 	{
 		return m_targetdieflag;
+	}
+	void SetTargetDieFlag(bool flag)
+	{
+		m_targetdieflag = flag;
 	}
 	bool IsOnQuest()const
 	{
@@ -94,10 +98,14 @@ public:
 	/// <summary>
 	/// Š‹à‚É•ñV‚ğ‰ÁZ
 	/// </summary>
-	void GetPrizeMoney(int prize)
+	void GetPrizeMoney()
 	{
-		m_money += prize;
-		prize &= 0;
+		
+		if (0< m_info.m_prizeMoney) {
+			m_money +=addmoney;
+			m_info.m_prizeMoney -= addmoney;
+		}
+		
 	}
 	void ResetPalam();
 	QuestManager();
@@ -121,4 +129,5 @@ private:
 
 
 	int m_money = 1000;
+	int addmoney = 0;
 };
