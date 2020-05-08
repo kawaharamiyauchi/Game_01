@@ -7,12 +7,12 @@ FBXHeaderExtension:  {
 	CreationTimeStamp:  {
 		Version: 1000
 		Year: 2020
-		Month: 3
-		Day: 10
-		Hour: 0
-		Minute: 46
-		Second: 20
-		Millisecond: 914
+		Month: 5
+		Day: 8
+		Hour: 14
+		Minute: 8
+		Second: 19
+		Millisecond: 636
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.0"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -28,19 +28,19 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\MH_Stage1-3.fbx"
-			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\MH_Stage1-3.fbx"
+			P: "DocumentUrl", "KString", "Url", "", "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\MH_Stage1-3.fbx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\MH_Stage1-3.fbx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "3ds Max"
 			P: "Original|ApplicationVersion", "KString", "", "", "2019"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "09/03/2020 15:46:20.908"
-			P: "Original|FileName", "KString", "", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\MH_Stage1-3.fbx"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "08/05/2020 05:08:19.628"
+			P: "Original|FileName", "KString", "", "", "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\MH_Stage1-3.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "3ds Max"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2019"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "09/03/2020 15:46:20.908"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "08/05/2020 05:08:19.628"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\GC1826\Documents\3dsMax"
 			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\GC1826\Documents\3dsMax\scenes\MH_Stage1-3.max"
 		}
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1286479739696, "", "Scene" {
+	Document: 2219963336496, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", ""
@@ -305,7 +305,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1286952972432, "Geometry::", "Mesh" {
+	Geometry: 2220151517936, "Geometry::", "Mesh" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.345098039215686,0.345098039215686,0.882352941176471
 		}
@@ -1195,7 +1195,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 1286952976784, "Geometry::", "Mesh" {
+	Geometry: 2220151523920, "Geometry::", "Mesh" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.105882352941176,0.694117647058824,0.105882352941176
 		}
@@ -1306,7 +1306,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1286914256496, "Model::Plane001", "Mesh" {
+	Model: 2219778484256, "Model::Plane001", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -1319,7 +1319,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 1286914238960, "Model::Plane002", "Mesh" {
+	Model: 2219778493024, "Model::Plane002", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "InheritType", "enum", "", "",1
@@ -1332,7 +1332,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1286911765360, "Material::Material #25", "" {
+	Material: 2219969143936, "Material::Material #25", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -1355,7 +1355,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Material: 1286911782640, "Material::Material #117", "" {
+	Material: 2219969141056, "Material::Material #117", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -1378,7 +1378,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Material: 1286911774000, "Material::Material #142", "" {
+	Material: 2219976957296, "Material::Material #143", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -1388,7 +1388,6 @@ Objects:  {
 			P: "AmbientColor", "Color", "", "A",0.587999999523163,0.587999999523163,0.587999999523163
 			P: "DiffuseColor", "Color", "", "A",0.587999999523163,0.587999999523163,0.587999999523163
 			P: "TransparentColor", "Color", "", "A",1,1,1
-			P: "TransparencyFactor", "Number", "", "A",0.5
 			P: "SpecularColor", "Color", "", "A",0.899999976158142,0.899999976158142,0.899999976158142
 			P: "SpecularFactor", "Number", "", "A",0
 			P: "ShininessExponent", "Number", "", "A",2
@@ -1398,41 +1397,41 @@ Objects:  {
 			P: "Diffuse", "Vector3D", "Vector", "",0.587999999523163,0.587999999523163,0.587999999523163
 			P: "Specular", "Vector3D", "Vector", "",0,0,0
 			P: "Shininess", "double", "Number", "",2
-			P: "Opacity", "double", "Number", "",0.5
+			P: "Opacity", "double", "Number", "",1
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Video: 1286911763440, "Video::マップ #1", "Clip" {
+	Video: 2220149208624, "Video::マップ #1", "Clip" {
 		Type: "Clip"
 		Properties70:  {
-			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\SANDWAVE.JPG"
-			P: "RelPath", "KString", "XRefUrl", "", "SANDWAVE.JPG"
+			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\SANDWAVE.JPG"
+			P: "RelPath", "KString", "XRefUrl", "", "DH_stage_texture\SANDWAVE.JPG"
 		}
 		UseMipMap: 0
-		Filename: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\SANDWAVE.JPG"
-		RelativeFilename: "SANDWAVE.JPG"
+		Filename: "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\SANDWAVE.JPG"
+		RelativeFilename: "DH_stage_texture\SANDWAVE.JPG"
 	}
-	Video: 1286911763920, "Video::マップ #5", "Clip" {
+	Video: 2219971065616, "Video::マップ #5", "Clip" {
 		Type: "Clip"
 		Properties70:  {
-			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\GRANCARN.JPG"
+			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\GRANCARN.JPG"
 			P: "RelPath", "KString", "XRefUrl", "", "DH_stage_texture\GRANCARN.JPG"
 		}
 		UseMipMap: 0
-		Filename: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\GRANCARN.JPG"
+		Filename: "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\GRANCARN.JPG"
 		RelativeFilename: "DH_stage_texture\GRANCARN.JPG"
 	}
-	Video: 1286911790800, "Video::マップ #8", "Clip" {
+	Video: 2220122859216, "Video::マップ #9", "Clip" {
 		Type: "Clip"
 		Properties70:  {
-			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\water13.jpg"
+			P: "Path", "KString", "XRefUrl", "", "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\water13.jpg"
 			P: "RelPath", "KString", "XRefUrl", "", "DH_stage_texture\water13.jpg"
 		}
 		UseMipMap: 0
-		Filename: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\water13.jpg"
+		Filename: "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\water13.jpg"
 		RelativeFilename: "DH_stage_texture\water13.jpg"
 	}
-	Texture: 1286911768720, "Texture::マップ #1", "" {
+	Texture: 2219969142016, "Texture::マップ #1", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::マップ #1"
@@ -1441,14 +1440,14 @@ Objects:  {
 			P: "UseMaterial", "bool", "", "",1
 		}
 		Media: "Video::マップ #1"
-		FileName: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\SANDWAVE.JPG"
-		RelativeFilename: "SANDWAVE.JPG"
+		FileName: "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\SANDWAVE.JPG"
+		RelativeFilename: "DH_stage_texture\SANDWAVE.JPG"
 		ModelUVTranslation: 0,0
 		ModelUVScaling: 1,1
-		Texture_Alpha_Source: "Alpha_Black"
+		Texture_Alpha_Source: "None"
 		Cropping: 0,0,0,0
 	}
-	Texture: 1286911770160, "Texture::マップ #5", "" {
+	Texture: 2219976956816, "Texture::マップ #5", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::マップ #5"
@@ -1457,36 +1456,36 @@ Objects:  {
 			P: "UseMaterial", "bool", "", "",1
 		}
 		Media: "Video::マップ #5"
-		FileName: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\GRANCARN.JPG"
+		FileName: "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\GRANCARN.JPG"
 		RelativeFilename: "DH_stage_texture\GRANCARN.JPG"
 		ModelUVTranslation: 0,0
 		ModelUVScaling: 1,1
-		Texture_Alpha_Source: "Alpha_Black"
+		Texture_Alpha_Source: "None"
 		Cropping: 0,0,0,0
 	}
-	Texture: 1286911774480, "Texture::マップ #8", "" {
+	Texture: 2220149207184, "Texture::マップ #9", "" {
 		Type: "TextureVideoClip"
 		Version: 202
-		TextureName: "Texture::マップ #8"
+		TextureName: "Texture::マップ #9"
 		Properties70:  {
 			P: "UVSet", "KString", "", "", "UVChannel_1"
 			P: "UseMaterial", "bool", "", "",1
 		}
-		Media: "Video::マップ #8"
-		FileName: "C:\Users\GC1826\Desktop\就活用エンジン\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\water13.jpg"
+		Media: "Video::マップ #9"
+		FileName: "C:\Users\GC1826\Desktop\MyEngine\Game_01\GameTemplate\Game\Assets\modelData\DH_stage_texture\water13.jpg"
 		RelativeFilename: "DH_stage_texture\water13.jpg"
 		ModelUVTranslation: 0,0
 		ModelUVScaling: 1,1
 		Texture_Alpha_Source: "Alpha_Black"
 		Cropping: 0,0,0,0
 	}
-	AnimationStack: 1286701127584, "AnimStack::Take 001", "" {
+	AnimationStack: 2219973714800, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",153953860000
 			P: "ReferenceStop", "KTime", "Time", "",153953860000
 		}
 	}
-	AnimationLayer: 1286953808464, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 2219974453744, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -1496,46 +1495,46 @@ Objects:  {
 Connections:  {
 	
 	;Model::Plane001, Model::RootNode
-	C: "OO",1286914256496,0
+	C: "OO",2219778484256,0
 	
 	;Model::Plane002, Model::RootNode
-	C: "OO",1286914238960,0
+	C: "OO",2219778493024,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1286953808464,1286701127584
+	C: "OO",2219974453744,2219973714800
 	
 	;Geometry::, Model::Plane001
-	C: "OO",1286952972432,1286914256496
+	C: "OO",2220151517936,2219778484256
 	
 	;Material::Material #25, Model::Plane001
-	C: "OO",1286911765360,1286914256496
+	C: "OO",2219969143936,2219778484256
 	
 	;Material::Material #117, Model::Plane001
-	C: "OO",1286911782640,1286914256496
+	C: "OO",2219969141056,2219778484256
 	
 	;Geometry::, Model::Plane002
-	C: "OO",1286952976784,1286914238960
+	C: "OO",2220151523920,2219778493024
 	
-	;Material::Material #142, Model::Plane002
-	C: "OO",1286911774000,1286914238960
+	;Material::Material #143, Model::Plane002
+	C: "OO",2219976957296,2219778493024
 	
 	;Texture::マップ #1, Material::Material #25
-	C: "OP",1286911768720,1286911765360, "DiffuseColor"
+	C: "OP",2219969142016,2219969143936, "DiffuseColor"
 	
 	;Video::マップ #1, Texture::マップ #1
-	C: "OO",1286911763440,1286911768720
+	C: "OO",2220149208624,2219969142016
 	
 	;Texture::マップ #5, Material::Material #117
-	C: "OP",1286911770160,1286911782640, "DiffuseColor"
+	C: "OP",2219976956816,2219969141056, "DiffuseColor"
 	
 	;Video::マップ #5, Texture::マップ #5
-	C: "OO",1286911763920,1286911770160
+	C: "OO",2219971065616,2219976956816
 	
-	;Texture::マップ #8, Material::Material #142
-	C: "OP",1286911774480,1286911774000, "DiffuseColor"
+	;Texture::マップ #9, Material::Material #143
+	C: "OP",2220149207184,2219976957296, "DiffuseColor"
 	
-	;Video::マップ #8, Texture::マップ #8
-	C: "OO",1286911790800,1286911774480
+	;Video::マップ #9, Texture::マップ #9
+	C: "OO",2220122859216,2220149207184
 }
 ;Takes section
 ;----------------------------------------------------
