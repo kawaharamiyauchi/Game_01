@@ -71,18 +71,18 @@ void GameCamera::Update()
 	ChangeCameraState();
 	auto m_game = Game::instance();
 	CVector3 toCameraPosOld;
-	float x;
-	float y;
+	float x =0.0f;
+	float y =0.0f;
 
-	float angle;
-	CVector3 axisX;
+	float angle =0.0f;
+	CVector3 axisX =CVector3::Zero();
 	//YŽ²Žü‚è‚Ì‰ñ“]
-	CQuaternion qRot;
-	CVector3 toPosDir;
-	CVector3 toDiff;
-	CVector3 d;
-	CVector3 plPos;
-	CVector3 drPos;
+	CQuaternion qRot =CQuaternion::Identity();
+	CVector3 toPosDir = CVector3::Zero();
+	CVector3 toDiff = CVector3::Zero();
+	CVector3 d = CVector3::Zero();
+	CVector3 plPos = CVector3::Zero();
+	CVector3 drPos = CVector3::Zero();
 
 
 	if (m_game->GetStageNum() == 3)
