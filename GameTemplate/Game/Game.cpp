@@ -17,7 +17,7 @@ Game::Game()
 	auto m_manager = &GameObjectManager::instance();
 	m_quest = &QuestManager::instance();
 	InitQuest(L"Assets/ModelData/MH01.que");
-	m_Item = m_manager->NewGO<ItemBase>();
+	m_ItemBase = m_manager->NewGO<ItemBase>();
 
 	m_BGM[wind].Init(L"Assets/sound/wind1.wav");
 	m_BGM[wind].Play(true);
@@ -47,10 +47,7 @@ void Game::DeleteGame()
 	if (m_player != nullptr) {
 		GameObjectManager::instance().DeleteGO(m_player);
 	}
-	/*if (m_gamecamera != nullptr) {
-
-		GameObjectManager::instance().DeleteGO(m_gamecamera);
-	}*/
+	
 
 	if (m_UI != nullptr) {
 		GameObjectManager::instance().DeleteGO(m_UI);
@@ -58,6 +55,8 @@ void Game::DeleteGame()
 	for (int i = 1; i < GhostTypeNum; i++) {
 		m_ghost[i].Release();
 	}
+	
+	
 	m_ghost[quest_board].Release();
 }
 void Game::EventChange()
@@ -344,6 +343,14 @@ void Game::LoadGame(int LoadNum, StageType type)
 					}
 					if (wcscmp(objData.name, L"Herbs") == 0)
 					{
+						Item *m_Item = m_manager->NewGO<Item>();
+						m_Item->MonoTypeItemCreate(
+							objData.position,
+							objData.rotation,
+							20.0f,
+							ItemBase::Herbs,
+							3
+						);
 						return true;
 					}
 					return false;

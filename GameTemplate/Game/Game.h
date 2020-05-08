@@ -20,6 +20,7 @@ class QuestManager;
 class LittleEnemy;
 class FontRender;
 class ItemBase;
+
 class Game:public IGameObject
 {
 
@@ -78,9 +79,13 @@ public:
 	{
 		return pauseFlag;
 	}
-	bool IsLookBoard()
+	bool IsLookBoard()const
 	{
 		return islookBoard;
+	}
+	void SetLookBoard(bool flag)
+	{
+		islookBoard = flag;
 	}
 	CapsuleCollider m_collider;
 	RigidBody m_rigidBody;
@@ -95,7 +100,8 @@ public:
 	QuestManager *m_quest =nullptr;
 	LittleEnemy *m_little[5] = { nullptr };
 	FontRender *m_font = nullptr;
-	ItemBase *m_Item = nullptr;
+	ItemBase *m_ItemBase = nullptr;
+
 private:
 	enum GhostType
 	{	
@@ -139,6 +145,6 @@ private:
 	bool islookBoard = false;
 	GhostObject m_ghost[GhostTypeNum];
 	CSoundSource m_BGM[BGMTypeNum];
-
+	
 
 };

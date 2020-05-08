@@ -15,15 +15,15 @@ ItemBase::ItemBase()
 	InitItem(&m_Item[ItemDummy00], User_Item, 2, 10,100);
 	InitItem(&m_Item[ItemDummy01], User_Item, 6, 10,100);
 
-	/*InitItem(&m_Item[Herbs], Drop_Item, 5, 99,20);
-	InitItem(&m_Item[PoisonouMushroom], Drop_Item, 6, 99,20);
-	InitItem(&m_Item[mushroom],Drop_Item, 10, 99,20);
-	InitItem(&m_Item[Treenut], Drop_Item, 11, 99,1);
-	InitItem(&m_Item[smallstone], Drop_Item, 12, 99,1);
-	InitItem(&m_Item[B_L_LizardTail], Drop_Item, 3, 99,5000);
-	InitItem(&m_Item[B_L_LizardClaw], Drop_Item, 1, 99,2500);
-	InitItem(&m_Item[B_L_LizardScales], Drop_Item, 3, 99,100);
-	InitItem(&m_Item[B_L_LizardFang], Drop_Item, 3, 99,2500);*/
+	/*InitItem(&m_ItemBase[Herbs], Drop_Item, 5, 99,20);
+	InitItem(&m_ItemBase[PoisonouMushroom], Drop_Item, 6, 99,20);
+	InitItem(&m_ItemBase[mushroom],Drop_Item, 10, 99,20);
+	InitItem(&m_ItemBase[Treenut], Drop_Item, 11, 99,1);
+	InitItem(&m_ItemBase[smallstone], Drop_Item, 12, 99,1);
+	InitItem(&m_ItemBase[B_L_LizardTail], Drop_Item, 3, 99,5000);
+	InitItem(&m_ItemBase[B_L_LizardClaw], Drop_Item, 1, 99,2500);
+	InitItem(&m_ItemBase[B_L_LizardScales], Drop_Item, 3, 99,100);
+	InitItem(&m_ItemBase[B_L_LizardFang], Drop_Item, 3, 99,2500);*/
 
 
 	InitItem(&m_Item[Herbs], Drop_Item, 0, 99, 20);
@@ -34,7 +34,11 @@ ItemBase::ItemBase()
 	InitItem(&m_Item[B_L_LizardTail], Drop_Item, 0, 99, 5000);
 	InitItem(&m_Item[B_L_LizardClaw], Drop_Item, 0, 99, 2500);
 	InitItem(&m_Item[B_L_LizardScales], Drop_Item, 0, 99, 100);
-	InitItem(&m_Item[B_L_LizardFang], Drop_Item, 0 ,99, 2500);
+	InitItem(&m_Item[B_L_LizardFang], Drop_Item, 0, 99, 2500);
+	InitItem(&m_Item[B_LizardTail], Drop_Item, 0 ,99, 10000);
+	InitItem(&m_Item[B_LizardHorn], Drop_Item, 0, 99, 5000);
+	InitItem(&m_Item[B_LizardFang], Drop_Item, 0, 99, 5000);
+	InitItem(&m_Item[B_LizardScales], Drop_Item, 0, 99, 1000);
 
 }
 
@@ -60,11 +64,24 @@ void ItemBase::Render()
 
 
 
+Item::Item()
+{
+		m_fontRender = GameObjectManager::instance().NewGO<FontRender>();
+		
+		m_sound.Init(L"Assets/sound/pick2.wav");
+		InitFontPalam(L"Init");
+}
 
 Item::~Item()
 {
 	m_ghostObject.Release();
+	
 	GameObjectManager::instance().DeleteGO(m_fontRender);
+}
+bool Item::Start()
+{
+	SetStageNum(Game::instance()->GetStageNum());
+	return true;
 }
 void Item::InitFontPalam(wchar_t text[255])
 {
@@ -78,15 +95,24 @@ void Item::InitFontPalam(wchar_t text[255])
 
 
 }
-void Item::MonoTypeItemCreate(CVector3 &pos,CQuaternion rot,float size, ItemBase::ItemType type,int DropMax)
+void Item::MonoTypeItemCreate(CVector3 pos,CQuaternion rot,float size, ItemBase::ItemType type,int DropMax)
 {
+	m_skinModelRender = GameObjectManager::instance().NewGO<SkinModelRender>();
+	if (type == ItemBase::Herbs)
+	{
+		m_skinModelRender->Init(L"Assets/modelData/Herbs.cmo");
+		wcscpy(m_fontPalam.m_text, L"–ò‘");
+	}
+
+	m_skinModelRender->SetPosition(pos);
+	m_skinModelRender->SetScale(CVector3::One());
 	m_position = pos;
 	m_rotation = rot;
 	m_size = size;
 	m_max = DropMax;
 	m_type = type;
-	m_ghostObject.CreateSphere(m_position, m_rotation, m_size);
-
+	m_ghostObject.CreateSphere(m_position, m_rotation,30.0f);
+	
 
 }
 void Item::RandTypeItemCreate(CVector3 & pos, CQuaternion rot, float size, DropType type, int DropMax)
@@ -103,13 +129,16 @@ void Item::RandTypeItemCreate(CVector3 & pos, CQuaternion rot, float size, DropT
 
 	switch (type)
 	{
-	case Item::PickMushroom:
+	case Item::PickHerbs:
+		m_skinModelRender = GameObjectManager::instance().NewGO<SkinModelRender>();
+		m_skinModelRender->SetPosition(m_position);
+		m_skinModelRender->SetScale(CVector3::One());
 		break;
 	case Item::LBD_Die:
-		int m_itemtype;
-		m_itemtype = rand() % 4 +9;
+		int m_l_itemtype;
+		m_l_itemtype = rand() % 4 +9;
 		
-		m_type = (ItemBase::ItemType)m_itemtype;
+		m_type = (ItemBase::ItemType)m_l_itemtype;
 		switch (m_type)
 		{
 		case ItemBase::B_L_LizardTail:
@@ -137,6 +166,33 @@ void Item::RandTypeItemCreate(CVector3 & pos, CQuaternion rot, float size, DropT
 		}
 		break;
 	case Item::BD_Die:
+		int m_itemtype;
+		m_itemtype = rand() % 4 + 13;
+		m_type = (ItemBase::ItemType)m_itemtype;
+		switch (m_type)
+		{
+			
+		case ItemBase::B_LizardTail:
+			m_max = 1;
+			wcscpy(m_fontPalam.m_text, L"Â–ä—³‚ÌK”ö");
+			break;
+		case ItemBase::B_LizardHorn:
+			m_max = DropMax;
+			wcscpy(m_fontPalam.m_text, L"Â–ä—³‚ÌŠp");
+			break;
+		case ItemBase::B_LizardFang:
+			wcscpy(m_fontPalam.m_text, L"Â–ä—³‚Ì‰å");
+
+			m_max = DropMax;
+			break;
+		case ItemBase::B_LizardScales:
+			wcscpy(m_fontPalam.m_text, L"Â–ä—³‚Ì—Ø");
+
+			m_max = DropMax;
+			break;
+		default:
+			break;
+		}
 		break;
 	default:
 		break;
@@ -147,9 +203,9 @@ void Item::Update()
 {
 	
 	auto m_player = Game::instance()->m_player;
-	auto m_ItemBase = Game::instance()->m_Item;
+	auto m_ItemBase = Game::instance()->m_ItemBase;
 	int m_Itemsize;
-	wchar_t mark[5] = L"*";
+	wchar_t mark[5] = L"x";
 	wchar_t itemNum[3];
 	
 	if (&m_ghostObject != nullptr) {
@@ -165,14 +221,17 @@ void Item::Update()
 					
 					
 					m_pickFlag = true;
-
+					m_sound.Stop();
+					m_sound.Play(false);
 					//Game::instance()->m_UI->PushPickText(m_fontRender);
 					m_ItemBase->GetItem(m_type, m_ItemNum);
 					m_ghostObject.Release();
+					GameObjectManager::instance().DeleteGO(m_skinModelRender);
 				}
 			}
 		);
 	}
+	
 	if (m_pickFlag == true)
 	{
 		m_fontPalam.pos.y += 4.0f;
@@ -185,6 +244,11 @@ void Item::Update()
 	if (m_fontPalam.pos.y > LIMIT_Y)
 	{
 		GameObjectManager::instance().DeleteGO(this);
+	}
+	if (Game::instance()->GetStageNum() != m_stageNum)
+	{
+		GameObjectManager::instance().DeleteGO(this);
+		GameObjectManager::instance().DeleteGO(m_skinModelRender);
 	}
 	m_fontRender->SetColor(m_fontPalam.m_textColor);
 	m_fontRender->SetPivot(m_fontPalam.pivot);
@@ -281,6 +345,11 @@ UI::UI()
 	m_spritePos[ReturnCamp].Set(400.0f, -300.0f, 0.0f);
 	m_spriteRender[ReturnCamp]->SetPivot({ 0.5f, 0.5f });
 
+	m_spriteRender[OrdersQuest]->Init(L"Assets/sprite/OrdersQuest.dds", 400.0f, 400.0f);
+	m_spriteRender[OrdersQuest]->SetIsActive(true);
+	m_spritePos[OrdersQuest].Set(0.0f, 0.0f, 0.0f);
+	m_spriteRender[OrdersQuest]->SetPivot({ 0.5f, 0.5f });
+	m_spriteRender[OrdersQuest]->SetAlpha(1.0f);
 
 	m_spriteRender[Result]->Init(L"Assets/sprite/Result.dds", 1280.0f, 720.0f);
 	m_spriteRender[Result]->SetIsActive(false);
@@ -330,7 +399,7 @@ UI::UI()
 	//SpriteRender *m_set = m_spriteRender[nonItem];
 
 	AttackEvent = false;
-
+	m_sound[Select].Init(L"Assets/sound/cursor2.wav");
 }
 
 
@@ -352,7 +421,7 @@ UI::~UI()
 int UI::CheckItem()
 {
 
-	auto m_Item = Game::instance()->m_Item;
+	auto m_Item = Game::instance()->m_ItemBase;
 	nonhaveItem = 0;
 	haveItemNum = 0;
 	
@@ -515,6 +584,8 @@ void UI::ChangeItem()
 					if (DropTarget < m_DropItemList.size() - 1)
 					{
 						DropTarget++;
+						m_sound[Select].Stop();
+						m_sound[Select].Play(false);
 					}
 
 				}
@@ -522,6 +593,8 @@ void UI::ChangeItem()
 					if (UserTarget < m_ItemList.size() - 1)
 					{
 						UserTarget++;
+						m_sound[Select].Stop();
+						m_sound[Select].Play(false);
 					}
 
 				}
@@ -532,12 +605,16 @@ void UI::ChangeItem()
 					if (DropTarget > 0)
 					{
 						DropTarget--;
+						m_sound[Select].Stop();
+						m_sound[Select].Play(false);
 					}
 				}
 				if (p_target == UserItemPouch) {
 					if (UserTarget > 1)
 					{
 						UserTarget--;
+						m_sound[Select].Stop();
+						m_sound[Select].Play(false);
 					}
 				}
 			}
@@ -657,7 +734,7 @@ void UI::SetFontPalam()
 {
 	
 	auto m_game = Game::instance();
-	auto m_Item = Game::instance()->m_Item;
+	auto m_Item = Game::instance()->m_ItemBase;
 	auto m_quest = Game::instance()->m_quest;
 	auto m_queboardInfo = m_quest->GetDispInfo();
 	auto m_queInfo = m_quest->GetQuestInfo();
@@ -758,6 +835,38 @@ void UI::SetFontPalam()
 					wcscpy(m_fontPalam[ItemSummry].m_text, L"»”™’n‘Ñ‚É¶‘§‚·‚éÂ–ä¬—³‚Ì‰åB\nŠl•¨‚ð‚©‚ÝØ‚é‹­x‚È‰åB");
 				}
 				break;
+
+			case(ItemBase::B_LizardTail):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"Â–ä—³‚ÌK”ö");
+				if (i == 0)
+				{
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"»”™’n‘Ñ‚ðŽx”z‚·‚éÂ–ä—³‚ÌK”öB");
+				}
+				break;
+			case(ItemBase::B_LizardFang):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"Â–ä—³‚Ì‰å");
+				if (i == 0)
+				{
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"»”™’n‘Ñ‚ðŽx”z‚·‚éÂ–ä—³‚Ì‰åB");
+				}
+				
+				break;
+			case(ItemBase::B_LizardHorn):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"Â–ä—³‚ÌŠp");
+				if (i == 0)
+				{
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"»”™’n‘Ñ‚ðŽx”z‚·‚éÂ–ä—³‚ÌŠpB");
+				}
+
+				break;
+			case(ItemBase::B_LizardScales):
+				wcscpy(m_fontPalam[ItemName00 + i].m_text, L"Â–ä—³‚Ì—Ø");
+				if (i == 0)
+				{
+					wcscpy(m_fontPalam[ItemSummry].m_text, L"»”™’n‘Ñ‚ðŽx”z‚·‚éÂ–ä—³‚Ì—ØB");
+				}
+
+				break;
 			default:
 				if (i == 0)
 				{
@@ -788,10 +897,10 @@ void UI::SetFontPalam()
 			}
 			break;
 		case(ItemDummy01):
-			wcscpy(m_fontPalam[ItemName00 + i].m_text, L"•—_–ò");
+			wcscpy(m_fontPalam[ItemName00 + i].m_text, L"–ò");
 			if (i == 0)
 			{
-				wcscpy(m_fontPalam[ItemSummry].m_text, L"•—_–ò");
+				wcscpy(m_fontPalam[ItemSummry].m_text, L"–ò");
 			}
 			break;
 		default:
@@ -804,7 +913,7 @@ void UI::SetFontPalam()
 	int targetnum = m_quest->GetQuestPoint();
 
 	int m_havemoney = m_quest->GetMoney();
-	wchar_t m_moneytext[255];
+	
 	wchar_t m_prizetext[255];
 	wchar_t m_itemnum[255];
 
@@ -995,25 +1104,36 @@ void UI::SetFontPalam()
 	/// </summary>
 	if (ResultFlag)
 	{
-		if (m_alpha >= 1.0f)
+
+		
+
+		if (m_spriteAlpha[Result] >= 1.0f)
 		{
-			m_spriteRender[ManeyPouch]->SetIsActive(true);
-			m_spriteRender[ManeyPouch]->SetPivot({ 1.0f, 0.5f });
-			m_spritePos[ManeyPouch].Set(
-				m_fontPalam->pos.x,
-				m_fontPalam->pos.y,
-				0.0f
-			);
-			m_spriteSca[ManeyPouch].Set( 2.0f,2.0f,1.0f) ;
-			m_quest->GetPrizeMoney();
-			m_fontPalam[HaveMoney].m_textColor.Set(CVector4::White());
-			m_fontPalam[HaveMoney].m_frameWidth = 5.0f;
-			m_fontPalam[HaveMoney].size = 2.0f;
-			m_fontPalam[HaveMoney].pos = { -200.0f,0.0f };
-			if (g_pad[0].IsPressAnyKey())
+			
+			if ( !m_quest->GetPrizeMoney()&&g_pad[0].IsPressAnyKey())
 			{
 				m_endqestFlag = true;
 			}
+			m_fontPalam[HaveMoney].m_textColor.Set(CVector4::White());
+			m_fontPalam[HaveMoney].m_frameWidth = 3.0f;
+			m_fontPalam[HaveMoney].frameFlag = true;
+			m_fontPalam[HaveMoney].size = 2.0f;
+			m_fontPalam[HaveMoney].pos = { -200.0f,-200.0f };
+			m_fontPalam[HaveMoney].pivot = { 0.9f,0.5f };
+			m_fontPalam[PrizeMoney].m_textColor.Set(1.0f, 1.0f, 1.0f, 1.0f);
+			m_fontPalam[PrizeMoney].size = 2.0f;
+			m_fontPalam[PrizeMoney].pos = { -400.0f,100.0f };
+			//m_fontPalam[PrizeMoney].pivot = { 1.0f,0.5f };
+			m_fontPalam[PrizeMoney].frameFlag = true;
+			m_spriteRender[ManeyPouch]->SetIsActive(true);
+			m_spriteRender[ManeyPouch]->SetPivot({ 0.75f, 0.5f });
+			m_spritePos[ManeyPouch].Set(
+				m_fontPalam[HaveMoney].pos.x,
+				m_fontPalam[HaveMoney].pos.y,
+				0.0f
+			);
+			m_spriteSca[ManeyPouch].Set(2.0f, 2.0f, 1.0f);
+			
 		}
 
 	}
@@ -1031,7 +1151,7 @@ void UI::SetFontPalam()
 		}
 		if (targetItem == nonItem)
 		{
-			m_fontPalam[i].frameFlag = false;
+			m_fontPalam[ItemNumber].frameFlag = false;
 		}
 		SetFont(i, m_fontPalam[i].m_text,
 			m_fontPalam[i].frameFlag,
@@ -1051,31 +1171,38 @@ void UI::SetFontPalam()
 void UI::ClearDraw()
 {
 
-	if (m_alpha < 1.0f) {
-		m_alpha += 0.02f;
-	}
+	
 	if (!ResultFlag) {
 		m_spriteRender[Clear]->SetIsActive(true);
-		m_spriteRender[Clear]->SetAlpha(m_alpha);
+		m_spriteRender[Clear]->SetAlpha(m_spriteAlpha[Clear]);
+		if (m_spriteAlpha[Clear] < 1.0f) {
+			m_spriteAlpha[Clear] += 0.02f;
+		}
+		
 	}
-
+	else
+	{
+		if (m_spriteAlpha[Result] < 1.0f) {
+			m_spriteAlpha[Result] += 0.02f;
+		}
+	}
 	if (g_pad[0].IsTrigger(enButtonStart))
 	{
-		m_alpha = 0;
+		m_spriteAlpha[Clear] = 0;
 		m_spriteRender[Result]->SetIsActive(true);
 		ResultFlag = true;
 		m_spriteRender[Clear]->SetIsActive(false);
 	}
-	m_spriteRender[Result]->SetAlpha(m_alpha);
+	m_spriteRender[Result]->SetAlpha(m_spriteAlpha[Result]);
 }
 
 void UI::GameOverDraw()
 {
-	if (m_alpha < 1.0f) {
-		m_alpha += 0.02f;
+	if (m_spriteAlpha[GameOver] < 1.0f) {
+		m_spriteAlpha[GameOver] += 0.02f;
 	}
 	m_spriteRender[GameOver]->SetIsActive(true);
-	m_spriteRender[GameOver]->SetAlpha(m_alpha);
+	m_spriteRender[GameOver]->SetAlpha(m_spriteAlpha[GameOver]);
 }
 
 void UI::PauseMenu()
@@ -1153,6 +1280,8 @@ void UI::PauseMenu()
 				if (p_target != 3)
 				{
 					p_target++;
+					m_sound[Select].Stop();
+					m_sound[Select].Play(false);
 				}
 			}
 			if (g_pad[0].IsTrigger(enButtonUp))
@@ -1161,6 +1290,8 @@ void UI::PauseMenu()
 				if (p_target != 0) {
 
 					p_target--;
+					m_sound[Select].Stop();
+					m_sound[Select].Play(false);
 				}
 			}
 
@@ -1490,8 +1621,14 @@ void UI::Update()
 	std::sort(m_DropItemList.begin(), m_DropItemList.end());
 	
 	auto m_game = Game::instance();
-	auto m_Item = m_game->m_Item;
+	auto m_Item = m_game->m_ItemBase;
 	m_spriteRender[QuestPaper]->SetIsActive(m_game->IsLookBoard());
+	
+	m_spriteRender[OrdersQuest]->SetIsActive(m_game->m_quest->IsOnQuest());
+	if (wcscmp(m_fontPalam[QuestName].m_text, m_game->m_quest->GetQuestInfo().m_questName) !=0|| !m_game->IsLookBoard())
+	{
+		m_spriteRender[OrdersQuest]->SetIsActive(false);
+	}
 	if (!m_game->m_quest->IsOnQuest())
 	{
 		m_endqestFlag = false;

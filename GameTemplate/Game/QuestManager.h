@@ -98,13 +98,15 @@ public:
 	/// <summary>
 	/// Š‹à‚É•ñV‚ğ‰ÁZ
 	/// </summary>
-	void GetPrizeMoney()
+	bool GetPrizeMoney()
 	{
 		
 		if (0< m_info.m_prizeMoney) {
 			m_money +=addmoney;
 			m_info.m_prizeMoney -= addmoney;
+			return true;
 		}
+		else return false;
 		
 	}
 	void ResetPalam();

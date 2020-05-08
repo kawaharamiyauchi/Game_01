@@ -53,6 +53,6 @@ void Fade::PostRender()
 		{ 0,1,0 }
 	);
 	mProj.MakeOrthoProjectionMatrix(1280.0f, 720.0f, 0.1f, 100.0f);
-	//m_sprite.SetAlpha(m_alpha);
+	//m_sprite.SetAlpha(m_spriteAlpha);
 	m_sprite.Draw(mView, mProj);
 }

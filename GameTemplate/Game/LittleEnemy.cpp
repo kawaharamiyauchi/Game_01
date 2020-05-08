@@ -55,6 +55,7 @@ LittleEnemy::LittleEnemy()
 LittleEnemy::~LittleEnemy()
 {
 	GameObjectManager::instance().DeleteGO(m_skinModelRender);
+	m_ghost->Release();
 }
 
 bool LittleEnemy::Start()
@@ -78,6 +79,7 @@ void LittleEnemy::Update()
 			DamageEvent();
 			if (m_Item ==nullptr&&d_state == die&&!m_animation.IsPlaying()) {
 				m_Item = GameObjectManager::instance().NewGO<Item>();
+				
 				m_Item->RandTypeItemCreate(
 					m_position,
 					m_rotation,
@@ -203,7 +205,7 @@ void LittleEnemy::DamageEvent()
 		if (m_game->m_player != nullptr)
 		{
 
-			if (m_game->m_player->Getattack() > 0 && m_game->m_player->Getattack() < 15)
+			if (m_game->m_player->GetAttackFlag())
 			{
 
 				auto plbone = m_game->m_player->GetPlayerBone(23);
@@ -223,7 +225,7 @@ void LittleEnemy::DamageEvent()
 				boneQua.SetRotation(plbone->GetWorldMatrix());
 				if (d_state != damage) {
 
-					m_ghost[P_attack00].CreateBox(bonePos, boneQua, { 30.0f,5.0f, 150.0f });
+					m_ghost[P_attack00].CreateBox(bonePos, boneQua, { 30.0f,5.0f, 160.0f });
 				}
 					g_physics.ContactTest(m_charaCon, [&](const btCollisionObject & contactObject)
 						{

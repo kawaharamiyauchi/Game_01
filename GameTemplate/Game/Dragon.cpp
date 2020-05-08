@@ -595,7 +595,7 @@ void Dragon::DamageEvent()
 		if (m_game->m_player != nullptr)
 		{
 			
-				if (m_game->m_player->Getattack() > 0&&m_game->m_player->Getattack()<15)
+				if (m_game->m_player->GetAttackFlag())
 				{
 
 					auto plbone = m_game->m_player->GetPlayerBone(23);
@@ -682,10 +682,21 @@ void Dragon::Update()
 		}
 		if (d_info.isEnd)
 		{
-			if (m_game->m_quest->GetQuestInfo().m_questType == QuestManager::Bossbattle)
-			{
-				m_game->m_quest->AddQuestPoint();
-				m_game->m_quest->SetTargetDieFlag(true);
+			
+			if (m_Item == nullptr&&d_state == die && !m_animation.IsPlaying()) {
+				if (m_game->m_quest->GetQuestInfo().m_questType == QuestManager::Bossbattle)
+				{
+					m_game->m_quest->AddQuestPoint();
+					m_game->m_quest->SetTargetDieFlag(true);
+				}
+				m_Item = GameObjectManager::instance().NewGO<Item>();
+				m_Item->RandTypeItemCreate(
+					m_position,
+					m_rotation,
+					200.0f,
+					Item::BD_Die,
+					2
+				);
 			}
 		}
 		Move();

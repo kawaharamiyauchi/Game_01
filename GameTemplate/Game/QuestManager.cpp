@@ -139,7 +139,12 @@ void QuestManager::Update()
 	}
 	if (m_info.m_questType == QuestType::Littlebattle)
 	{
-		//QuestPoint++;
+		if (g_pad[0].IsTrigger(enButtonLB1))
+		{
+			QuestPoint++;
+		}
+
+		
 	
 	}
 	/*if (Game::instance()->GetStageNum() == 3) {

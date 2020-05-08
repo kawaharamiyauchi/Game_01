@@ -508,4 +508,9 @@
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\sprite\OrdersQuest.png">
+      <Filter>Assets\sprite</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

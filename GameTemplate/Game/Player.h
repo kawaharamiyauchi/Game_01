@@ -122,13 +122,13 @@ public:
 		return m_skinModelRender[Hunter]->GetSkinModel();
 		//return m_model;
 	}
-	const int Getattack()const
-	{
-		return m_attackTimer;
-	}
 	bool GetPickFlag()
 	{
 		return pickflag;
+	}
+	bool GetAttackFlag()
+	{
+		return attackflag;
 	}
 	CharacterController& GetcharaCon()
 	{
@@ -146,6 +146,7 @@ private:
 		enAnimationClip_run,
 		enAnimationClip_jump,
 		enAnimationClip_attack,
+		enAnimationClip_attack_02,
 		enAnimationClip_damage,
 		enAnimationClip_die,
 		enAnimationClip_drink,
@@ -159,10 +160,17 @@ private:
 		Weapon,
 		ModelType_num
 	};
+	enum AttackState
+	{
+		First,
+		Second,
+		Third
+	};
 	enum SoundType
 	{
 		GetHit,
 		move,
+		sword,
 		SoundTypeNum
 	};
 	float move_x = 0.0f;
@@ -171,6 +179,7 @@ private:
 	AnimationClip m_animationClip[enAnimationClip_num];
 	//SkinModel m_model[] = new Modeltype[4]{};	//スキンモデル。
 	//SkinModel m_model[ModelType_num];
+	AttackState m_attackState = First;
 	SkinModelRender *m_skinModelRender[ModelType_num] = { nullptr };
 	Skeleton* m_skeleton;
 	CVector3 m_speed = CVector3::Zero();
@@ -182,9 +191,10 @@ private:
 	bool m_damageFlag =false;
 	bool m_jumpflag = false;
 	bool m_dashflag = true;
+	bool attackflag = false;
 	bool pickflag = false;
 	int m_damageTimer = 0;
-	int m_attackTimer = 0;
+	
 	float footStop = 1.0f;
 	int runTimer = 0;
 

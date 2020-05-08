@@ -47,6 +47,8 @@ Player::Player()
 	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_attack].Load(L"Assets/animData/hunter03_attack.tka", L"enAnimation(h)Attack");
 	m_animationClip[enAnimationClip_attack].SetLoopFlag(false);
+	m_animationClip[enAnimationClip_attack_02].Load(L"Assets/animData/hunter03_attack_02.tka", L"enAnimation(h)Attack_02");
+	m_animationClip[enAnimationClip_attack_02].SetLoopFlag(false);
 	m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter03_damage.tka",L"enAnimtion(h)Damage");
 	//m_animationClip[enAnimationClip_damage].Load(L"Assets/animData/hunter_test.tka", L"enAnimtion(h)Damage");
 	m_animationClip[enAnimationClip_idle].Load(L"Assets/animData/hunter03_idle.tka",L"enAnimation(h)Idle");
@@ -84,6 +86,7 @@ Player::Player()
 	}
 	m_sound[GetHit].Init(L"Assets/sound/punch-middle2.wav");
 	m_sound[move].Init(L"Assets/sound/walk-soil1.wav");
+	m_sound[sword].Init(L"Assets/sound/sword.wav");
 }
 
 
@@ -104,6 +107,28 @@ void Player::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 		m_sound[move].Stop();
 		m_sound[move].Play(false);
 	}
+	if (wcscmp(eventName, L"attackON") == 0)
+	{
+		attackflag = true;
+		m_sound[sword].Stop();
+		m_sound[sword].Play(false);
+	}
+
+	if (wcscmp(eventName, L"attackOFF") == 0)
+	{
+		attackflag = false;
+	}
+	
+	if (wcscmp(eventName, L"FirstEnd") == 0)
+	{
+
+		if(g_pad[0].IsPress(enButtonB))
+		{
+			m_attackState = Second;
+		}
+		
+	}
+
 
 	if (wcscmp(eventName, L"Pick") == 0)
 	{
@@ -155,7 +180,7 @@ void Player::Move()
 			if (!g_pad[0].IsPress(enButtonLB1)) {
 				if (g_pad[0].IsTrigger(enButtonB) && p_state != jump)
 				{
-					if (p_state != attack) {
+					if (p_state != attack&&!Game::instance()->IsLookBoard()) {
 						m_speed.y += 40.0f;
 						p_state = jump;
 						m_jumpflag = true;
@@ -287,7 +312,7 @@ void Player::Turn()
 }
 void Player::StateChange()
 {	
-	auto m_Item = Game::instance()->m_Item;
+	auto m_Item = Game::instance()->m_ItemBase;
 	if (p_state == die)
 	{
 		if (!m_animation.IsPlaying())
@@ -303,18 +328,13 @@ void Player::StateChange()
 		}
 		if (g_pad[0].IsTrigger(enButtonY) && m_charaCon.IsOnGround())
 		{
-			p_state = attack;
+			if (p_state != attack) {
+				p_state = attack;
+			}
 
 		}
-		if (m_attackTimer == 10)
-		{
-			//MessageBox(NULL, "ハンターの攻撃！！", "Game Over", MB_OK);
-		}
-		if (m_attackTimer > 20)
-		{
-			m_attackTimer = 0;
-			p_state = idle;
-		}
+		
+		
 		if (m_damageFlag)
 		{
 			
@@ -323,7 +343,8 @@ void Player::StateChange()
 			{
 				m_sound[GetHit].Play(false);
 			}
-			m_attackTimer = 0;
+			
+			m_attackState = First;
 			p_state = damage;
 			
 			if (m_damageTimer > 30)
@@ -366,7 +387,11 @@ void Player::StateChange()
 				p_state = useitem;
 				if (m_Item->UseItem() == ItemBase::ItemType::kaihukuyaku)
 				{
-					m_plinfo.HP += 10.0f;
+					if (m_plinfo.HP < 1000.0f)
+					{
+						m_plinfo.HP += 10.0f;
+					}
+					else m_plinfo.HP = 1000.0f;
 				}
 			}
 		}
@@ -382,6 +407,13 @@ void Player::StateChange()
 		if (p_state == useitem&&!m_animation.IsPlaying())
 		{
 			p_state = idle;
+		}
+		if (p_state == attack && !m_animation.IsPlaying())
+		{
+			
+			p_state = idle;
+			m_attackState = First;
+			
 		}
 	}
 }
@@ -416,19 +448,36 @@ void Player::AnimationPlay()
 	}
 	if (p_state == attack)
 	{
-		m_footStep = m_animation.Update(0.04f);
+		m_footStep = m_animation.Update(0.03f);
 		auto change = m_footStep.y;
 		m_footStep.y = m_footStep.z;
 		m_footStep.z = change;
-		m_animation.Play(enAnimationClip_attack, interpolateTime);
+		switch (m_attackState)
+		{
+		case Player::First:
+			m_animation.Play(enAnimationClip_attack, interpolateTime);
+			break;
+		case Player::Second:
+			m_animation.Play(enAnimationClip_attack_02, interpolateTime);
+			break;
+		case Player::Third:
+			break;
+		default:
+			break;
+		}
+		
 		CMatrix rotMatrix;
 		CMatrix mBias = CMatrix::Identity();
 		//回転行列を作成する。
 		rotMatrix.MakeRotationFromQuaternion(m_rotation[Hunter]);
 		rotMatrix.Mul(mBias, rotMatrix);
 		rotMatrix.Mul(m_footStep);
-		m_attackTimer++;
+		
 
+	}
+	else
+	{
+		attackflag = false;
 	}
 	if (p_state == damage)
 	{
@@ -464,9 +513,10 @@ bool Player::Start()
 
 void Player::Update()
 {
+	auto m_game = Game::instance();
 	auto ispouse = Game::instance()->GetPauseFlag();
 	pickflag = false;
-	if (!ispouse) {
+	if (!ispouse&&!m_game->IsLookBoard()) {
 		StateChange();
 		AnimationPlay();
 

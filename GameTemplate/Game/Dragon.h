@@ -7,6 +7,7 @@
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 #include"Player.h"
+class Item;
 class Dragon :public IGameObject
 {
 public:
@@ -33,7 +34,7 @@ public:
 	{
 		bool isFind =false;
 		bool isDead = false;
-		float HP = 500.0f;
+		float HP = 100.0f;
 		bool isEnd = false;
 	};
 	/// <summary>
@@ -173,6 +174,6 @@ private:
 	//SkinModel m_test;
 	SkinModelRender * m_skinModelRender = nullptr;
 	GhostObject m_ghost[EventSize];
-
+	Item *m_Item = nullptr;
 	CSoundSource m_sound[SoundTypeNum];
 };

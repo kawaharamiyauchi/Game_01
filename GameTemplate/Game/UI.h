@@ -34,8 +34,8 @@ public:
 
 		B_LizardTail,			//青紋竜の尻尾
 		B_LizardHorn,			//青紋竜の角
-		B_LizardFang,
-
+		B_LizardFang,			//青紋竜の牙
+		B_LizardScales,			//青紋竜の鱗
 		TypeNum,
 
 	};
@@ -117,7 +117,6 @@ public:
 		FrameIcon01,
 		FrameIcon02,
 		FrameIcon03,
-
 		FrameIcon04,
 		FrameIcon05,
 		FrameIcon06,
@@ -126,7 +125,7 @@ public:
 
 		TargetMark,
 		ManeyPouch,
-
+		OrdersQuest,
 		ItemNext,
 		UITypeNum
 	};
@@ -183,6 +182,11 @@ public:
 		Exit,
 		MenuSize
 
+	};
+	enum SoundType
+	{
+		Select,
+		SoundTypeNum
 	};
 	struct FontPalam {
 		wchar_t m_text[255] =L"NonText";
@@ -271,7 +275,7 @@ private:
 	CVector3 m_mainItemSca = { 2.0f,2.0f,1.0f };
 	CVector3 m_sideItemSca = CVector3::One();
 
-	float m_alpha = 0.0f;
+	float m_spriteAlpha[UITypeNum] = { 0.0f };
 	float hp = 0.0f;
 	int haveItemNum = 0;			//選択対象のアイテム数
 	int lastItem = 0;				//登録されているアイテムの末尾
@@ -306,21 +310,22 @@ private:
 	FontPalam m_fontPalam[FontTypeNum];
 	PickTextParts m_pickTextParts;
 	PouseMenuButton m_state = UserItemPouch;
+	CSoundSource m_sound[SoundTypeNum];
 };
 
 class Item :public IGameObject
 {
 public:
-	Item() {
-		m_fontRender = GameObjectManager::instance().NewGO<FontRender>();
-		InitFontPalam(L"Init");
-	}
+	Item(); 
 	~Item();
-	
-
+	bool Start();
+	void SetStageNum(int num)
+	{
+		m_stageNum = num;
+	}
 	enum DropType
 	{
-		PickMushroom,
+		PickHerbs,
 		LBD_Die,
 		BD_Die
 
@@ -328,7 +333,7 @@ public:
 	void InitFontPalam(wchar_t text[255]);
 	void Update();
 	void Render() {}
-	void MonoTypeItemCreate(CVector3 &pos, CQuaternion rot, float size, ItemBase::ItemType type, int DropMax);
+	void MonoTypeItemCreate(CVector3 pos, CQuaternion rot, float size, ItemBase::ItemType type, int DropMax);
 	void RandTypeItemCreate(CVector3 &pos, CQuaternion rot, float size, DropType type, int DropMax);
 
 private:
@@ -341,7 +346,10 @@ private:
 	CVector2 m_fontpos = {-620.0f , -250.0f};
 	int m_ItemNum = 0;
 	int m_max = 0;
+	int m_stageNum =0;
 	bool m_pickFlag = false;
 	UI::FontPalam m_fontPalam;
 	FontRender *m_fontRender = nullptr;
+	SkinModelRender *m_skinModelRender = nullptr;
+	CSoundSource m_sound;
 };

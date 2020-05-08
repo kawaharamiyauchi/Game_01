@@ -322,7 +322,7 @@ void Sprite::Draw()
 	cb.WVP = m_world;
 	cb.WVP.Mul(cb.WVP, g_camera2D.GetViewMatrix());
 	cb.WVP.Mul(cb.WVP, g_camera2D.GetProjectionMatrix());
-	//cb.alpha =m_alpha;
+	//cb.alpha =m_spriteAlpha;
 
 	d3dDeviceContext->UpdateSubresource(m_cbGPU, 0, NULL, &cb, 0, 0);
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cbGPU);
