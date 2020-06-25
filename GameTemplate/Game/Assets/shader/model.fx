@@ -43,10 +43,10 @@ static const int NUM_DIRECTION_LIG = 4;
  *@brief	ライト用の定数バッファ。
  */
 cbuffer LightCb : register(b1) {
+
 	/*float3 dligDirection[NUM_DIRECTION_LIG];
-	float4 dligColor[NUM_DIRECTION_LIG];
-	float3 eyePos;
-	float specPow;*/
+	float4 dligColor[NUM_DIRECTION_LIG];*/
+	
 	SDirectionLight directionLight;
 	float3 eyePos;
 	float specPow;
@@ -91,7 +91,7 @@ struct PSInput {
 	float3 Tangent		: TANGENT;
 	float2 TexCoord		: TEXCOORD0;	//UV座標。
 	float4 posInLVP		: TEXCOORD1;	//ライトビュープロジェクション空間での座標。
-	float3 WorldPos		: TEXCOORD2;	//ワールド座標。解説６
+	float3 WorldPos		: TEXCOORD2;	//ワールド座標。
 
 
 };
@@ -212,7 +212,7 @@ float4 PSMain(PSInput In) : SV_Target0
 	float4 albedoColor = g_albedoTexture.Sample(g_sampler, In.TexCoord);
 	//ディレクションライトの拡散反射光を計算する。
 
-
+	//float3 lig = float3(0.0f, 0.0f, 0.0f);
 	
 	/// <summary>
 	/// ライト4本(ディレクションライト＋鏡面反射)
@@ -222,12 +222,12 @@ float4 PSMain(PSInput In) : SV_Target0
 	float t[NUM_DIRECTION_LIG];
 	float3 specLig[NUM_DIRECTION_LIG];*/
 	//for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
-	//	lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) *  dligColor[i];
-	//	toEyeDir[i] = normalize(eyePos - In.WorldPos);
-	//	reflectEyeDir[i] = -toEyeDir[i] + 2 * dot(In.Normal, toEyeDir[i]) * In.Normal;
-	//	t[i] = max(0.0f, dot(-dligDirection[i], reflectEyeDir[i]));
-	//	//鏡面反射を反射光に加算する。
-	//	lig += pow(0.1, 1.0f) * dligColor[i].xyz;
+		//lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) *  dligColor[i]/4;
+		//toEyeDir[i] = normalize(eyePos - In.WorldPos);
+		//reflectEyeDir[i] = -toEyeDir[i] + 2 * dot(In.Normal, toEyeDir[i]) * In.Normal;
+		//t[i] = max(0.0f, dot(-dligDirection[i], reflectEyeDir[i]));
+		//鏡面反射を反射光に加算する。
+		//lig += pow(0.1, 1.0f) * dligColor[i].xyz;
 
 	//}
 	/// <summary>
@@ -235,7 +235,7 @@ float4 PSMain(PSInput In) : SV_Target0
 	/// </summary>
 	/// 拡散反射光
 	float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
-	
+	//鏡面反射光
 	float3 toEyeDir = normalize(eyePos - In.WorldPos);
 
 	float3 reflectEyeDir = -toEyeDir + 2 * dot(In.Normal, toEyeDir) * In.Normal;
@@ -244,11 +244,14 @@ float4 PSMain(PSInput In) : SV_Target0
 
 	float3 specLig = pow(t, specPow) * directionLight.color.xyz;
 	
+	float rim = saturate(1.0f - dot(-toEyeDir, In.Normal));
+	rim = pow(rim, 1.0f);
+	float3 rimColor = float3(0.4f, 0.4f, 0.4f) * rim*2;
+	lig += rimColor;
+	//鏡面反射を反射光に加算する。
+	lig += specLig*3.0f;
 
-	
-
-	float3 halflig = lig*0.5 ;
-
+	//float3 halflig = lig*0.5 ;
 		if (isShadowReciever == 1) {	//シャドウレシーバー。
 			//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
 			float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;
@@ -270,11 +273,11 @@ float4 PSMain(PSInput In) : SV_Target0
 				//float z = zInLVP - zInShadowMap;
 				if (zInLVP - zInShadowMap > 0.005f) {
 					//影が落ちているので、光を弱くする
-					lig *= 0.1f;
+					lig *=0.4f;
 				}
 				//VSM??
 				//Variance Shadow Maps（分散シャドウマップ）
-				float add = 0.0f;
+				//float add = 0.0f;
 				//for (int i = 2; i < 20; i++) {
 				//	//2*0.05 =0.1
 				//	add = 0.01f*i;
@@ -288,14 +291,14 @@ float4 PSMain(PSInput In) : SV_Target0
 			
 		}
 	
-		
+		if (In.WorldPos.y >0.0f&&In.WorldPos.y < 20.0f)
+		{
+
+			lig *= 0.5f;
+			
+		}
 	
 	lig += ambientLight;
-
-	//鏡面反射を反射光に加算する。
-	lig += specLig;
-	
-	
 	
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz * lig;

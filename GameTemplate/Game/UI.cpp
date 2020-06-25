@@ -245,7 +245,7 @@ void Item::Update()
 	{
 		GameObjectManager::instance().DeleteGO(this);
 	}
-	if (Game::instance()->GetStageNum() != m_stageNum)
+	if (Game::instance()->GetStageNum() != m_stageNum||Game::instance()->IsBackCamp())
 	{
 		GameObjectManager::instance().DeleteGO(this);
 		GameObjectManager::instance().DeleteGO(m_skinModelRender);
@@ -697,6 +697,7 @@ void UI::ChangeItem()
 		else if (MenuStageNum == 0)
 		{
 			DropTarget = 0;
+			UserTarget = 1;
 		}
 
 	}
@@ -740,6 +741,15 @@ void UI::SetFontPalam()
 	auto m_queInfo = m_quest->GetQuestInfo();
 	int itemnum = m_Item->GetData(targetItem).num;
 	int d_itemnum = m_Item->GetData(d_target[0]).num;
+	int u_itemnum = m_Item->GetData(u_target[0]).num;
+	int m_prizemoney = m_queInfo.m_prizeMoney;
+	int goalnum = m_queInfo.m_targetNum;
+	int targetnum = m_quest->GetQuestPoint();
+
+	int m_havemoney = m_quest->GetMoney();
+
+	wchar_t m_prizetext[255] =L"nonText";
+	wchar_t m_itemnum[255] =L"nonText";
 	_itow_s(itemnum, m_fontPalam[ItemNumber].m_text, 10);
 	m_fontPalam[ItemNumber].m_frameWidth = 3.0f;
 	m_fontPalam[ItemNumber].pos = { 350.0f,-230.0f };
@@ -753,7 +763,7 @@ void UI::SetFontPalam()
 	m_fontPalam[QuestSummary].size = 0.6f;
 	m_fontPalam[PrizeMoney].size = 0.6f;
 	m_fontPalam[RequesterName].size = 0.6f;
-	m_fontPalam[DropItemNumber].size = 0.6f;
+	m_fontPalam[Pause_ItemNumber].size = 0.6f;
 	for (int i = ItemName00; i <= ItemName04; i++)
 	{
 		m_fontPalam[i].size = 0.6f;
@@ -773,6 +783,8 @@ void UI::SetFontPalam()
 
 
 	if (MenuFlag[DropItemPouch]) {
+
+		_itow_s(d_itemnum, m_itemnum, 10);
 		for (int i = 0; i <= m_DropItemList.size(); i++) {
 
 			switch (d_target[i])
@@ -879,6 +891,8 @@ void UI::SetFontPalam()
 	}
 	if (p_target == UserItemPouch)
 	{
+		_itow_s(u_itemnum, m_itemnum, 10);
+		
 		for(int i =0;i<m_ItemList.size();i++)
 		switch (u_target[i])
 		{
@@ -904,18 +918,15 @@ void UI::SetFontPalam()
 			}
 			break;
 		default:
+			if (i == 0)
+			{
+				wcscpy(m_fontPalam[ItemSummry].m_text, L"ÉAÉCÉeÉÄñ¢èäéù");
+			}
 			break;
 		}
 	}
 	
-	int m_prizemoney = m_queInfo.m_prizeMoney;
-	int goalnum = m_queInfo.m_targetNum;
-	int targetnum = m_quest->GetQuestPoint();
-
-	int m_havemoney = m_quest->GetMoney();
 	
-	wchar_t m_prizetext[255];
-	wchar_t m_itemnum[255];
 
 
 
@@ -925,19 +936,19 @@ void UI::SetFontPalam()
 	wcscpy(m_fontPalam[PrizeMoney].m_text, L"ïÒèVã‡\n");
 	wcscpy(m_fontPalam[U_Pouch].m_text, L"ìπãÔ");
 	wcscpy(m_fontPalam[D_Pouch].m_text, L"ëfçﬁ");
-	wcscpy(m_fontPalam[DropItemNumber].m_text, L"èäéùêî");
+	wcscpy(m_fontPalam[Pause_ItemNumber].m_text, L"èäéùêî");
 	wcscpy(m_fontPalam[m_exit].m_text, L"ÉQÅ[ÉÄèIóπ");
 	wcscpy(m_fontPalam[m_help].m_text, L"ëÄçÏê‡ñæ");
 
 	_itow_s(m_prizemoney, m_prizetext, 10);
-	_itow_s(d_itemnum, m_itemnum, 10);
+	
 	_itow_s(goalnum, m_fontPalam[GoalNum].m_text, 10);
 	_itow_s(targetnum, m_fontPalam[QuestPoint].m_text, 10);
 	_itow_s(m_havemoney, m_fontPalam[HaveMoney].m_text, 10);
 	wcscat(m_fontPalam[QuestPoint].m_text, L"/");
 	//wcscat(m_fontPalam[HaveMoney].m_text, m_moneytext);
 	wcscat(m_fontPalam[PrizeMoney].m_text, m_prizetext);
-	wcscat(m_fontPalam[DropItemNumber].m_text, m_itemnum);
+	wcscat(m_fontPalam[Pause_ItemNumber].m_text, m_itemnum);
 	/// <summary>
 	/// àÍéûí‚é~âÊñ íÜ
 	/// </summary>
@@ -956,7 +967,7 @@ void UI::SetFontPalam()
 		m_fontPalam[GoalNum].pivot = { 0.0f,0.5f };
 		m_fontPalam[QuestPoint].pivot = { 0.0f,0.5f }; 
 		m_fontPalam[HaveMoney].pivot = { 0.0f,0.5f };
-		m_fontPalam[DropItemNumber].pivot = { 0.5f,0.5f };
+		m_fontPalam[Pause_ItemNumber].pivot = { 0.5f,0.5f };
 		m_fontPalam[ItemSummry].pivot = { 0.0f,0.5f };
 
 
@@ -966,10 +977,10 @@ void UI::SetFontPalam()
 		m_fontPalam[QuestPoint].pos = { -600.0f,160.0f };
 		m_fontPalam[PrizeMoney].pos = { -600.0f,130.0f };
 		m_fontPalam[HaveMoney].pos = { -470.0f,-300.0f };
-		m_fontPalam[DropItemNumber].pos = { 300.0f,-200.0f };
+		m_fontPalam[Pause_ItemNumber].pos = { 300.0f,-200.0f };
 		m_fontPalam[ItemSummry].pos = { 150.0f,50.0f };
 
-		//m_fontPalam[DropItemNumber].m_textColor = CVector4::White();
+		//m_fontPalam[Pause_ItemNumber].m_textColor = CVector4::White();
 		//m_fontPalam[ItemName00].m_textColor = CVector4::White();
 		m_fontPalam[QuestName].m_textColor = CVector4::White();
 		m_fontPalam[QuestSummary].m_textColor = CVector4::White();
@@ -1033,20 +1044,22 @@ void UI::SetFontPalam()
 			{
 				m_fontPalam[ItemSummry].m_textColor.Set(CVector4::White());
 
-				if (p_target == 0 && m_ItemList.size() > 0)
-				{
-					m_fontPalam[ItemNumber].m_textColor.Set(CVector4::White());
+				m_fontPalam[Pause_ItemNumber].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
 
-				}
 				if (p_target ==1 &&m_DropItemList.size() > 0) {
-					m_fontPalam[DropItemNumber].m_textColor.Set(CVector4::White());
+					m_fontPalam[Pause_ItemNumber].m_textColor.Set(CVector4::White());
 				}
+				if (p_target ==0 &&m_ItemList.size() > 1)
+				{
+					m_fontPalam[Pause_ItemNumber].m_textColor.Set(CVector4::White());
+				}
+				
 				
 			}
 			else
 			{
 				m_fontPalam[ItemSummry].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
-				m_fontPalam[DropItemNumber].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
+				m_fontPalam[Pause_ItemNumber].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
 			}
 
 		}
@@ -1149,9 +1162,10 @@ void UI::SetFontPalam()
 		{
 			m_fontPalam[i].frameFlag = true;
 		}
-		if (targetItem == nonItem)
+		if (targetItem == nonItem || m_game->GetPauseFlag())
 		{
 			m_fontPalam[ItemNumber].frameFlag = false;
+			m_fontPalam[ItemNumber].m_textColor.Set({ 0.0f,0.0f,0.0f,0.0f });
 		}
 		SetFont(i, m_fontPalam[i].m_text,
 			m_fontPalam[i].frameFlag,
@@ -1435,20 +1449,10 @@ void UI::PauseMenu()
 					}
 
 					break;
+				
 				default:
 					break;
 				}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1546,7 +1550,13 @@ void UI::PauseMenu()
 
 			
 			break;
-	
+			/// <summary>
+			/// ÉÅÉjÉÖÅ[Ç™ÇQíiäKñ⁄ÇÃéû
+			/// </summary>
+		case 2:
+			
+
+		break;
 		default:
 
 

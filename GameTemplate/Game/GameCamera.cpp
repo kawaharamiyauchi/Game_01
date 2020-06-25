@@ -93,17 +93,17 @@ void GameCamera::Update()
 		
 	}
 	//パッドの入力を使ってカメラを回す。
-	if (!g_pad[0].IsPress(enButtonLB2))
+	if (g_pad[0].IsPress(enButtonLB2)&&Game::instance()->GetStageNum() ==3)
 	{
-		x = g_pad[0].GetRStickXF() * 2;
-		y = g_pad[0].GetRStickYF() * 2;
 		
+		plPos = m_game->m_player->GetPosition();
 		
 	}
 	else {
-		plPos = m_game->m_player->GetPosition();
+		
 	
-
+		x = g_pad[0].GetRStickXF() * 2;
+		y = g_pad[0].GetRStickYF() * 2;
 	}
 
 	//x = g_pad[0].GetRStickXF() * 2;

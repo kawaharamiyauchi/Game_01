@@ -186,7 +186,6 @@
     </ClCompile>
     <ClCompile Include="QuestManager.cpp" />
     <ClCompile Include="Fade.cpp" />
-    <ClCompile Include="Character.cpp" />
     <ClCompile Include="sound\WaveFile.cpp">
       <Filter>sound</Filter>
     </ClCompile>
@@ -347,7 +346,6 @@
     </ClInclude>
     <ClInclude Include="QuestManager.h" />
     <ClInclude Include="Fade.h" />
-    <ClInclude Include="Character.h" />
     <ClInclude Include="sound\WaveFile.h">
       <Filter>sound</Filter>
     </ClInclude>
@@ -504,13 +502,9 @@
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\ItemNextIcon.png" />
+    <ImageContentTask Include="Assets\sprite\OrdersQuest.png" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\sprite\OrdersQuest.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
   </ItemGroup>
 </Project>

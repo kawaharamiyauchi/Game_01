@@ -8,7 +8,7 @@
 
 LittleEnemy::LittleEnemy()
 {
-	g_effect.m_sampleEffect = Effekseer::Effect::Create(g_effect.m_effekseerManager, (const EFK_CHAR*)L"Assets/effect/tm_damage.efk");
+	g_effect.m_sampleEffect[GameObjectManager::EffectType::damage] = Effekseer::Effect::Create(g_effect.m_effekseerManager, (const EFK_CHAR*)L"Assets/effect/tm_damage.efk");
 	m_skinModelRender =GameObjectManager::instance().NewGO<SkinModelRender>();
 	m_skinModelRender->Init(L"Assets/ModelData/LittleDragon_Blue.cmo");
 	m_skinModelRender->SetShadowCasterFlag(true);
@@ -231,11 +231,10 @@ void LittleEnemy::DamageEvent()
 						{
 							if (m_ghost[P_attack00].IsSelf(contactObject))
 							{
-								//再生中のエフェクトを止める。
-								g_effect.m_effekseerManager->StopEffect(g_effect.m_playEffectHandle);
+								
 								//再生。
 								g_effect.m_playEffectHandle = g_effect.m_effekseerManager->Play(
-									g_effect.m_sampleEffect,
+									g_effect.m_sampleEffect[GameObjectManager::EffectType::damage],
 									bonePos.x,
 									bonePos.y,
 									bonePos.z

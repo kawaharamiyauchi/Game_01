@@ -117,6 +117,8 @@ public:
 	{
 		m_plinfo = info;
 	}
+
+
 	const SkinModel* GetskinModel()const
 	{
 		return m_skinModelRender[Hunter]->GetSkinModel();
@@ -138,7 +140,10 @@ public:
 	{
 		return m_skeleton->GetBone(bonenum);
 	}
-
+	void  SetIsNonAnimation(bool flag)
+	{
+		nonAnim = flag;
+	}
 private:
 	enum Player_anim {
 		enAnimationClip_idle,
@@ -193,15 +198,16 @@ private:
 	bool m_dashflag = true;
 	bool attackflag = false;
 	bool pickflag = false;
+	bool nonAnim = false;
 	int m_damageTimer = 0;
-	
+	int m_nextattacktimer = 0;
 	float footStop = 1.0f;
 	int runTimer = 0;
 
 	
 	CVector3 m_footStep = CVector3::Zero();
 	bool stopflag = false;
-
+	
 	CSoundSource m_sound[SoundTypeNum];
 };
 

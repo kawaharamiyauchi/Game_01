@@ -89,6 +89,10 @@ public:
 	{
 		return m_Item[type];
 	}
+	ItemType GetSelectItem()const
+	{
+		return m_select;
+	}
 private:
 	ItemData m_Item[TypeNum];
 	ItemType m_select = noneItem;
@@ -149,23 +153,26 @@ public:
 		GoalNum,				//目標の数
 		QuestPoint,				//現在のクエストターゲット達成数
 
-		ItemNumber,				//UserItem用　アイテム数
-		DropItemNumber,			//DropItem用　アイテム数
+		ItemNumber,				//Userアイテム数
+		Pause_ItemNumber,		//pouse画面用　アイテム数
 		
-		ItemName00,				//ItemBaseの名称
+		ItemName00,				//Itemの名称
 		ItemName01,
 		ItemName02,
 		ItemName03,
 		ItemName04,
 
 
-		ItemSummry,				//ItemBaseの説明文
+		ItemSummry,				//Itemの説明文
 
 		U_Pouch,				//道具ポーチ
 		D_Pouch,				//素材ポーチ
 		m_help,
 		m_exit,
 
+		//Deliverytext,			//選択しているアイテムが納品クエストの対象である時に出現
+								//規定数を満たしている時「規定数納品してクエストを達成する」
+								//満たしていない時		「対象アイテムの数量が不足しています」
 		
 		Resulttime,				//時間
 		ResultMoney,			//リザルトで渡される金
@@ -311,6 +318,7 @@ private:
 	PickTextParts m_pickTextParts;
 	PouseMenuButton m_state = UserItemPouch;
 	CSoundSource m_sound[SoundTypeNum];
+	
 };
 
 class Item :public IGameObject
@@ -347,6 +355,7 @@ private:
 	int m_ItemNum = 0;
 	int m_max = 0;
 	int m_stageNum =0;
+
 	bool m_pickFlag = false;
 	UI::FontPalam m_fontPalam;
 	FontRender *m_fontRender = nullptr;

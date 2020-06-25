@@ -155,6 +155,7 @@ void Game::Update()
 
 				if (m_ghost[quest_board].IsSelf(contactObject))
 				{
+					
 					if (g_pad[0].IsTrigger(enButtonA))
 					{
 						islookBoard = true;

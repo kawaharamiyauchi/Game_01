@@ -8,6 +8,7 @@
 #include < locale.h >
 #include<iostream>
 string INPUT_FOLDER_NAME = "Assets/QuestData/";
+//string INPUT_FOLDER_NAME = "DHQuestEditor/DHQuestEditor/bin/Debug/";
 
 
 
@@ -137,16 +138,7 @@ void QuestManager::Update()
 	{
 
 	}
-	if (m_info.m_questType == QuestType::Littlebattle)
-	{
-		if (g_pad[0].IsTrigger(enButtonLB1))
-		{
-			QuestPoint++;
-		}
-
-		
 	
-	}
 	/*if (Game::instance()->GetStageNum() == 3) {
 		
 		if (m_info.m_questType == QuestType::Bossbattle) {
@@ -197,7 +189,7 @@ void QuestManager::Update()
 			}
 		}
 		Load(selectfileName);
-		if (g_pad[0].IsTrigger(enButtonRB1))
+		if (g_pad[0].IsTrigger(enButtonA))
 		{
 			m_info = m_infoDisp;
 			isOnQuest = true;

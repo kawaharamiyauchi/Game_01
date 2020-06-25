@@ -12,7 +12,7 @@ Dragon::Dragon()
 {	
 
 	//サンプルのエフェクトをロードする。
-	g_effect.m_sampleEffect = Effekseer::Effect::Create(g_effect.m_effekseerManager, (const EFK_CHAR*)L"Assets/effect/tm_damage.efk");
+	g_effect.m_sampleEffect[GameObjectManager::EffectType::damage] = Effekseer::Effect::Create(g_effect.m_effekseerManager, (const EFK_CHAR*)L"Assets/effect/tm_damage.efk");
 	d_state = normal;
 	//m_position.Set(0.0f,0.0f, 1000.0f);
 	m_scale *= 2.5f;
@@ -122,7 +122,7 @@ void Dragon::AnimationPlay()
 		break;
 	case damage:
 		m_animation.Play(enAnimationClip_getHit, 1.0f);
-		m_animation.Update(0.04f);
+		m_animation.Update(0.06f);
 		break;
 	case die:
 		m_animation.Play(enAnimationClip_die, 1.0f);
@@ -459,6 +459,13 @@ void Dragon::SetState()
 				break;
 			case Dragon::walk:
 
+				walktimer++;
+				if (walktimer > 100.0f)
+				{
+					SetDragonState(scream);
+					walktimer = 0;
+				}
+
 				if (diff_3.Length() < 100.0f)
 				{
 					SetDragonState(escape);
@@ -511,12 +518,15 @@ void Dragon::SetState()
 					
 						SetDragonState(escape);
 					}
-					else if (a == 1||a ==2)
+					else if (a == 1)
 					{
 					
 						SetDragonState(tailattack);
 					}
-					
+					else if (a == 2)
+					{
+						SetDragonState(scream);
+					}
 				}
 				break;
 			case Dragon::escape:
@@ -554,7 +564,7 @@ void Dragon::SetState()
 					}
 					if (a == 1)
 					{
-						SetDragonState(escape);
+						SetDragonState(hornattack);
 					}
 					if (a == 2)
 					{
@@ -625,7 +635,7 @@ void Dragon::DamageEvent()
 						plbone->GetWorldMatrix().m[3][2] + forward.z
 					);
 					boneQua.SetRotation(plbone->GetWorldMatrix());
-					if (d_state != damage) {
+					if (d_state != damage) { 
 
 						m_ghost[P_attack00].CreateBox(bonePos, boneQua, { 30.0f,5.0f, 150.0f });
 					}
@@ -638,7 +648,7 @@ void Dragon::DamageEvent()
 									g_effect.m_effekseerManager->StopEffect(g_effect.m_playEffectHandle);
 									//再生。
 									g_effect.m_playEffectHandle = g_effect.m_effekseerManager->Play(
-										g_effect.m_sampleEffect,
+										g_effect.m_sampleEffect[GameObjectManager::EffectType::damage],
 										bonePos.x,
 										bonePos.y,
 										bonePos.z

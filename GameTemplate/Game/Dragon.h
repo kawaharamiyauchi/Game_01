@@ -34,7 +34,7 @@ public:
 	{
 		bool isFind =false;
 		bool isDead = false;
-		float HP = 100.0f;
+		float HP = 1500.0f;
 		bool isEnd = false;
 	};
 	/// <summary>
@@ -167,6 +167,7 @@ private:
 	int m_timer = 0;
 	int rand_damage = 0;
 	int escapetimer = 0;
+	int walktimer = 0;
 	bool m_damageflag = false;
 	bool h_attackflag = false;
 	const wchar_t * bonename[41];

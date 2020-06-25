@@ -14,14 +14,20 @@ using namespace std;
 class GameObjectManager
 {
 public:
-
+	enum EffectType
+	{
+		heal,
+		damage,
+		powerup,
+		TypeNum
+	};
 	struct EffekseerTool
 	{
 		//Effekseerマネージャ管理。
 		Effekseer::Manager*				m_effekseerManager = nullptr;
 		EffekseerRenderer::Renderer*	m_effekseerRenderer = nullptr;
 
-		Effekseer::Effect* m_sampleEffect = nullptr;
+		Effekseer::Effect* m_sampleEffect[TypeNum] = { nullptr };
 		Effekseer::Handle m_playEffectHandle = -1;
 	};
 	static GameObjectManager& instance()

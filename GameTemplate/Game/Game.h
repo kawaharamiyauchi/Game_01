@@ -83,9 +83,18 @@ public:
 	{
 		return islookBoard;
 	}
+	bool IsBackCamp()const
+	{
+		return m_backCampFlag;
+	}
 	void SetLookBoard(bool flag)
 	{
 		islookBoard = flag;
+	}
+
+	void SetPauseFlag(bool flag)
+	{
+		pauseFlag = flag;
 	}
 	CapsuleCollider m_collider;
 	RigidBody m_rigidBody;

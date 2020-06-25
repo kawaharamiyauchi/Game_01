@@ -103,9 +103,6 @@
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="C3DModelDraw.cpp" />
     <ClCompile Include="C3DModelEffect.cpp" />
-    <ClCompile Include="Character.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="dbgDraw.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -176,9 +173,6 @@
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="C3DModelDraw.h" />
     <ClInclude Include="C3DModelEffect.h" />
-    <ClInclude Include="Character.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="dbgDraw.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

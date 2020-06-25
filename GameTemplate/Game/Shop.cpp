@@ -10,3 +10,12 @@ Shop::Shop()
 Shop::~Shop()
 {
 }
+bool Shop::Start()
+{
+	return true;
+}
+
+void Shop::Update()
+{
+
+}

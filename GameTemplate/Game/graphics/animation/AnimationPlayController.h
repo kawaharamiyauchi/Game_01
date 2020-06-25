@@ -95,7 +95,11 @@ public:
 	{
 		return m_deltaValueFootstepBoneOneFrame;
 	}
-	
+	//現在再生中のキーフレーム番号を取得。
+	const int GetCurrentKeyFrameNo()const
+	{
+		return m_currentKeyFrameNo;
+	}
 private:
 	/// <summary>
 	/// アニメーションイベントを起動する。

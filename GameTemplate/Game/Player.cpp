@@ -5,6 +5,8 @@
 #include"GameObjectManager.h"
 #include"HID/Pad.h"
 
+
+typedef ItemBase::ItemType Type;
 Player::Player()
 {
 	
@@ -87,6 +89,9 @@ Player::Player()
 	m_sound[GetHit].Init(L"Assets/sound/punch-middle2.wav");
 	m_sound[move].Init(L"Assets/sound/walk-soil1.wav");
 	m_sound[sword].Init(L"Assets/sound/sword.wav");
+
+	g_effect.m_sampleEffect[GameObjectManager::EffectType::heal] = Effekseer::Effect::Create(g_effect.m_effekseerManager, (const EFK_CHAR*)L"Assets/effect/tm_heal00.efk");
+	//g_effect.m_sampleEffect[GameObjectManager::EffectType::powerup] = Effekseer::Effect::Create(g_effect.m_effekseerManager, (const EFK_CHAR*)L"Assets/effect/tm_powerup.efk");
 }
 
 
@@ -107,17 +112,22 @@ void Player::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 		m_sound[move].Stop();
 		m_sound[move].Play(false);
 	}
-	if (wcscmp(eventName, L"attackON") == 0)
-	{
-		attackflag = true;
-		m_sound[sword].Stop();
-		m_sound[sword].Play(false);
-	}
-
-	if (wcscmp(eventName, L"attackOFF") == 0)
-	{
-		attackflag = false;
-	}
+	
+		
+		if (wcscmp(eventName, L"attackON") == 0)
+		{
+			attackflag = true;
+			m_sound[sword].Stop();
+			m_sound[sword].Play(false);
+		}
+		if (wcscmp(eventName, L"attackOFF") == 0)
+		{
+			
+				attackflag = false;
+				m_animationClip[enAnimationClip_attack].SetLoopFlag(false);
+		}
+	
+	
 	
 	if (wcscmp(eventName, L"FirstEnd") == 0)
 	{
@@ -128,7 +138,42 @@ void Player::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 		}
 		
 	}
+	if (wcscmp(eventName, L"drink") ==0)
+	{
+		
+		Type m_itemType = (Type)Game::instance()->m_ItemBase->UseItem();
 
+		switch (m_itemType)
+		{
+
+		case Type::kaihukuyaku:
+			if (m_plinfo.HP < 100.0f)
+			{
+				m_plinfo.HP += 10.0f;
+			}
+			else m_plinfo.HP = 100.0f;
+			//再生。
+			g_effect.m_playEffectHandle = g_effect.m_effekseerManager->Play(
+				g_effect.m_sampleEffect[GameObjectManager::EffectType::heal],
+				m_position[Hunter].x,
+				m_position[Hunter].y,
+				m_position[Hunter].z
+			);
+			break;
+		case Type::ItemDummy00:
+			m_plinfo.AttackPower +=50.0f;
+			m_skinModelRender[Hunter]->SetGlowColor({ 0.5f,-0.01f,-0.01f });
+			break;
+		case Type::ItemDummy01:
+			m_plinfo.Stamina = 100.0f;
+			m_plinfo.HP = 100.0f;
+			break;
+		default:
+			break;
+		}
+		
+		
+	}
 
 	if (wcscmp(eventName, L"Pick") == 0)
 	{
@@ -138,15 +183,10 @@ void Player::OnAnimationEvent(const wchar_t * clipName, const wchar_t * eventNam
 void Player::Move()
 {
 	Dragon*m_dragon;
-	
-	
-	{
-
-	}
 	if (Game::instance()->m_dragon != nullptr) {
 		m_dragon = Game::instance()->m_dragon;
 	}
-	if (p_state != die&&p_state!=useitem)
+	if (p_state != die&&p_state!=useitem&&p_state !=pickup)
 	{
 		float IStick_y = 0.0f;
 		float IStick_x = 0.0f;
@@ -156,7 +196,6 @@ void Player::Move()
 			IStick_y = g_pad[0].GetLStickYF();
 		//}
 		}
-
 		CVector3 cameraForward = g_camera3D.GetFront();
 		CVector3 cameraRight = g_camera3D.GetRight();
 
@@ -244,7 +283,10 @@ void Player::Move()
 		m_speed.y -= 6.0f;
 
 	}
-	if (p_state == die)
+	if (p_state == die||
+		p_state ==useitem||
+		p_state ==pickup
+		)
 	{
 		m_speed.x = 0.0f;
 		m_speed.z = 0.0f;
@@ -328,9 +370,12 @@ void Player::StateChange()
 		}
 		if (g_pad[0].IsTrigger(enButtonY) && m_charaCon.IsOnGround())
 		{
-			if (p_state != attack) {
-				p_state = attack;
+			if (m_nextattacktimer > 2) {
+				if (p_state != attack)
+					p_state = attack;
+				m_nextattacktimer = 0;
 			}
+			
 
 		}
 		
@@ -358,6 +403,7 @@ void Player::StateChange()
 		if (p_state != damage && p_state != die&&p_state !=useitem&&p_state !=pickup)
 		{
 			if (m_charaCon.IsOnGround() && p_state != attack) {
+				m_nextattacktimer++;
 				if (fabsf(m_speed.x*m_speed.z) > 0.01f&&stopflag !=true)
 				{
 					p_state = walk;
@@ -377,28 +423,21 @@ void Player::StateChange()
 			}
 		}
 		
-
-
 		if (g_pad[0].IsTrigger(enButtonX) && m_charaCon.IsOnGround())
 		{
-
+			auto m_selectItem = Game::instance()->m_UI->GetTargetItem();
 			if (!g_pad[0].IsPress(enButtonLB1)) {
-
-				p_state = useitem;
-				if (m_Item->UseItem() == ItemBase::ItemType::kaihukuyaku)
+				if (m_selectItem > 0)
 				{
-					if (m_plinfo.HP < 1000.0f)
-					{
-						m_plinfo.HP += 10.0f;
-					}
-					else m_plinfo.HP = 1000.0f;
+					p_state = useitem;
 				}
+				
 			}
 		}
 		if (g_pad[0].IsTrigger(enButtonA))
 		{
 			p_state = pickup;
-			m_Item->GetItem(ItemBase::ItemType::kaihukuyaku, 2);
+			m_Item->GetItem(Type::ItemDummy00, 2);
 		}
 		if (p_state == pickup && !m_animation.IsPlaying())
 		{
@@ -420,96 +459,97 @@ void Player::StateChange()
 void Player::AnimationPlay()
 {
 	const float interpolateTime = 0.2f;
-	if (p_state == idle)
-	{
-		m_animation.Play(enAnimationClip_idle, interpolateTime);
-		m_animation.Update(0.05f);
-		
-		
-	}
-	if (p_state ==walk)
-	{
-		m_animation.Play(enAnimationClip_walk, interpolateTime);
-		m_animation.Update(0.07f);
-	}
-	if (p_state  ==jump)
-	{
-		m_animation.Play(enAnimationClip_jump, interpolateTime);
-		m_animation.Update(0.04f);
-		if (m_charaCon.IsOnGround()) {
-			m_jumpflag = false;
-		}
-	}
+	if (nonAnim != true) {
 
-	if (p_state == run)
-	{
-		m_animation.Play(enAnimationClip_run, interpolateTime);
-		m_animation.Update(0.11f);
-	}
-	if (p_state == attack)
-	{
-		m_footStep = m_animation.Update(0.03f);
-		auto change = m_footStep.y;
-		m_footStep.y = m_footStep.z;
-		m_footStep.z = change;
-		switch (m_attackState)
+
+		if (p_state == idle)
 		{
-		case Player::First:
-			m_animation.Play(enAnimationClip_attack, interpolateTime);
-			break;
-		case Player::Second:
-			m_animation.Play(enAnimationClip_attack_02, interpolateTime);
-			break;
-		case Player::Third:
-			break;
-		default:
-			break;
+
+			m_animation.Play(enAnimationClip_idle, interpolateTime);
+			m_animation.Update(0.05f);
+
+
 		}
-		
-		CMatrix rotMatrix;
-		CMatrix mBias = CMatrix::Identity();
-		//回転行列を作成する。
-		rotMatrix.MakeRotationFromQuaternion(m_rotation[Hunter]);
-		rotMatrix.Mul(mBias, rotMatrix);
-		rotMatrix.Mul(m_footStep);
-		
+		if (p_state == walk)
+		{
+			m_animation.Play(enAnimationClip_walk, interpolateTime);
+			m_animation.Update(0.07f);
+		}
+		if (p_state == jump)
+		{
+			m_animation.Play(enAnimationClip_jump, interpolateTime);
+			m_animation.Update(0.04f);
+			if (m_charaCon.IsOnGround()) {
+				m_jumpflag = false;
+			}
+		}
 
-	}
-	else
-	{
-		attackflag = false;
-	}
-	if (p_state == damage)
-	{
-		m_animation.Play(enAnimationClip_damage, interpolateTime);
-		/*auto a =*/m_animation.Update(0.06f);
-		//m_speed = a;
+		if (p_state == run)
+		{
+			m_animation.Play(enAnimationClip_run, interpolateTime);
+			m_animation.Update(0.11f);
+		}
+		if (p_state == attack)
+		{
+			m_footStep = m_animation.Update(0.04f);
+			auto change = m_footStep.y;
+			m_footStep.y = m_footStep.z;
+			m_footStep.z = change;
+			switch (m_attackState)
+			{
+			case Player::First:
+				m_animation.Play(enAnimationClip_attack, interpolateTime);
+				break;
+			case Player::Second:
+				m_animation.Play(enAnimationClip_attack_02, interpolateTime);
+				break;
+			case Player::Third:
+				break;
+			default:
+				break;
+			}
 
-	}
-	if (p_state == die)
-	{
-		m_animation.Play(enAnimationClip_die, interpolateTime);
-		m_animation.Update(0.04f);
-	}
-	if (p_state == useitem)
-	{
-		m_animation.Play(enAnimationClip_drink, interpolateTime);
-		m_animation.Update(0.04f);
-	}
-	if (p_state == pickup)
-	{
-		m_animation.Play(enAnimationClip_pickup, interpolateTime);
-		m_animation.Update(0.08f);
+			CMatrix rotMatrix;
+			CMatrix mBias = CMatrix::Identity();
+			//回転行列を作成する。
+			rotMatrix.MakeRotationFromQuaternion(m_rotation[Hunter]);
+			rotMatrix.Mul(mBias, rotMatrix);
+			rotMatrix.Mul(m_footStep);
+
+
+		}
+
+		if (p_state == damage)
+		{
+
+			m_animation.Play(enAnimationClip_damage, interpolateTime);
+			m_animation.Update(0.02f);
+
+		}
+		if (p_state == die)
+		{
+			m_animation.Play(enAnimationClip_die, interpolateTime);
+			m_animation.Update(0.04f);
+		}
+		if (p_state == useitem)
+		{
+			m_animation.Play(enAnimationClip_drink, interpolateTime);
+			m_animation.Update(0.04f);
+		}
+		if (p_state == pickup)
+		{
+			m_animation.Play(enAnimationClip_pickup, interpolateTime);
+			m_animation.Update(0.08f);
+		}
 	}
 }
 
 bool Player::Start()
 {
-	m_skinModelRender[Hunter]->SetGlowColor({ -0.3f, -0.3f, -0.3f });
-	m_skinModelRender[Hunter]->SetSpecPow(2.0f);
+	m_skinModelRender[Hunter]->SetGlowColor({- 0.3f, -0.3f, -0.3f });
+	m_skinModelRender[Hunter]->SetSpecPow(3.0f);
 	return true;
 }
-
 
 void Player::Update()
 {
@@ -542,6 +582,7 @@ void Player::Update()
 			m_skinModelRender[i]->SetScale(m_scale);
 		}
 	}
+	
 }
 void Player::Render()
 {
